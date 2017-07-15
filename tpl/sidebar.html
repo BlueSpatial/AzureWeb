@@ -1,0 +1,84 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': !$root.sidebarShow}">
+        <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+      
+       
+        
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/ManageServices')}">
+            <a ng-link="['ManageServices']" >
+                <i class="fa fa-map-o"></i>
+                <span class="title">Manage services</span>
+                <span ng-if="$root.isActiveRoute('/ManageServices')" class="selected"></span>
+            </a>
+        </li>
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/Renderer')}">
+            <a class="disabled-link">
+                <span class="glyphicon glyphicon-picture"></span>
+                <span class="title">Renderer</span>
+                <span ng-if="$root.isActiveRoute('/Renderer')" class="selected"></span>
+            </a>
+        </li>
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/FieldConfiguation')}">
+            <a class="disabled-link">
+                <span class="glyphicon glyphicon-cog"></span>
+                <span class="title">Field configuation</span>
+                <span ng-if="$root.isActiveRoute('/FieldConfiguation')" class="selected"></span>
+            </a>
+        </li>
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/BuildTiles')}">
+            <a class="disabled-link">
+                <span class="glyphicons glyphicons-more-items"></span>
+                <span class="title">Build tiles</span>
+                <span ng-if="$root.isActiveRoute('/BuildTiles')" class="selected"></span>
+            </a>
+        </li>
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/ManageConnection')}">
+            <a ng-link="['ManageConnection']">
+                <i class="fa fa-database"></i>
+                <span class="title">Manage connections</span>
+                <span ng-if="$root.isActiveRoute('/ManageConnection')" class="selected"></span>
+            </a>
+        </li>       
+        <li class="nav-item" ng-init="$root.securityRoutes=['/ManageUser','/Cors','/AzureAdSetting','/OtherSetting']" ng-class="{active:$root.isActiveRoutes($root.securityRoutes)}">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-shield"></i>
+                <span class="title">Security</span>
+                <span class="arrow"></span>
+                <span ng-if="$root.isActiveRoutes($root.securityRoutes)" class="selected"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item" ng-class="{active:$root.isActiveRoute('/ManageUser')}">
+                    <a ng-link="['ManageUser']">
+                        <i class="fa fa-user"></i> Manage users
+                    </a>
+                </li>
+                <li class="nav-item" ng-class="{active:$root.isActiveRoute('/Cors')}">
+                    <a ng-link="['Cors']">
+                        <i class="fa fa-star"></i> CORS 
+                    </a>
+                </li>
+                <li class="nav-item" ng-class="{active:$root.isActiveRoute('/AzureAdSetting')}">
+                    <a ng-link="['AzureAdSetting']">
+                        <i class="fa fa-cloud"></i> Azure AD Settings
+                    </a>
+                </li>
+                <li class="nav-item" ng-class="{active:$root.isActiveRoute('/OtherSetting')}">
+                    <a ng-link="['OtherSetting']">
+                        <i class="fa fa-cog"></i> Other Settings
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+       
+       
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

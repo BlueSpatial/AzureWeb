@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BlueSpatial.Models.FeatureLayerInfo>
+
+@{
+    ViewBag.Title = "Layers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var layer in Model) {    
+    <h2>Layer: @layer.name (ID: @layer.id)</h2>
+    @Html.Partial("_LayerPatial",layer)
+    <hr />
+}
+

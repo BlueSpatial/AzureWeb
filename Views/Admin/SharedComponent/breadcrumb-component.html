@@ -1,0 +1,20 @@
+﻿
+<div class="page-bar" ng-show="$ctrl.breadcrumb.length">
+    <ul class="page-breadcrumb">
+        <li ng-repeat="b in $ctrl.breadcrumb">
+            <a href="{{b.Url}}" target="_blank">
+                <span class="glyphicons tree-icon"
+                      ng-class="{
+          'glyphicons-folder-open': b.MetadataType==0,
+          'glyphicons-nearby-circle': b.MetadataType==1&&b.ServiceType==0,
+          'glyphicons-nearby-square': b.MetadataType==1&&b.ServiceType==1,
+          'glyphicons-sort': b.MetadataType==2
+
+        }"></span>
+                {{b.Name}}
+            </a>
+            <i ng-if="$index!=($ctrl.breadcrumb.length-1)" class="fa fa-circle"></i>
+        </li>
+    </ul>
+</div>
+<br />

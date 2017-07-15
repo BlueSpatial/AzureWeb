@@ -1,0 +1,11 @@
+﻿<a ng-click="$ctrl.showSymbolModal()" title="Set Symbol">
+    <img ng-show="$ctrl.symbolType.Value=='PictureMarkerSymbol'" ng-src="{{$ctrl.label.Symbol.ImageUrl}}" style="opacity:{{(100-$ctrl.transparency)/100}}" width="{{$ctrl.label.Symbol.Size}}" height="{{$ctrl.label.Symbol.Size}}" />
+    <div ng-show="$ctrl.symbolType.Value=='SimpleFillSymbol'" class="simple-fill-symbol-preview" ng-style="{'background-color':$ctrl.label.Symbol.Fill.Color,
+                                    'border-color': $ctrl.label.Symbol.Outline.Color,
+                                    'border-width': $ctrl.label.Symbol.Outline.LineWidth,
+                                    'border-style': $ctrl.label.Symbol.Outline.Pattern.Id==0?'solid': ($ctrl.label.Symbol.Outline.Pattern.Id==1?'dashed': 'dotted'),
+                                    'opacity': (100-$ctrl.transparency) /100,
+        }">
+    </div>
+    {{$ctrl.label.Name}}
+</a>

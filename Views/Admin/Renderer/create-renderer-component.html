@@ -1,0 +1,83 @@
+﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.id"></breadcrumb-component>
+<div id="createRendererComponent">
+    <form name="$ctrl.rendererForm">
+        <div class="row">
+           
+            <div class="col-md-4">               
+                <div class="row">
+                    <div class="col-md-6">                        
+                        <div class="form-group">
+                            <label>Type of renderer: </label>
+                            <ui-select on-select="$ctrl.clearAtributeToShow()" ng-model="$ctrl.drawing.DrawingStyle"
+                                       theme="bootstrap"
+                                       reset-search-input="false">
+                                <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="d in $ctrl.drawingStyles| propsFilter: {Name: $select.search}">
+                                    <div ng-bind-html="d.Name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <label>Rendering field:</label>
+                            <ui-select on-select="$ctrl.getFieldValues($item)" ng-model="$ctrl.drawing.Attribute"
+                                        theme="bootstrap"
+                                        ng-disabled="!($ctrl.drawing.DrawingStyle.Id==1||$ctrl.drawing.DrawingStyle.Id==2)"
+                                        reset-search-input="false">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="a in $ctrl.filteredAttributes=($ctrl.attributes| filter: $ctrl.filterAttributeByDrawingStyle |propsFilter: {name: $select.search})">
+                                    <div ng-bind-html="a.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Transparency %: </label>
+                            <input class="form-control" type="number" ng-min="0" ng-max="100" ng-model="$ctrl.drawing.Transparency" />
+                        </div>
+                        <div class="form-group">
+                            <label>Visible range: </label>
+                            <ui-select ng-model="$ctrl.drawing.VisibleRange"
+                                       theme="bootstrap"
+                                       reset-search-input="false">
+                                <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="v in $ctrl.visibleRanges| propsFilter: {Name: $select.search} ">
+                                    <div ng-bind-html="v.Name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 hidden">
+                        <div class="form-group">
+                            <label>Symbol type:</label>
+                            <ui-select ng-model="$ctrl.drawing.SymbolType"
+                                       theme="bootstrap"
+                                       ng-disabled="true"
+                                       reset-search-input="false">
+                                <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="s in $ctrl.symbolTypes |propsFilter: {Value: $select.search}">
+                                    <div ng-bind-html="s.Name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div ng-include="'/Views/Admin/Renderer/symbol-patial.html'">
+            </div>
+            <div class="col-md-4">
+                <label-component label-feature="$ctrl.labelFeature" attributes="$ctrl.attributes"></label-component>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <hr />
+        <div class="col-md-12">
+            <button ng-click="$ctrl.saveRenderer()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+        </div>
+    </div>
+</div>

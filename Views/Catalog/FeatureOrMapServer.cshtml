@@ -1,0 +1,48 @@
+﻿@model BlueSpatial.Models.CatalogViewModels.ServiceViewModel
+@{
+    ViewBag.Title = Model.ServiceBase.Type;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BlueSpatial.Models
+@*$"/{GlobalConstant.ARCRESTROUTEPREFIX}/{Model.ServiceBase.Folder}/{Model.ServiceBase.Name}/{Model.ServiceBase.Type}"*@
+@{ var currentLink =string.Format("/{0}/{1}/{2}/{3}", GlobalConstant.ARCRESTROUTEPREFIX, Model.ServiceBase.Folder, Model.ServiceBase.Name, Model.ServiceBase.Type);}
+<div class="div-padding-top">
+    @*<div><strong>View in:</strong></div>
+    <div><strong>View Footprint In:</strong></div>
+    <div><strong>Service Description:</strong> @Model.ServiceBase.serviceDescription</div>*@
+    @if (Model.ServiceBase.GetType() == typeof(MapService))
+    {
+        <div><strong>Map Name:</strong> @((Model.ServiceBase as MapService).mapName)</div>
+    }
+    @*<div>Legend</div>*@
+    <div><a href="@currentLink/layers">All Layers and Tables</a></div>
+    <div><strong>Layers:</strong> <br /></div>
+    <ul>
+        @foreach (var layer in Model.ServiceBase.layers)
+        {
+            <li>
+                <a href='@currentLink/@layer.id'>@layer.name (@layer.id)</a>
+            </li>
+
+        }
+    </ul>
+
+    @*<div><strong>Service Description:</strong> @Model.ServiceBase.description</div>
+    <div><strong>Copy Right Text:</strong> @Model.ServiceBase.copyrightText</div>*@
+    <div><strong>Spatial Reference:</strong> @(((WkidBasedSpatialReference)Model.ServiceBase.spatialReference).wkid )</div>
+    <div>
+        <strong>Intial Extent:</strong> <br />
+        @Html.Partial("_EnvelopePatial", Model.ServiceBase.initialExtent)
+    </div>
+    <div>
+        <strong>Full Extent:</strong> <br />
+        @Html.Partial("_EnvelopePatial", Model.ServiceBase.fullExtent)
+    </div>
+    <div><strong>Units:</strong> @Model.ServiceBase.units</div>
+    <div><strong>Supported Image Format Types:</strong> @Model.ServiceBase.supportedImageFormatTypes</div>
+    @*<div><strong>Document Info:</strong> @Model.ServiceBase.documentInfo</div>*@
+    @*<div><strong>Supported Interfaces:</strong></div>*@
+    <div><strong>Supported Operations:</strong> @Model.ServiceBase.capabilities.Replace(",",", ") </div>
+
+    <div><strong>Single Fused Map Cache:</strong> @Model.ServiceBase.singleFusedMapCache</div>
+</div>

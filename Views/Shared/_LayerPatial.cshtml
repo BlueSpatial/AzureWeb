@@ -1,0 +1,43 @@
+﻿@model BlueSpatial.Models.FeatureLayerInfo
+
+<div class="div-padding-top">
+    @*<div><strong>View in:</strong></div>*@
+    <div><strong>Name:</strong> @Model.name</div>
+    <div><strong>Display Field:</strong> @Model.displayField</div>
+    <div><strong>Type:</strong> @Model.type</div>
+    <div><strong>Geometry Type:</strong> @Model.geometryType</div>
+    @*<div><strong>Description:</strong> @Model.description</div>
+    <div><strong>Copyright Text:</strong> @Model.copyrightText</div>*@
+    <div><strong>Min. Scale:</strong> @Model.minScale</div>
+    <div><strong>Max. Scale:</strong> @Model.maxScale</div>
+    <div><strong>Default Visibility:</strong> @Model.defaultVisibility</div>
+    <div><strong>Max Record Count:</strong> @Model.maxRecordCount</div>
+    <div><strong>Supported query Formats:</strong> @Model.supportedQueryFormats</div>
+    <div><strong>Use Standardized Queries:</strong> @Model.useStandardizedQueries</div>
+    <div><strong>Extent:</strong> 
+    @Html.Partial("_EnvelopePatial",Model.extent)
+    </div>
+    <div><strong>Drawing Info:</strong><span class="formatted-json"> @(Newtonsoft.Json.JsonConvert.SerializeObject(Model.drawingInfo, Newtonsoft.Json.Formatting.Indented).Replace("\"","")) </span></div>
+    @*<div><strong>HasZ:</strong> </div>
+    <div><strong>HasM:</strong> </div>*@
+    <div><strong>Has Attachments:</strong> @Model.hasAttachments</div>
+    <div><strong>HTML Popup Type:</strong> @Model.htmlPopupType</div>
+    @*<div><strong>Object ID Field::</strong> </div>*@
+    <div><strong>Type ID Field:</strong> @Model.typeIdField</div>
+    <div><strong>Fields:</strong> 
+    <ul>
+        @foreach(var field in Model.fields)
+        {
+            <li>@(string.Format("{0} (type: {1}, alias: {2}, length: {3}, nullable: {4}, editable: {5})", field.name,field.type,field.alias,field.length,field.nullable,field.editable))</li>
+            @*<li>@($"{field.name} (type: {field.type}, alias: {field.alias}, length: {field.length}, nullable: {field.nullable}, editable: {field.editable})")</li>*@
+        }
+    </ul>
+    </div>
+    @*<div><strong>Templates: </strong> </div>
+    <div><strong>Is Data Versioned: </strong> </div>
+    <div><strong>Supports Rollback On Failure Parameter: </strong> </div>
+    <div><strong>Last Edited: </strong> </div>*@
+    <div><strong>Supported Operations: </strong>@Model.capabilities.Replace(",",", ")</div>
+
+</div>
+

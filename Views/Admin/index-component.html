@@ -1,0 +1,53 @@
+﻿<!-- Not login page -->
+<div ng-show="!$root.isActiveRoute('/UserLogin')">
+    <div ng-include="'tpl/header.html'" ng-controller="HeaderController" class="page-header navbar navbar-fixed-top"> </div>
+    <!-- END HEADER -->
+    <div class="clearfix"> </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div ng-include="'tpl/sidebar.html'" ng-controller="SidebarController" class="page-sidebar-wrapper"> </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <div class="page-content">
+
+                <!-- BEGIN ACTUAL CONTENT -->
+                <div id="message" >
+                    <div ng-if="$root.errorMessage">
+                        <div class="fade-in-up alert custom-alert alert-warning alert-dismissible">
+                            <button ng-click="$ctrl.clearError()" type="button" class="close" aria-label="Close"><span>&times;</span></button>
+                            <strong>Error!</strong><br />
+                            <span ng-bind-html="$root.errorMessage"></span>
+                        </div>
+                    </div>
+                    <div ng-if="$root.successMessage">
+                        <div class="fade-in-up alert custom-alert alert-success alert-dismissible">
+                            <button ng-click="$ctrl.clearSuccess()" type="button" class="close"><span>&times;</span></button>
+                            {{$root.successMessage}}
+                        </div>
+                    </div>
+                </div>
+
+                <my-app></my-app>
+                <!-- END ACTUAL CONTENT -->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+        <!-- BEGIN QUICK SIDEBAR -->
+        <a href="javascript:;" class="page-quick-sidebar-toggler">
+            <i class="icon-login"></i>
+        </a>
+
+        <!-- END QUICK SIDEBAR -->
+    </div>
+</div>
+  
+
+<!-- Login page -->
+<div ng-if="$root.isActiveRoute('/UserLogin')">
+    <login-component></login-component>
+</div>
+
+
+<loading-component is-loading="$root.isLoading"></loading-component>

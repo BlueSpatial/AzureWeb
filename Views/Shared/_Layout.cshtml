@@ -1,0 +1,33 @@
+﻿@using MvcSiteMapProvider.Web.Html
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+<head>
+    <meta name="viewport" content="width=device-width" />    
+    <title>Service Catalog</title>
+    @System.Web.Optimization.Styles.Render("~/layout/styles")
+
+
+    @RenderSection("styles", required: false)
+</head>
+<body class="container" >
+        
+    <div class="row">
+        <div class="col-xs-3">
+            <a href="http://www.BlueSpatial.com" target="_blank"><img id="logo" src="~/Images/logo.gif" /></a>
+        </div>
+        <div class="col-xs-9 p-t-32">
+           <a class="pull-right" href="/admin#/UserLogin"><span class="glyphicon glyphicon-log-in"></span> Admin</a>
+        </div>
+    </div>
+    <br/>
+    <div class="breadcrumb row">
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+    @RenderBody()
+
+    @System.Web.Optimization.Scripts.Render("~/layout/scripts")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

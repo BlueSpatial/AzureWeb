@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="Layer" table="Layer" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="ServiceId" type="Int32">
+      <column name="ServiceId" sql-type="int" not-null="true" />
+    </property>
+    <!--file name for this layer config-->
+    <property name="Name" type="String">
+      <column name="Name" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="TableName" type="String">
+      <column name="TableName" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+      <property name="FilterExpression" type="String">
+      <column name="FilterExpression" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="State" type="Int32">
+      <column name="State" sql-type="int" not-null="true" />
+    </property>
+    <property name="Type" type="Int32">
+      <column name="Type" sql-type="int" not-null="false" />
+    </property>
+    <property name="Drawing" type="StringClob">
+      <column name="Drawing" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="VisibleRange" type="Int32">
+      <column name="VisibleRange" sql-type="int" not-null="true" />
+    </property>
+    <property name="IsEditable" type="bool">
+      <column name="IsEditable" sql-type="bit" not-null="true" />
+    </property>
+    <property name="HasAttachments" type="bool">
+      <column name="HasAttachments" sql-type="bit" not-null="true" />
+    </property>
+    <property name="IsSupportTime" type="bool">
+      <column name="IsSupportTime" sql-type="bit" not-null="true" />
+    </property>    
+    <property name="TimeFieldId" type="Int32">
+      <column name="TimeFieldId" sql-type="int" not-null="false" />
+    </property>
+    <property name="Extent" type="NHibernate.Spatial.Type.GeometryType, NHibernate.Spatial">
+      <column name="Extent" sql-type="geometry" not-null="true" />
+    </property>
+    <bag name="Attachment">
+      <key column="LayerId" />
+      <one-to-many class="Attachment" />
+    </bag>
+    <bag name="Field">
+      <key column="LayerId" />
+      <one-to-many class="Field" />
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,108 @@
+﻿.angular-ui-tree-handle {
+    background: #f8faff;
+    border: 1px solid #dae2ea;
+    color: #7c9eb2;
+    padding: 10px 10px;
+}
+
+.angular-ui-tree-handle:hover {
+    color: #438eb9;  
+	background: #dce2e8;
+	border-color: #c1c1c1;
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+tr.angular-ui-tree-empty {
+    height:100px
+}
+
+.group-title {
+    background-color: #687074 !important;
+    color: #FFF !important;
+}
+
+
+/* --- Tree --- */
+.tree-node {
+    border: 1px solid #dae2ea;
+    background: #f8faff;
+    color: #7c9eb2;
+}
+
+.nodrop {
+    background-color: #f2dede;
+}
+
+.tree-node-content {
+    margin: 10px;
+}
+.tree-handle {
+    padding: 10px;
+    background: #428bca;
+    color: #FFF;
+    margin-right: 10px;
+}
+
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.expand-button{    
+    color: #fff;   
+	background-color: #878d87;
+	border-color: #827d7d
+}
+.expand-button:hover {
+    color: #fff;
+    background-color: #6f736f;
+    border-color: #3a3838
+}
+.tree-node.folder {
+    color: #f8d775;
+    /*background-color: rgba(252, 248, 227,1);
+    border-color: rgba(250, 235, 204,1);*/
+}
+
+    .tree-node.folder:hover {
+        color: rgb(185, 137, 53);
+        /*background-color: rgb(239, 229, 181);
+        border-color: rgb(247, 220, 166);*/
+    }
+
+.tree-node.service {
+    color: rgba(49, 112, 143,1);
+    /*background-color: rgba(217, 237, 247,1);
+    border-color: rgba(188, 232, 241,1);*/
+}
+
+    .tree-node.service:hover {
+        color: rgb(49, 129, 169);
+        /*background-color: rgb(178, 216, 234);
+        border-color: rgb(163, 219, 230);*/
+    }
+
+.tree-node.layer {
+    color: rgba(60, 118, 61, 1);
+    /*background-color: rgba(223, 240, 216, 1);
+    border-color: rgba(214, 233, 198, 1);*/
+}
+
+    .tree-node.layer:hover {
+        color: rgb(49, 113, 50);
+        /*background-color: rgb(183, 218, 169);
+        border-color: rgb(187, 218, 162);*/
+    }
+.angular-ui-tree-empty{
+    display:none;
+}

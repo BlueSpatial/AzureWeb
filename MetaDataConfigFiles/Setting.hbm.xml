@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="Setting" table="Setting" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="Key" type="String">
+      <column name="`Key`" sql-type="nvarchar(max)" not-null="true" />
+    </property>
+    <property name="Value" type="String">
+      <column name="`Value`" sql-type="nvarchar(max)" not-null="true" />
+    </property>    
+  </class>
+</hibernate-mapping>

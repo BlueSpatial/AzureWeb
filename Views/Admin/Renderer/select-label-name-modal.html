@@ -1,0 +1,22 @@
+﻿<div class="modal fade" id="selectLabelName" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Unique value:</label>
+                    <ui-select ng-model="$ctrl.currentLabel.Name"
+                               theme="bootstrap"
+                               reset-search-input="false">
+                        <ui-select-match>{{$select.selected}}</ui-select-match>
+                        <ui-select-choices repeat="f in $ctrl.fieldValues | filter: $ctrl.fieldValueFilter">
+                            <div ng-bind-html="f | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="$ctrl.insertOrUpdateLabel()" class="btn blue" data-dismiss="modal">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <a class="btn blue btn-xs" ng-click="$ctrl.addUser()">
+            <span class="glyphicon glyphicon-plus"></span> Add user
+        </a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>User name/Email</th>
+                    <th>Role</th>
+                    <th>Is Azure AD User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="u in $ctrl.users">
+                    <td>{{u.UserName}}</td>
+                    <td>{{$ctrl.getRoleName(u.Role)}}</td>    
+                    <td><input type="checkbox" ng-model="u.IsAzureAD" disabled /></td>     
+                    <td>
+                        <a class="btn btn-danger btn-xs tree-button pull-right" ng-click="$ctrl.deleteUser(u,$index)"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        <button ng-click="$ctrl.editUser(u)" class="btn blue btn-xs pull-right m-r-8"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- user modal -->
+<div class="modal fade" id="creatUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{$ctrl.isEditMode?'Edit':'Add'}} user</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Azure AD User: 
+                        <input ng-disabled="$ctrl.selectedUser.Id" type="checkbox" ng-model="$ctrl.selectedUser.IsAzureAD" >
+                    </label>
+                    
+                </div>
+                <div class="form-group">
+                    <label>User name/Email: </label>
+                    <input ng-disabled="$ctrl.selectedUser.Id" ng-model="$ctrl.selectedUser.UserName" class="form-control">
+                </div>
+                <div class="form-group" ng-show="!$ctrl.selectedUser.IsAzureAD">
+                    <label>Password:</label>
+                    <input ng-model="$ctrl.selectedUser.Password"  type="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Role:</label>
+                    <ui-select ng-model="$ctrl.selectedUser.Role"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               title="Choose a database">
+                        <ui-select-match placeholder="Choose a role">{{$ctrl.getRoleName($ctrl.selectedUser.Role)}}</ui-select-match>
+                        <ui-select-choices repeat="r.Value as r in $ctrl.roles  | propsFilter: {Name: $select.search}">
+                            <div ng-bind-html="r.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>  
+                <div class="form-group" ng-show="$ctrl.selectedUser.Role!='Admin'">
+                    <label>Services:</label>
+                    <ui-select multiple ui-select-add-remove-all ng-model="$ctrl.selectedUser.Services" theme="bootstrap">
+                        <ui-select-match placeholder="Select services">
+                            <span class="glyphicons tree-icon glyphicons-folder-open"></span>
+                            {{$item.FolderName}}
+                            <span class="glyphicons tree-icon" ng-class="{ 'glyphicons-nearby-circle': $item.ServiceType==0,'glyphicons-nearby-square': $item.ServiceType==1, }"></span>
+                            {{$item.Name}}
+                        </ui-select-match>
+                        <ui-select-choices position="auto" repeat="s.Id as s in $ctrl.services | propsFilter: {Name: $select.search}">
+                            <div>
+                                <span ng-if="s.FolderName" class="glyphicons tree-icon glyphicons-folder-open"></span>
+                                {{s.FolderName}}
+                                <span class="glyphicons tree-icon" ng-class="{ 'glyphicons-nearby-circle': s.ServiceType==0,'glyphicons-nearby-square': s.ServiceType==1, }"></span>
+                                {{s.Name}}
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div> 
+               
+                <button ng-click="$ctrl.saveUser($ctrl.selectedUser)" class="btn blue">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

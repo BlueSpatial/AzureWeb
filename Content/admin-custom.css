@@ -1,0 +1,120 @@
+﻿.user-name {
+    color: darkgrey!important;
+}
+.ng-cloak {
+    display: none;
+}
+.m-t-5 {
+    margin-top: 5px!important;
+}
+.m-t-0{
+    margin-top:0!important;
+}
+
+body > .breadcrumb {
+    display: none;
+}
+.p-r-8{
+    padding-right:8px;
+}
+.page-header.navbar .page-logo .logo-default {
+    margin: 5px 0 0;
+    width: 150px;
+}
+.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
+    
+    text-transform: capitalize; 
+    font-weight:initial;
+   
+}
+.nav-item a.disabled-link {
+    background-color: #575b61;
+    opacity: 0.5;
+}
+.nav-item.active a.disabled-link {
+    opacity: 1;
+}
+.page-content-white .page-bar .page-breadcrumb > li > a {
+    color: #337ab7;
+}
+    .page-content-white .page-bar .page-breadcrumb > li > a:hover {
+        color: #1085ec;
+    }
+
+.ui-select-icon .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
+    padding: 0px 14px 0px 14px;
+}
+/*.btn.blue:not(.btn-outline) {  
+    background-color: #004bb6;
+    border-color: #004bb6;
+}
+    
+    .btn.blue:not(.btn-outline):hover {
+        background-color: rgb(7, 97, 227);
+        border-color: rgb(7, 97, 227);
+    }*/
+/*.btn.btn-outline.blue {
+    border-color: #004bb6;
+    color: #004bb6;
+}
+
+    .btn.btn-outline.blue:active:hover, .btn.btn-outline.blue:hover {
+        background-color: rgb(7, 97, 227);
+        border-color: rgb(7, 97, 227);
+    }*/
+
+.page-sidebar .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a,
+.page-sidebar .page-sidebar-menu > li.active.open > a:hover, .page-sidebar .page-sidebar-menu > li.active > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a:hover, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a:hover {
+    background: #3598dc;
+}
+.page-spinner-bar > div {
+    background: #3598dc;
+}
+.glyphicons.tree-icon{
+    line-height:0.5;
+}
+.glyphicons-folder-open {
+    color: #f8d775;
+}
+
+
+.glyphicons-sort {
+    color: #2c3e50;
+}
+.glyphicons-nearby-circle {
+    color: #27ae60;
+}
+.glyphicons-nearby-square {
+    color: #8e44ad;
+}
+
+.table > tfoot > tr > th, .table > tfoot > tr > td {
+    
+     padding: inherit; 
+   
+}
+.tile-done td {
+    border-bottom: 1px solid #3598dc !important;
+}
+.layer-modal-breadcrumb .page-bar {
+    margin: 0;
+}
+.custom-alert {
+    position: fixed;
+    width: inherit;
+    right: 0;
+    z-index: 9999999;
+    bottom: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.breadcrumb-seperant {
+    font-size: 5px;
+    margin: 0 5px;
+    position: relative;
+    top: -3px;
+    opacity: .4;
+}
+b, strong {
+    font-weight: 600;
+}   

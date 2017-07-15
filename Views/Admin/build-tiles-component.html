@@ -1,0 +1,40 @@
+﻿<breadcrumb-component metadata-type="1" metadata-id="$ctrl.serviceId"></breadcrumb-component>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><input type="checkbox" ng-model="$ctrl.checkAll" ng-click="$ctrl.updateChecked()" /></th>
+            <th>Level</th>
+            <th>Scale</th>
+            <th>Total Tiles</th>
+            <th>Tiles Created</th>
+            <th>Storage</th> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-class="{'tile-done':t.TotalTiles==t.TilesCreated}" ng-repeat="t in $ctrl.tilesStatuses">
+            <td><input type="checkbox" ng-model="t.IsSelected" /></td>
+            <td>{{t.Level}}</td>
+            <td>1:{{t.Scale|number:0}}</td>
+            <td>{{t.TotalTiles|number:0}}</td>
+            <td>{{t.TilesCreated|number:0}}</td>
+            <td>{{t.Storage|fileSize}}</td>            
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-center">Total</td>
+            <td>{{$ctrl.total.TotalTiles|number:0}}</td>
+            <td>{{$ctrl.total.TilesCreated|number:0}}</td>
+            <td>{{$ctrl.total.Storage|fileSize}}</td>
+        </tr>
+    </tfoot>
+</table>
+<p ng-if="$ctrl.totalTilesToCreate()">{{$ctrl.totalTilesToCreate()|number:0}} tiles to create (Estimated storage: {{$ctrl.totalTilesToCreate()*$ctrl.sizePerTile()|fileSize}})</p>
+<!-- progress bar -->
+<div ng-show="$ctrl.progressBar.IsLoading" class="modal-backdrop loader-backdrop fade in"></div>
+<span ng-show="$ctrl.progressBar.Text">{{$ctrl.progressBar.Text}} <span ng-show="$ctrl.progressBar.Value" class="progress-bar-text">{{$ctrl.progressBar.Value}} / {{$ctrl.progressBar.Max}} tiles</span></span>
+<uib-progressbar ng-show="$ctrl.progressBar.Text||$ctrl.progressBar.Max" max="$ctrl.progressBar.Max" value="$ctrl.progressBar.Value">
+</uib-progressbar>
+
+<button class="btn blue" ng-click="$ctrl.buildTiles()">Create tiles</button>

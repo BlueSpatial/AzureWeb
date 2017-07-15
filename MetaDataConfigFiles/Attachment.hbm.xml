@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="Attachment" table="Attachment" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+      <generator class="identity" />
+    </id>    
+    <property name="FolderName" type="String">
+      <column name="FolderName" sql-type="nvarchar(max)" not-null="true" />
+    </property>
+    <property name="Name" type="String">
+      <column name="Name" sql-type="nvarchar(max)" not-null="true" />
+    </property>
+    <property name="Size" type="Int64">
+      <column name="Size" sql-type="BigInt" not-null="true" />
+    </property>
+    <property name="ContentType" type="String">
+      <column name="ContentType" sql-type="nvarchar(max)" not-null="true" />
+    </property>
+    <property name="LayerId" type="Int32">
+      <column name="LayerId" sql-type="int" not-null="true" />
+    </property>
+    <property name="FeatureId" type="Int32">
+      <column name="FeatureId" sql-type="int" not-null="true" />
+    </property>
+    <property name="State" type="Int32">
+      <column name="State" sql-type="int" not-null="true" />
+    </property>
+  </class>
+</hibernate-mapping>

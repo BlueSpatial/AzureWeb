@@ -1,0 +1,100 @@
+﻿<div class="form-horizontal">
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-md-5 control-label">
+                <input type="checkbox" ng-model="$ctrl.labelFeature.IsActive" ng-click="$ctrl.setDefaultValue()" /> Label features
+            </label>
+            
+        </div>
+        <div ng-show="$ctrl.labelFeature.IsActive">
+            <div class="form-group">
+                <label class="col-md-5 control-label">Text template:</label>
+                <div class="col-md-7">
+                    <ui-select title="Add text" class="add-button-ui-select" on-select="$ctrl.addAttributeToText($item)" ng-model="$ctrl.attribute"
+                               theme="bootstrap"
+                               reset-search-input="false">
+                        <ui-select-match placeholder="+">+</ui-select-match>
+                        <ui-select-choices repeat="a in $ctrl.attributes|propsFilter: {name: $select.search}">
+                            <div ng-bind-html="a.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <textarea class="form-control" id="labelFeatureText" ng-model="$ctrl.labelFeature.Text"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">Size:</label>
+                <div class="col-md-7">
+                    <input title="Text size" type="number" class="small-number form-control" ng-min="1" ng-model="$ctrl.labelFeature.TextSize" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">Color:</label>
+                <div class="col-md-7">
+                    <input title="Text color" colorpicker="rgba" type="text" ng-style="{color:$ctrl.labelFeature.TextColor}" class="form-control" ng-model="$ctrl.labelFeature.TextColor" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">Style:</label>
+                <div class="col-md-7">
+                    <checkbox-component title="Bold" chk-model="$ctrl.labelFeature.Bold">
+                        <button class="btn btn-xs btn-outline blue"><strong>B</strong></button>
+                    </checkbox-component>
+                    <checkbox-component title="Italic" chk-model="$ctrl.labelFeature.Italic">
+                        <button class="btn btn-xs btn-outline blue"><em>I</em></button>
+                    </checkbox-component>
+                    <checkbox-component title="Underline" chk-model="$ctrl.labelFeature.Underline">
+                        <button class="btn btn-xs btn-outline blue"><u>U</u></button>
+                    </checkbox-component>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">
+                    <checkbox-component chk-model="$ctrl.labelFeature.IsHalo">
+                        <button class="btn btn-xs blue btn-outline">{{$ctrl.labelFeature.IsHalo?'Remove Halo':'Add Halo'}}</button>
+                    </checkbox-component>
+                </label>
+                <div class="col-md-7">
+                    <input title="Halo size" ng-min="1" ng-show="$ctrl.labelFeature.IsHalo" type="number" class="small-number form-control" ng-model="$ctrl.labelFeature.HaloSize" />
+                </div>
+            </div>
+            <div class="form-group" ng-show="$ctrl.labelFeature.IsHalo" >
+                <label class="col-md-5 control-label">
+                   Halo color
+                </label>
+                <div class="col-md-7">
+                    <input title="Halo color" ng-show-end colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.labelFeature.HaloColor}" ng-model="$ctrl.labelFeature.HaloColor" />
+                </div>
+            </div>
+            <div ng-if="$ctrl.labelFeature.IsPointType" class="form-group">
+                <label class="col-md-5 control-label">
+                    Alignment:
+                </label>
+                <div class="col-md-7">
+                    <ui-select ng-model="$ctrl.labelFeature.Alignment"
+                               theme="bootstrap"
+                               reset-search-input="false">
+                        <ui-select-match placeholder="">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="a in $ctrl.alignments|propsFilter: {Name: $select.search}">
+                            <div ng-bind-html="a.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">
+                    Visible range:
+                </label>
+                <div class="col-md-7">
+                    <ui-select ng-model="$ctrl.labelFeature.VisibleRange"
+                               theme="bootstrap"
+                               reset-search-input="false">
+                        <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="v in $ctrl.visibleRanges| propsFilter: {Name: $select.search} ">
+                            <div ng-bind-html="v.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

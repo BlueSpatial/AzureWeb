@@ -1,0 +1,22 @@
+﻿<div id="uploadGisFile" class="tab-pane fade in active">
+    <div class="row">        
+        <div class="col-md-12">
+            <div ng-show-start="$ctrl.progressBar.Text" class="modal-backdrop loader-backdrop fade in"></div>
+            <span ng-show-end=>{{$ctrl.progressBar.Text}} <span ng-show="$ctrl.progressBar.Value" class="progress-bar-text">{{$ctrl.progressBar.Value}} / {{$ctrl.progressBar.Max}} features</span></span>
+            <uib-progressbar ng-show="$ctrl.progressBar.Text||$ctrl.progressBar.Max" max="$ctrl.progressBar.Max" value="$ctrl.progressBar.Value">                
+            </uib-progressbar>
+            <div class="form-group">
+                <label>File:</label>
+                <input type="file" class="form-control" title="Supported formats: {{$ctrl.supportedFormats}}" accept="{{$ctrl.supportedFormats}}" onchange="angular.element(this).scope().changeFile(this.files)">
+            </div>
+            <div class="form-group">
+                <label>Layer name:</label>
+                <input ng-model="$ctrl.uploadFile.TableName" class="form-control">
+            </div>
+            <div class="form-group">
+                <button ng-click="$ctrl.upload()" class="btn blue"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

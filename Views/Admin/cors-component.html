@@ -1,0 +1,45 @@
+﻿<h4> Cross Origin Resource Sharing</h4>
+<div class="form-group">
+    <a class="btn blue btn-xs" ng-click="$ctrl.addNewDomain()">
+        <span class="glyphicon glyphicon-plus"></span> Add domain
+    </a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Domain name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="d in $ctrl.domains">
+                <td>{{d.Name}}</td>
+                <td>
+                    <a class="btn btn-danger btn-xs  tree-button pull-right" ng-click="$ctrl.deleteDomain(d,$index)"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                    <a class="btn blue btn-xs m-r-8 pull-right" ng-click="$ctrl.editDomain(d)"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </td>
+            </tr>
+            <tr ng-if="!$ctrl.domains.length">
+                <td>* (Allow all)</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="createDomainModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Domain name:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Domain name: </label>
+                    <input ng-model="$ctrl.domain.Name" class="form-control">
+                </div>
+                <button ng-click="$ctrl.saveDomain()" type="button" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>

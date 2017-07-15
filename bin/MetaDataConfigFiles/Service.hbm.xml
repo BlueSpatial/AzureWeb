@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="Service" table="Service" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="ConnectionId" type="Int32">
+      <column name="ConnectionId" sql-type="int" not-null="true" />
+    </property>
+    <property name="FolderId" type="Int32">
+      <column name="FolderId" sql-type="int" not-null="true" />
+    </property>
+    <property name="Name" type="String">
+      <column name="Name" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="State" type="Int32">
+      <column name="State" sql-type="int" not-null="true" />
+    </property>
+    <property name="ServiceType" type="Int32">
+      <column name="ServiceType" sql-type="int" not-null="true" />
+    </property>
+    <property name="IsCached" type="bool">
+      <column name="IsCached" sql-type="bit" not-null="true" />
+    </property>
+      <property name="IsAllowAnonymous" type="bool">
+      <column name="IsAllowAnonymous" sql-type="bit" not-null="true" />
+    </property>
+    <bag name="Layer">
+      <key column="ServiceId" />
+      <one-to-many class="Layer" />
+    </bag>
+  </class>
+</hibernate-mapping>

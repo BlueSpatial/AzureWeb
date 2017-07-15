@@ -1,0 +1,52 @@
+﻿<div class="modal fade" id="creatServiceModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{$ctrl.single.IsEditMode?'Edit':'Add'}} service</h4>
+            </div>
+            <div class="modal-body">
+                <div class="layer-modal-breadcrumb" ng-include="'/Views/Admin/SharedComponent/breadcrumb-component.html'"></div>                        
+                <div class="form-group">
+                    <label>Service name: </label>
+                    <input ng-model="$ctrl.single.NewService.Name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Service type: </label>
+                    <ui-select ng-model="$ctrl.single.NewService.ServiceType"
+                               theme="bootstrap"
+                               ng-disabled="$root.isNotFullVersion()"
+                               ng-attr-title="{{$root.isNotFullVersion()?'Only Map Services are available with the BASIC/PRO version':''}}"
+                               reset-search-input="false"
+                               title="Choose service type">
+                        <ui-select-match placeholder="Choose service type">{{$select.selected.DisplayName}}</ui-select-match>
+                        <ui-select-choices repeat="st.Id as st in $ctrl.serviceTypes  | propsFilter: {DisplayName: $select.search}">
+                            <div ng-bind-html="st.DisplayName | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>                    
+                </div>
+                <div ng-show="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}"> <!--only show for map service-->
+                    <label  ng-class="{'disabled':$root.isNotFullVersion()}">                       
+                        <input type="checkbox" ng-model="$ctrl.single.NewService.IsCached" >
+                        Cached Tiles
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Database connection: </label>
+                    <!-- disable when edit or basic version  -->
+                    <ui-select ng-model="$ctrl.single.NewService.ConnectionId"
+                               theme="bootstrap"
+                               ng-disabled="$ctrl.single.NewService.Id||$root.isBasicVersion()||$ctrl.connections.length==1"
+                               reset-search-input="false"
+                               title="{{$root.isBasicVersion()?'The BASIC version is limited to the default installed database connection':''}}">
+                        <ui-select-match placeholder="Choose database connection">{{$select.selected.Name +'.'+$select.selected.DatabaseName}}</ui-select-match>
+                        <ui-select-choices repeat="c.Id as c in $ctrl.connections  | propsFilter: {Name: $select.search}">
+                            <div ng-bind-html="c.Name+'.'+c.DatabaseName | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>       
+                <button ng-click="$ctrl.creatNewService()" type="button" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            </div>            
+        </div>
+    </div>
+</div>

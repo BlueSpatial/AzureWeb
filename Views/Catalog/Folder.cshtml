@@ -1,0 +1,32 @@
+﻿@model BlueSpatial.Models.CatalogViewModels.CatalogViewModel
+
+@{
+    ViewBag.Title = Model.ParentFolder;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div><strong>Current Version:</strong>@Model.Catalog.currentVersion</div>*@
+@if (Model.Catalog.folders.Count > 0)
+{
+    <strong>Folders:</strong>
+    <ul>
+        @foreach (var folder in Model.Catalog.folders)
+        {
+            <li>
+                <a href="/@GlobalConstant.ARCRESTROUTEPREFIX/@Model.ParentFolder@folder">@folder</a>
+            </li>
+        }
+    </ul>
+}
+@if (Model.Catalog.services.Count > 0)
+{
+    <strong>Services:</strong>
+    <ul>
+        @foreach (var service in Model.Catalog.services)
+        {
+            <li>
+                <a href="@Model.ParentFolder/@Path.GetFileName(service.name)/@service.type">@Path.GetFileName(service.name)</a> (@service.type)<br>
+            </li>
+        }
+    </ul>
+}

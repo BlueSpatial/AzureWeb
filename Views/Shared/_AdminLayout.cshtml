@@ -1,0 +1,22 @@
+﻿@using MvcSiteMapProvider.Web.Html
+<!DOCTYPE html>
+
+<html ng-app="myApp" class="ng-cloak">
+<head>
+    <meta name="viewport" content="width=device-width" />    
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @System.Web.Optimization.Styles.Render("~/layout/styles")
+
+
+    @RenderSection("styles", required: false)
+</head>
+<body class="{{isActiveRoute('/UserLogin')?'login':'page-header-fixed page-sidebar-closed-hide-logo page-md page-sidebar-fixed'}} " ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': !$root.sidebarShow}" >   
+    @RenderBody()
+    <!-- BEGIN FOOTER -->
+    <div ng-class="{'footer-login':$root.isActiveRoute('/UserLogin')}" ng-include="'tpl/footer.html'" ng-controller="FooterController" class="page-footer"> </div>
+    @System.Web.Optimization.Scripts.Render("~/layout/scripts")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

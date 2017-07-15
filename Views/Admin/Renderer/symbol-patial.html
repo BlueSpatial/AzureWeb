@@ -1,0 +1,60 @@
+﻿
+<div class="col-md-4 m-t-20" ng-show="($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)" ng-if="$ctrl.drawing.DrawingStyle.Id==1">
+    <table class="table table-borderless">
+        <tr ng-repeat="l in $ctrl.labels" ng-init="l.Id=$index" class="col-sm-12 m-b">
+            <td>
+                <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+            </td>
+            <td class="align-middle">
+                <a ng-if="$index!=0" title="Delete" class="btn btn-danger btn-xs" ng-click="$ctrl.removeLabel(l);$ctrl.rendererForm.$dirty=true">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn blue m-t-5" ng-if-start="$ctrl.labels.length<$ctrl.fieldValues.length+1" ng-click="$ctrl.addLabel()">
+                    <span class="glyphicon glyphicon-plus"></span> Add Unique Value
+                </button>
+                <button class="btn blue m-t-5" ng-if-end ng-click="$ctrl.addAllRemainingValue()" title="Add All Remaining Unique Values">
+                    <span class="glyphicon glyphicon-plus"></span> Add All Remaining
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div ng-include="'/Views/Admin/Renderer/select-label-name-modal.html'"></div>
+</div>
+<div class="col-md-4" ng-if="($ctrl.drawing.DrawingStyle.Id!=0)&&!($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)">
+    <div class="form-group">
+        <label>Please select "Rendering field" first.</label>
+    </div>
+</div>
+<div class="col-md-4 m-t-20" ng-if="$ctrl.drawing.DrawingStyle.Id==0">
+    <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="$ctrl.labels[0]" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+</div>
+<div class="col-md-4" ng-show="($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)" ng-if="$ctrl.drawing.DrawingStyle.Id==2">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Total classes: </label>
+                <input ng-model="$ctrl.drawing.TotalClasses" type="number" ng-change="$ctrl.onTotalClassChange()" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <multi-slider ng-if="$ctrl.renderSlider" floor="{{$ctrl.sliderSetting.Floor}}"
+                      step="1"
+                      precision="2"
+                      ceiling="{{$ctrl.sliderSetting.Ceiling}}"
+                      bubbles="true"
+                      ng-model="$ctrl.sliders">
+        </multi-slider>
+    </div>
+    <div ng-repeat="l in $ctrl.getClassBreakLabels()" ng-init="l.Id=$index" class="row">
+        <div class="col-sm-12 m-b">
+            <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+        </div>
+    </div>
+</div>
+
+<symbol-modal-component symbol-type="$ctrl.drawing.SymbolType" label="$ctrl.activeLabel" patterns="$ctrl.patterns" errorMessage="$ctrl.errorMessage" isLoading="$ctrl.isLoading"></symbol-modal-component>

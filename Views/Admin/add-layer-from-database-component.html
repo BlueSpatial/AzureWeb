@@ -1,0 +1,27 @@
+﻿<div class="tab-pane fade in">
+    <div class="row">
+        
+        <div class="col-md-12">       
+            <div class="form-group">
+                <label>Table name: </label>
+                <ui-select ng-model="$ctrl.connectionInfo.TableName"
+                           theme="bootstrap"
+                           reset-search-input="false"
+                           title="Choose a table">
+                    <ui-select-match placeholder="Choose a table">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="t.Name as t in $ctrl.tables  | propsFilter: {Name: $select.search}">
+                        <div ng-bind-html="t.Name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>  
+            <div class="form-group">
+                <label>Layer name:</label>
+                <input ng-model="$ctrl.layerName" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" ng-click="$ctrl.generateHibernateCongfig()" class="btn blue"><span class="glyphicon glyphicon-ok"></span> Generate layer</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

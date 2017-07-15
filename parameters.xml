@@ -1,0 +1,18 @@
+﻿<parameters>
+  <parameter name="Username"
+    description="Please provide a username for the admin section"
+    tags="">
+  <parameterEntry  
+    kind="XmlFile" 
+    scope="\\Web.config$" 
+    match="/configuration/appSettings/add[@key='Username']/@value" />
+  </parameter>
+  <parameter name="Password"
+    description="Please provide a password for the admin section"
+    tags="">
+  <parameterEntry  
+    kind="XmlFile" 
+    scope="\\Web.config$" 
+    match="/configuration/appSettings/add[@key='Password']/@value" />
+  </parameter>
+</parameters>

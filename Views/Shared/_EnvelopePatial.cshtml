@@ -1,0 +1,9 @@
+﻿@model BlueSpatial.Models.Envelope
+<ul>
+    <li>XMin: @Model.xmin</li>
+    <li>YMin: @Model.ymin</li>
+    <li>XMax: @Model.xmax</li>
+    <li>YMax: @Model.ymax</li>
+    <li>Spatial References: @((Model.spatialReference as BlueSpatial.Models.WkidBasedSpatialReference).wkid)</li>
+</ul>
+

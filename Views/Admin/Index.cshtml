@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*<my-app></my-app>*@
+<index-component></index-component>
+
+
+@section scripts {
+    @System.Web.Optimization.Scripts.Render("~/admin/scripts")
+    <script src="~/signalr/hubs"></script>
+}
+@section styles {
+    @System.Web.Optimization.Styles.Render("~/admin/styles")
+}

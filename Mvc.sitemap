@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Catalog" action="Index">
+    <mvcSiteMapNode title="Folder" controller="Catalog" action="Folder" preservedRouteParameters="folder">
+      <mvcSiteMapNode title="Server" controller="Catalog" action="FeatureOrMapServer" preservedRouteParameters="folder,serviceName,serverType">
+        <mvcSiteMapNode title="Layer" controller="Catalog" action="Layer" preservedRouteParameters="folder,serviceName,serverType,layer">           
+        </mvcSiteMapNode>
+        <mvcSiteMapNode title="Layers" controller="Catalog" action="Layers" preservedRouteParameters="folder,serviceName,serverType" >
+        </mvcSiteMapNode>
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Error" controller="Error" action="Index" >
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Not Found" controller="Error" action="NotFound" >
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Admin" controller="Admin" action="Index" >
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

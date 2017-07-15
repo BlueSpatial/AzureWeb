@@ -1,0 +1,423 @@
+﻿/*.modal.introjs-fixParent {
+    position: absolute !important;
+    margin-left: auto;
+    margin-right: auto;
+    top:-49px;
+    left: 0;
+    right: 0;
+}*/
+.introjs-overlay, .introjs-button.introjs-nextbutton, .introjs-button.introjs-prevbutton {
+    display: none;
+}
+.introjs-bullets {
+    pointer-events: none;
+}
+label.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+.tree-node.disabled, .tree-node.disabled .btn:not(.btn-enable), .tree-node.disabled .tree-checkbox {
+    background-color: rgba(220, 220, 220,0.5);
+    cursor: not-allowed;
+}
+.tree-node.disabled .btn:not(.btn-enable), .tree-node.disabled .tree-checkbox {
+    pointer-events: none;
+    opacity: .5;
+    color:initial;
+}
+.tree-node.disabled a:not(.btn-enable) {
+    opacity: .5;
+}
+.p-t-32 {
+    padding-top: 32px;
+}
+.about-highlight {
+    color: #e7505a;
+}
+.text-bold {
+    font-weight: bold;
+}
+.navbar-default .navbar-nav > li.disabled-link > a {
+    color:#ccc;
+    cursor: not-allowed;
+}
+
+
+.form-label{
+    height: 34px;
+    margin-top: 7px;
+}
+.radio-input{   
+    -webkit-appearance: radio; /* Chrome, Safari, Opera */
+    -moz-appearance: radio;    /* Firefox */
+    -ms-appearance: radio;     /* not currently supported */
+}
+.no-wrap{
+    white-space:nowrap;
+}
+.tree-node{
+    color:#4d6776;
+    font-weight:normal;
+}
+.angular-ui-tree-handle {
+    cursor:initial;
+}
+.tree-checkbox{
+    color: #333;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.tree-checkbox:hover {
+    cursor:pointer;
+    color:black;
+}
+.tree-button {
+    color: #333;
+    background-color: transparent;
+}
+input[type=checkbox]{
+    margin-top:0;
+    vertical-align:middle;
+}
+.m-r-8{
+    margin-right:8px;
+}
+.editable-checkbox{
+    font-weight: normal;
+    margin-right: 10px;
+}
+.formatted-json{
+    white-space:pre;
+    display:block;
+}
+.loader{
+     position: fixed!important; 
+     margin: auto; 
+     left: 0; 
+     right: 0; 
+     bottom: 0; 
+     top: 0; 
+}
+.loader-backdrop.modal-backdrop.in{
+    opacity:0;
+}
+#logo{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:130px;
+}
+.ui-select-container input[type=search]{
+    width:100%!important/*override the inline style*/
+}
+.label-text-color{
+    width: calc(100% - 168px);
+    display: inline-block;
+}
+.add-button-ui-select, .add-button-ui-select input {
+    width: 38px !important; /*override the inline style*/
+    display: inline-block;
+    float: left;
+    width: 38px !important;
+    margin-right: 5px;
+}
+#labelFeatureText {
+    width: calc(100% - 43px);
+}
+.add-button-ui-select i.caret{
+    display:none;
+}
+.add-button-ui-select{
+    margin-top:3px;
+}
+
+.add-button-ui-select.ui-select-bootstrap > .ui-select-match > .btn {
+    padding-left: 12px;
+    padding-right: 0px;
+}
+.small-number.form-control{
+    width: 50px;
+    display: inline-block;
+    padding: 6px;
+}
+.chk-active button{
+    background-color: #bcd5f0;
+    border: 2px solid #8ba0bd;    
+}
+
+.log-out-link{
+    margin-top: -70px;
+    margin-right: 30px;
+}
+a:focus, a:hover {
+    color: #1085ec;
+    text-decoration: none;
+    cursor:pointer;
+}
+.ui-select-container input.search{
+    width:100%!important;
+}
+.align-middle{
+    vertical-align:middle!important;
+}
+.table-borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+    border: none;
+}
+.m-t-20{
+    margin-top:20px;
+}
+.m-b{
+    margin-bottom:5px;
+}
+.simple-fill-symbol-preview{
+    width: 30px;
+    height: 30px;
+    display:inline-block;
+    vertical-align: middle;
+}
+a.disabled{
+    pointer-events: none;
+    color: #555;
+}
+.tab-pane{
+    margin-top:20px;
+}
+.div-padding-top div{
+    padding-top:10px
+}
+.box {
+    border: 0.5px solid #c0bdbd;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+/*Loading*/
+@-webkit-keyframes uil-default-anim {
+                0% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            @keyframes uil-default-anim {
+                0% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            .uil-default-css > div:nth-of-type(1) {
+                -webkit-animation: uil-default-anim 1s linear infinite;
+                animation: uil-default-anim 1s linear infinite;
+                -webkit-animation-delay: -0.5s;
+                animation-delay: -0.5s;
+            }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(2) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: -0.4166666666666667s;
+                    animation-delay: -0.4166666666666667s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(3) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: -0.33333333333333337s;
+                    animation-delay: -0.33333333333333337s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(4) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: -0.25s;
+                    animation-delay: -0.25s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(5) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: -0.16666666666666669s;
+                    animation-delay: -0.16666666666666669s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(6) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: -0.08333333333333331s;
+                    animation-delay: -0.08333333333333331s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(7) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0s;
+                    animation-delay: 0s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(8) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0.08333333333333337s;
+                    animation-delay: 0.08333333333333337s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(9) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0.16666666666666663s;
+                    animation-delay: 0.16666666666666663s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(10) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0.25s;
+                    animation-delay: 0.25s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(11) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0.33333333333333337s;
+                    animation-delay: 0.33333333333333337s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+
+                .uil-default-css > div:nth-of-type(12) {
+                    -webkit-animation: uil-default-anim 1s linear infinite;
+                    animation: uil-default-anim 1s linear infinite;
+                    -webkit-animation-delay: 0.41666666666666663s;
+                    animation-delay: 0.41666666666666663s;
+                }
+
+            .uil-default-css {
+                position: relative;
+                background: none;
+                width: 200px;
+                height: 200px;
+            }
+.content-center{
+    display:flex;
+    justify-content:center;
+    width: 100%;
+}
+ /*Loading*/
+
+ .m-r-15{
+     margin-right:15px;
+ }
+
+
+
+
+.catalog-container {
+    border: 1px solid #e7ecf1 !important;
+    box-shadow: 0 2px 3px 2px rgba(0,0,0,.03);
+    min-height: 100vh;
+}
+    .catalog-container .breadcrumb {
+        border-radius: 0px;
+        border-bottom: 1px solid #e7ecf1;
+        background-color: initial;
+    }
+.container .breadcrumb {
+    border-radius: 0px;
+}
+.glyphicons:before {
+    padding: 6px 2px;
+}
+.btn.btn-outline.blue:active, .btn.btn-outline.blue:active:focus, .btn.btn-outline.blue:focus {
+    color: inherit;
+    background-color: inherit;
+}
