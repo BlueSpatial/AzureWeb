@@ -15,8 +15,10 @@
     @RenderBody()
     <!-- BEGIN FOOTER -->
     <div ng-class="{'footer-login':$root.isActiveRoute('/UserLogin')}" ng-include="'tpl/footer.html'" ng-controller="FooterController" class="page-footer"> </div>
+    <script type="text/javascript">
+    CKEDITOR_BASEPATH = "@Url.Content("~/scripts/ckeditor/")";
+    </script>
     @System.Web.Optimization.Scripts.Render("~/layout/scripts")
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

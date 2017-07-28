@@ -186,6 +186,14 @@ myApp.factory(factoryName, ['$http', function ($http) {
         // create symbol
         var createSymbol = function (label) {
             var symbol = {};
+            var getLineSymbol = function (symbol) {
+                return {
+                    type: "esriSLS",
+                    color: getColorArray(symbol.Color),
+                    style: symbol.Pattern.Value,
+                    width: symbol.LineWidth,
+                };
+            }
             if (drawing.SymbolType.Value == 'PictureMarkerSymbol') {               
                 symbol = {
                     type: "esriPMS",
@@ -205,14 +213,11 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     type: "esriSFS",
                     color: getColorArray(label.Symbol.Fill.Color),
                     style: 'esriSFSSolid',
-                    outline: {
-                        type: "esriSLS",
-                        color: getColorArray(label.Symbol.Outline.Color),
-                        style: label.Symbol.Outline.Pattern.Value,
-                        width: label.Symbol.Outline.LineWidth,
-                    }
+                    outline: getLineSymbol(label.Symbol.Outline) 
                 };
-            };
+            } else if (drawing.SymbolType.Value == 'SimpleLineSymbol') {
+                symbol = getLineSymbol(label.Symbol);
+            }
             return symbol;
         };
         var createRendererObject = function () {
@@ -358,13 +363,20 @@ myApp.factory(factoryName, ['$http', function ($http) {
                 case 'esriSFS':
                     
                     label.Symbol.Fill = label.Symbol.Fill || {};
-                    label.Symbol.Outline = label.Symbol.Outline || {};
                     label.Symbol.Fill.Color = convertColorArray(symbol.color);
+                    label.Symbol.Outline = label.Symbol.Outline || {};
                     label.Symbol.Outline.Color = convertColorArray(symbol.outline.color);
                     label.Symbol.Outline.Pattern = patterns.filter(function (pattern, idx) {
                         return pattern.Value == symbol.outline.style;
                     })[0];
                     label.Symbol.Outline.LineWidth = symbol.outline.width;
+                    break;
+                case 'esriSLS':
+                    label.Symbol.Color = convertColorArray(symbol.color);
+                    label.Symbol.Pattern = patterns.filter(function (pattern, idx) {
+                        return pattern.Value == symbol.style;
+                    })[0];
+                    label.Symbol.LineWidth = symbol.width;
                     break;
             }
         }
@@ -431,7 +443,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                 };
             }
         }
-        else if (symbolType.Id == 1) {
+        else if (symbolType.Id == 1) { // simple fill symbol
             if (!label.Symbol) {
                 messages.push(labelName + "Symbol is required.");
             }
@@ -452,6 +464,23 @@ myApp.factory(factoryName, ['$http', function ($http) {
                         messages.push(labelName + "Pattern is required.");
                     }
                 };
+            }
+        } else if (symbolType.Id == 2) { // simple line symbol
+            if (!label.Symbol) {
+                messages.push(labelName + "Symbol is required.");
+            }
+            else {             
+              
+                if (!label.Symbol.Color) {
+                    messages.push(labelName + "Color is required.");
+                }
+                if (!label.Symbol.LineWidth) {
+                    messages.push(labelName + "Line width is required.");
+                }
+                if (!label.Symbol.Pattern) {
+                    messages.push(labelName + "Pattern is required.");
+                }
+               
             }
         };
     };

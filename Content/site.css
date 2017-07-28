@@ -183,6 +183,15 @@ a:focus, a:hover {
     display:inline-block;
     vertical-align: middle;
 }
+.simple-line-symbol-preview {
+    width: 40px;
+    height: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
 a.disabled{
     pointer-events: none;
     color: #555;

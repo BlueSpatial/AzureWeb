@@ -1,0 +1,18 @@
+﻿<div ng-hide="$root.currentLayerId" class="row">
+    <div class="col-xs-12 form-group">
+        <label class="col-xs-2 form-label">Layer:</label>
+        <div class="col-xs-6">
+            <ui-select ng-model="$root.currentLayerId"
+                       theme="bootstrap"
+                       on-select="$ctrl.onLayerChange(); $ctrl.updateUrlId();"
+                       reset-search-input="false"
+                       title="Choose a layer">
+                <ui-select-match placeholder="Choose a layer">{{$select.selected.Name}}</ui-select-match>
+                <!-- field type 5 for date -->
+                <ui-select-choices repeat="l.Id as l in $ctrl.layers | propsFilter: {Name: $select.search}">
+                    <div ng-bind-html="l.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>

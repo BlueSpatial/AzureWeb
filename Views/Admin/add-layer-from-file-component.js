@@ -105,6 +105,10 @@
                             $ctrl.callback(res.Layer);
                             //$ctrl.getTables();
                             $("#creatLayerModal").modal('hide');
+                            $ctrl.uploadFile = {};
+                            $('#shapeFile').val("");
+                            $ctrl.progressBar.Max = 0;
+                            $rootScope.currentLayerId = res.Layer.Id;
                         }
                         else {
                             $rootScope.errorMessage = res.Message;

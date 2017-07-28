@@ -6,6 +6,13 @@
                                     'border-style': $ctrl.label.Symbol.Outline.Pattern.Id==0?'solid': ($ctrl.label.Symbol.Outline.Pattern.Id==1?'dashed': 'dotted'),
                                     'opacity': (100-$ctrl.transparency) /100,
         }">
+    </div>   
+    <div ng-show="$ctrl.symbolType.Value=='SimpleLineSymbol'" class="simple-line-symbol-preview" ng-style="{
+                                    'border-color': $ctrl.label.Symbol.Color,
+                                    'border-width': $ctrl.label.Symbol.LineWidth,
+                                    'border-style': $ctrl.label.Symbol.Pattern.Id==0?'solid': ($ctrl.label.Symbol.Pattern.Id==1?'dashed': 'dotted'),
+                                    'opacity': (100-$ctrl.transparency) /100,
+        }">
     </div>
     {{$ctrl.label.Name}}
 </a>

@@ -1,5 +1,7 @@
-﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.id"></breadcrumb-component>
-<div class="row">
+﻿<breadcrumb-component ng-if="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
+<!-- choose layer -->
+<select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
+<div  ng-if="$root.currentLayerId" class="row">
     <div class="col-md-12">
         <p class="m-t-0"><strong>Server:</strong> {{$ctrl.connection.Name}} 
             <i class="fa fa-circle breadcrumb-seperant"></i>
@@ -55,7 +57,7 @@
                         <td ng-if-start="($index!=0&&$ctrl.fieldTypes[field.Type].Name!='Geometry')"><input type="text" ng-model="field.Alia" /></td>
                         <td><input type="checkbox" ng-model="field.IsIncluded" /></td>
                         <td><input type="checkbox" ng-model="field.IsEditable" /></td>
-                        <td ng-if-end><input class="radio-input" type="checkbox" ng-click="$ctrl.updateOtherIsDisplay(field.Id,field.IsDisplay)" ng-model="field.IsDisplay" /></td>
+                        <td ng-if-end><input name="displayField" type="radio" ng-click="$ctrl.updateIsDisplay()" ng-value="field.Id" ng-model="$ctrl.displayField" /></td>
                         <td ng-if-start="!($index!=0&&$ctrl.fieldTypes[field.Type].Name!='Geometry')"></td>
                         <td></td>
                         <td></td>

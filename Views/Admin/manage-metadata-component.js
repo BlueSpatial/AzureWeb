@@ -7,6 +7,11 @@
     // The controller that handles our component logic
     controller: ['$rootScope', '$http', 'authorizeService', 'layerService', 'ngIntroService', function ($rootScope, $http, authorizeService, layerService, ngIntroService ) {
         var $ctrl = this;
+        $ctrl.activeLayer = function (node) {
+            if (node.MetadataType == 2) {
+                $rootScope.currentLayerId = node.Id;
+            }
+        }
         $ctrl.introOptions = {
             steps: [
                 {
@@ -153,6 +158,9 @@
                 ).success(function (res) {
                     if (!res.Error) {
                         scope.remove();
+                        if (scope.node.MetadataType == 2 && scope.node.Id == $rootScope.currentLayerId) {
+                            $rootScope.currentLayerId = null;
+                        }
                     }
                     else {
                         $rootScope.errorMessage = res.Message;

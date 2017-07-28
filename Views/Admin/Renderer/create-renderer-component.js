@@ -75,54 +75,66 @@
             .error(authorizeService.onError);
 
         }
-        
-        
-        $ctrl.$routerOnActivate = function (next) {
-            // Get the hero identified by the route parameter
-            var id =$ctrl.id= next.params.id;
-            var getLayerInfo = function () {
-                $rootScope.errorMessage = "";
-                $rootScope.isLoading = true;                
-                $http.get("/Renderer/GetLayerInfo/" + id).success(function (res) {
-                    if (!res.Error) {
-                        $ctrl.drawing.Layer = res.Layer;
-                        var layerInfo = res.LayerInfo;
-                        $ctrl.layerUrl = res.LayerBreadCrumb.Url;
-                        // chose default symbol type base on geometry type
-                        if (layerInfo.geometryType == "esriGeometryPoint") {
-                            $ctrl.drawing.SymbolType = $ctrl.symbolTypes[0]// 0 for picture marker symbol
-                            $ctrl.labelFeature.IsPointType = true;
-                        }
-                        else {
-                            $ctrl.drawing.SymbolType = $ctrl.symbolTypes[1] // 1 for simple fill symbol
-                            $ctrl.labelFeature.IsPointType = false;
-                        }
-                       
-                        // get attribute
-                        $ctrl.attributes = [];
-                        layerInfo.fields.forEach(function (value, index) {
-                            if (value.type != "esriFieldTypeGeometry" && value.type != "esriFieldTypeOID") {
-                                $ctrl.attributes.push(value);
-                            }
-                        });
-                        $ctrl.labels = initLabels();
-                        $ctrl.sliders = [];
-                        $ctrl.renderSlider = false; // if show sliders now some code will make the value to not a number
-                        rendererService.updateDrawingInfoToUI(layerInfo.drawingInfo, $ctrl.drawingStyles, $ctrl.patterns, $ctrl.attributes, $ctrl.getFieldValues, layerInfo.minScale,
-                                                                    $ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders, $ctrl.labelFeature);
-                        $rootScope.isLoading = false;
+        var getLayerInfo = function () {
+            $rootScope.errorMessage = "";
+            $rootScope.isLoading = true;
+            $http.get("/Renderer/GetLayerInfo/" + $rootScope.currentLayerId).success(function (res) {
+                if (!res.Error) {
+                    if (res.LayerNotFound) {
+                        $rootScope.currentLayerId = null;
+                        return;
                     }
-                    else {
-                        $rootScope.errorMessage = res.Message;
-                        $rootScope.isLoading = false;
-                    };
-                   
+                    $ctrl.drawing.Layer = res.Layer;
+                    var layerInfo = res.LayerInfo;
+                    $ctrl.layerUrl = res.LayerBreadCrumb.Url;
+                    // chose default symbol type base on geometry type
+                    if (layerInfo.geometryType == "esriGeometryPoint") {
+                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[0]// 0 for picture marker symbol
+                        $ctrl.labelFeature.IsPointType = true;
+                    }
+                    else if (layerInfo.geometryType == "esriGeometryPolygon") {
+                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[1] // 1 for simple fill symbol
+                        $ctrl.labelFeature.IsPointType = false;
+                    }
+                    else // line
+                    {
+                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[2] // 1 for simple line symbol
+                        $ctrl.labelFeature.IsPointType = false;
+                    }
+
+                    // get attribute
+                    $ctrl.attributes = [];
+                    layerInfo.fields.forEach(function (value, index) {
+                        if (value.type != "esriFieldTypeGeometry" && value.type != "esriFieldTypeOID") {
+                            $ctrl.attributes.push(value);
+                        }
+                    });
+                    $ctrl.labels = initLabels();
+                    $ctrl.sliders = [];
+                    $ctrl.renderSlider = false; // if show sliders now some code will make the value to not a number
+                    rendererService.updateDrawingInfoToUI(layerInfo.drawingInfo, $ctrl.drawingStyles, $ctrl.patterns, $ctrl.attributes, $ctrl.getFieldValues, layerInfo.minScale,
+                                                                $ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders, $ctrl.labelFeature);
+                    $rootScope.isLoading = false;
+                }
+                else {
+                    $rootScope.errorMessage = res.Message;
+                    $rootScope.isLoading = false;
+                };
+
+            });
+        }
+        
+        $ctrl.onLayerChange = function () {
+            if ($rootScope.currentLayerId) {
+                getRendererInfo().then(function () {
+                    getLayerInfo();
                 });
             }
-            getRendererInfo().then(function(){
-                getLayerInfo();
-            });
-           
+        }
+        $ctrl.$routerOnActivate = function (next) {
+            
+            $rootScope.currentLayerId= parseInt(next.params.id);
+            $ctrl.onLayerChange();
         };
         $ctrl.onTotalClassChange = function () {
             if ($ctrl.drawing.TotalClasses < 1) {
@@ -207,11 +219,16 @@
             $("#selectLabelName").modal('show');
         };
         $ctrl.insertOrUpdateLabel = function () {
+            if (!$ctrl.currentLabel.Name) {
+                $rootScope.errorMessage = 'Please select a value in the list';
+                return;
+            }
             if ($ctrl.currentLabel.Symbol) {
                 // update do nothing
             } else {
                 $ctrl.labels.push({ Name: $ctrl.currentLabel.Name });
             };
+            $("#selectLabelName").modal('hide');
         };
         $ctrl.addAllRemainingValue = function () {
             // add all the remaining if not exist yest
@@ -283,7 +300,7 @@
             }
         }
         this.$routerCanDeactivate = function () { // return false to not allow navigate to other page
-            if ($ctrl.rendererForm.$dirty) {
+            if ($ctrl.rendererForm&&$ctrl.rendererForm.$dirty) {
                 if (confirm(warningMessage)) {
                     return true
                 } else {

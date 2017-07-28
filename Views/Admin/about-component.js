@@ -39,7 +39,7 @@
                         return 'ENTERPRISE';
                 }
             }
-            $http.get("/Admin/GetLicenseInfo").success(function (res) {
+            $http.get("/License/GetLicenseInfo").success(function (res) {
                 if (!res.Error) {
                     $rootScope.licenseInfo = res.LicenseInfo;                   
                 }

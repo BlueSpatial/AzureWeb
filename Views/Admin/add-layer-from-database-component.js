@@ -61,6 +61,9 @@
                        }
                    })
                    $("#creatLayerModal").modal('hide');
+                   $ctrl.connectionInfo.TableName = "";
+                   $ctrl.layerName = "";
+                   $rootScope.currentLayerId = res.Layer.Id;
                }
                else {
                    $rootScope.errorMessage = res.Message;

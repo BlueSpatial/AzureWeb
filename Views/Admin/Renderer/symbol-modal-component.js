@@ -26,7 +26,10 @@
                 $ctrl.activeTab = 0;
             } else if ($ctrl.symbolType.Value == 'SimpleFillSymbol') {
                 $ctrl.activeTab = 1;
+            } else if ($ctrl.symbolType.Value == 'SimpleLineSymbol') {
+                $ctrl.activeTab = 3;
             }
+
         })       
         $scope.changeFile = function (files) {
             $scope.$apply();

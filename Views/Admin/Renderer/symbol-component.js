@@ -21,6 +21,11 @@
                 $ctrl.label.Symbol.Outline.LineWidth = $ctrl.label.Symbol.Outline.LineWidth || 2;                
                 $ctrl.label.Symbol.Outline.Pattern = $ctrl.label.Symbol.Outline.Pattern || $ctrl.patterns[0];
             }
+            else if ($ctrl.symbolType.Value == 'SimpleLineSymbol') {
+                $ctrl.label.Symbol = $ctrl.label.Symbol || {};
+                $ctrl.label.Symbol.LineWidth = $ctrl.label.Symbol.LineWidth || 2;
+                $ctrl.label.Symbol.Pattern = $ctrl.label.Symbol.Pattern || $ctrl.patterns[0];
+            }
             else {
                 $ctrl.label.Symbol = $ctrl.label.Symbol || {};
                 $ctrl.label.Symbol.Size = $ctrl.label.Symbol.Size || 20;

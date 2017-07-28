@@ -7,7 +7,7 @@
             </uib-progressbar>
             <div class="form-group">
                 <label>File:</label>
-                <input type="file" class="form-control" title="Supported formats: {{$ctrl.supportedFormats}}" accept="{{$ctrl.supportedFormats}}" onchange="angular.element(this).scope().changeFile(this.files)">
+                <input id="shapeFile" type="file" class="form-control" title="Supported formats: {{$ctrl.supportedFormats}}" accept="{{$ctrl.supportedFormats}}" onchange="angular.element(this).scope().changeFile(this.files)">
             </div>
             <div class="form-group">
                 <label>Layer name:</label>

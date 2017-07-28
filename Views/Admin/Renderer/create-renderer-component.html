@@ -1,5 +1,6 @@
-﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.id"></breadcrumb-component>
-<div id="createRendererComponent">
+﻿<select-layer-component  on-layer-change="$ctrl.onLayerChange"></select-layer-component>
+<breadcrumb-component ng-if-start="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
+<div ng-if-end id="createRendererComponent">
     <form name="$ctrl.rendererForm">
         <div class="row">
            

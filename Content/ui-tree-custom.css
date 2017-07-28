@@ -5,11 +5,11 @@
     padding: 10px 10px;
 }
 
-.angular-ui-tree-handle:hover {
-    color: #438eb9;  
-	background: #dce2e8;
-	border-color: #c1c1c1;
-}
+    .angular-ui-tree-handle:hover, .angular-ui-tree-handle.active {
+        color: #438eb9;
+        background: #dce2e8;
+        border-color: #c1c1c1;
+    }
 
 .angular-ui-tree-placeholder {
     background: #f0f9ff;

@@ -44,6 +44,12 @@
     <property name="Extent" type="NHibernate.Spatial.Type.GeometryType, NHibernate.Spatial">
       <column name="Extent" sql-type="geometry" not-null="true" />
     </property>
+    <property name="PopupType" type="Int32">
+      <column name="PopupType" sql-type="int" not-null="false" />
+    </property>
+    <property name="PopupContent" type="String">
+      <column name="PopupContent" sql-type="nvarchar(max)" not-null="false" />
+    </property>
     <bag name="Attachment">
       <key column="LayerId" />
       <one-to-many class="Attachment" />

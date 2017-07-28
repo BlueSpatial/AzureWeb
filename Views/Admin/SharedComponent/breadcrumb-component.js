@@ -15,7 +15,11 @@
                 $rootScope.isLoading = true;
                 $http.get("/Admin/GetBreadcrumb/" + $ctrl.metadataType + "/" + $ctrl.metadataId).success(function (res) {
                     if (!res.Error) {
-                        $ctrl.breadcrumb = res.Breadcrumb;
+                        if (res.LayerNotFound) {
+                            $rootScope.currentLayerId = null;
+                        } else {
+                            $ctrl.breadcrumb = res.Breadcrumb;
+                        }
                     }
                     else {
                         $rootScope.errorMessage = res.Message;

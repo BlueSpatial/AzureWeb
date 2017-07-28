@@ -1,0 +1,31 @@
+﻿<select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
+<breadcrumb-component ng-if-start="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
+<div ng-if-end class="row">
+    <div class="col-xs-12">
+        <div class="form-group col-md-4">
+            <ui-select ng-model="$ctrl.popup.PopupType"
+                       theme="bootstrap"
+                       reset-search-input="false"
+                       on-select="$ctrl.onChangePopupType()"
+                       title="Choose popup type">
+                <ui-select-match placeholder="Choose popup type">{{$select.selected.Description}}</ui-select-match>
+                <!-- field type 5 for date -->
+                <ui-select-choices repeat="t.Id as t in $ctrl.popupTypes | propsFilter: {Description: $select.search}">
+                    <div ng-bind-html="t.Description | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="form-group col-md-12">
+            <input ng-if="$ctrl.popup.PopupType==1" class="form-control" ng-model="$ctrl.popup.PopupContent"/>
+            <div ng-if="$ctrl.popup.PopupType==2" ckeditor="$ctrl.options" ng-model="$ctrl.popup.PopupContent"></div>
+        </div>
+        <div class="form-group col-md-12">
+            <button ng-click="$ctrl.save()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+

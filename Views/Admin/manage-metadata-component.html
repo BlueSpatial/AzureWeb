@@ -1,7 +1,7 @@
 ﻿<script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content"
+    <div ng-click="$ctrl.activeLayer(node)" ui-tree-handle class="tree-node tree-node-content"
          title="{{$ctrl.getDisableTitle(node)}}"
-         ng-class="{'folder':node.MetadataType==0,'service':node.MetadataType==1, 'layer':node.MetadataType==2,'disabled': node.IsDisabled}">
+         ng-class="{'folder':node.MetadataType==0,'service':node.MetadataType==1, 'layer':node.MetadataType==2,'disabled': node.IsDisabled,'active':node.Id==$root.currentLayerId&&node.MetadataType==2}">
         <a class="btn expand-button btn-xs btn-enable" ng-if="node.Nodes && node.Nodes.length > 0" data-nodrag ng-click="toggle(this)">
             <span class="glyphicon"
                   ng-class="{
@@ -23,18 +23,21 @@
         <a class="pull-right btn btn-danger btn-xs tree-button btn-enable" data-nodrag ng-click="$ctrl.removeMetadata(this)">
             <span class="glyphicon glyphicon-remove"></span> Delete
         </a>
+        <!--Layer-->
 
         <a ng-if-start="node.MetadataType==2" class="btn btn-success btn-xs tree-button pull-right m-r-8"  href="/map?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
             <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
         </a>
-       
+        <a class="pull-right btn btn-success btn-xs tree-button m-r-8" data-nodrag ng-link="['PopupConfiguation', {id:node.Id }]">
+            <span class="glyphicons glyphicons-embed-close tree-icon"></span> Config HTML
+        </a>
         <a class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['FieldConfiguation', {id:node.Id }]">
             <span class="glyphicon glyphicon-cog"></span> Config Field
         </a>
         <a ng-if-end class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['Renderer', {id:node.Id }]">
             <span class="glyphicon glyphicon-picture"></span> Edit Renderer
         </a>
-
+        <!--Layer-->
         <a ng-if="node.MetadataType!=2" class="pull-right btn btn-success btn-xs m-r-8 tree-button" data-nodrag ng-click="$ctrl.editNode(this)">
             <span class="glyphicon glyphicon-pencil"></span> Edit
         </a>

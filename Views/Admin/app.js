@@ -32,6 +32,7 @@ myApp.config(function ($locationProvider) {
       { path: '/ManageServices', name: 'ManageServices', component: 'manageMetadataComponent' },
        { path: '/Renderer', name: 'Renderer', component: 'createRendererComponent' },
        { path: '/FieldConfiguation', name: 'FieldConfiguation', component: 'layerFieldComponent' },
+       { path: '/PopupConfiguation', name: 'PopupConfiguation', component: 'popupComponent' },
        { path: '/BuildTiles', name: 'BuildTiles', component: 'buildTilesComponent' },
        { path: '/ManageConnection', name: 'ManageConnection', component: 'manageConnectionComponent' },
        { path: '/ManageUser', name: 'ManageUser', component: 'manageUserComponent' },

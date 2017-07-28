@@ -19,26 +19,33 @@
             </a>
         </li>
         <li class="nav-item" ng-class="{active:$root.isActiveRoute('/Renderer')}">
-            <a class="disabled-link">
+            <a ng-link="['Renderer',{id:$root.currentLayerId }]">
                 <span class="glyphicon glyphicon-picture"></span>
                 <span class="title">Renderer</span>
                 <span ng-if="$root.isActiveRoute('/Renderer')" class="selected"></span>
             </a>
         </li>
         <li class="nav-item" ng-class="{active:$root.isActiveRoute('/FieldConfiguation')}">
-            <a class="disabled-link">
+            <a ng-link="['FieldConfiguation',{id:$root.currentLayerId }]">
                 <span class="glyphicon glyphicon-cog"></span>
                 <span class="title">Field configuation</span>
                 <span ng-if="$root.isActiveRoute('/FieldConfiguation')" class="selected"></span>
             </a>
         </li>
-        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/BuildTiles')}">
+        <li class="nav-item" ng-class="{active:$root.isActiveRoute('/PopupConfiguation')}">
+            <a ng-link="['PopupConfiguation',{id:$root.currentLayerId }]">
+                <span class="glyphicons glyphicons-embed-close"></span>
+                <span class="title">HTML configuration</span>
+                <span ng-if="$root.isActiveRoute('/PopupConfiguation')" class="selected"></span>
+            </a>
+        </li>
+        <!--<li class="nav-item" ng-class="{active:$root.isActiveRoute('/BuildTiles')}">
             <a class="disabled-link">
                 <span class="glyphicons glyphicons-more-items"></span>
                 <span class="title">Build tiles</span>
                 <span ng-if="$root.isActiveRoute('/BuildTiles')" class="selected"></span>
             </a>
-        </li>
+        </li>-->
         <li class="nav-item" ng-class="{active:$root.isActiveRoute('/ManageConnection')}">
             <a ng-link="['ManageConnection']">
                 <i class="fa fa-database"></i>

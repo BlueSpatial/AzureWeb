@@ -56,7 +56,12 @@
                 ).success(function (res) {
                     if (!res.Error) {
                         $rootScope.licenseInfo = res.LicenseInfo;
-                        $rootScope.successMessage = "License was update successfully.";
+                        if ($rootScope.licenseInfo.VersionType==2){ // basic
+                            $rootScope.errorMessage = "The license file doesn't work, please check you hardware id or expired date.";
+                        }
+                        else {
+                            $rootScope.successMessage = "License was update successfully.";
+                        }
                     }
                     else {
                         $rootScope.errorMessage = res.Message;
