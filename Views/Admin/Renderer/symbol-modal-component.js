@@ -5,7 +5,8 @@
         label:'=',
         patterns: '=',
         errorMessage: '=?',
-        isLoading:'=?'
+        isLoading: '=?',
+        smsStyles:'='
     },
 
     templateUrl: '/Views/Admin/Renderer/symbol-modal-component.html',
@@ -22,14 +23,16 @@
             if (!$ctrl.symbolType) {
                 return;
             }
-            if ($ctrl.symbolType.Value == 'PictureMarkerSymbol') {
+            if ($ctrl.symbolType == 'PictureMarkerSymbol') {
                 $ctrl.activeTab = 0;
-            } else if ($ctrl.symbolType.Value == 'SimpleFillSymbol') {
+            } else if ($ctrl.symbolType == 'SimpleFillSymbol') {
                 $ctrl.activeTab = 1;
-            } else if ($ctrl.symbolType.Value == 'SimpleLineSymbol') {
+            } else if ($ctrl.symbolType == 'SimpleLineSymbol') {
                 $ctrl.activeTab = 3;
             }
-
+            else if ($ctrl.symbolType == 'SimpleMarkerSymbol') {
+                $ctrl.activeTab = 4;
+            }
         })       
         $scope.changeFile = function (files) {
             $scope.$apply();

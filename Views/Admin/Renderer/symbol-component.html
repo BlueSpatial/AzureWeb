@@ -1,18 +1,45 @@
 ﻿<a ng-click="$ctrl.showSymbolModal()" title="Set Symbol">
-    <img ng-show="$ctrl.symbolType.Value=='PictureMarkerSymbol'" ng-src="{{$ctrl.label.Symbol.ImageUrl}}" style="opacity:{{(100-$ctrl.transparency)/100}}" width="{{$ctrl.label.Symbol.Size}}" height="{{$ctrl.label.Symbol.Size}}" />
-    <div ng-show="$ctrl.symbolType.Value=='SimpleFillSymbol'" class="simple-fill-symbol-preview" ng-style="{'background-color':$ctrl.label.Symbol.Fill.Color,
+    <img ng-show="$ctrl.symbolType=='PictureMarkerSymbol'" ng-src="{{$ctrl.label.Symbol.ImageUrl}}" style="opacity:{{(100-$ctrl.transparency)/100}}" width="{{$ctrl.label.Symbol.Size}}" height="{{$ctrl.label.Symbol.Size}}" />
+    <div ng-show="$ctrl.symbolType=='SimpleFillSymbol'" class="simple-fill-symbol-preview" ng-style="{'background-color':$ctrl.label.Symbol.Fill.Color,
                                     'border-color': $ctrl.label.Symbol.Outline.Color,
                                     'border-width': $ctrl.label.Symbol.Outline.LineWidth,
                                     'border-style': $ctrl.label.Symbol.Outline.Pattern.Id==0?'solid': ($ctrl.label.Symbol.Outline.Pattern.Id==1?'dashed': 'dotted'),
                                     'opacity': (100-$ctrl.transparency) /100,
         }">
     </div>   
-    <div ng-show="$ctrl.symbolType.Value=='SimpleLineSymbol'" class="simple-line-symbol-preview" ng-style="{
+    <div ng-show="$ctrl.symbolType=='SimpleLineSymbol'" class="simple-line-symbol-preview" ng-style="{
                                     'border-color': $ctrl.label.Symbol.Color,
                                     'border-width': $ctrl.label.Symbol.LineWidth,
                                     'border-style': $ctrl.label.Symbol.Pattern.Id==0?'solid': ($ctrl.label.Symbol.Pattern.Id==1?'dashed': 'dotted'),
                                     'opacity': (100-$ctrl.transparency) /100,
         }">
     </div>
+    <!-- SimpleMarkerSymbol -->
+    <i ng-if="$ctrl.symbolType=='SimpleMarkerSymbol'" class="fa marker-border" ng-class="{'fa-stop':$ctrl.label.Symbol.Style=='esriSMSSquare',
+                                                    'fa-play rotate-150':$ctrl.label.Symbol.Style=='esriSMSTriangle',
+                                                    'fa-circle':$ctrl.label.Symbol.Style=='esriSMSCircle',
+                                                    'fa-plus':$ctrl.label.Symbol.Style=='esriSMSCross',
+                                                    'fa-stop rotate-45':$ctrl.label.Symbol.Style=='esriSMSDiamond',
+                                                    'fa-times':$ctrl.label.Symbol.Style=='esriSMSX'
+                                                    }"
+       ng-style="{
+                                    'font-size': $ctrl.label.Symbol.Size,
+                                    'color': $ctrl.label.Symbol.Outline.Color,
+                                    'opacity': (100-$ctrl.transparency) /100,}">
+        <!--not have inside color for X and cross ng-if="['esriSMSCross','esriSMSX'].indexOf($ctrl.label.Symbol.Style)==-1" -->
+        <i class="fa marker" ng-if="['esriSMSCross','esriSMSX'].indexOf($ctrl.label.Symbol.Style)==-1" ng-class="{'fa-stop':$ctrl.label.Symbol.Style=='esriSMSSquare',
+                                                    'fa-play':$ctrl.label.Symbol.Style=='esriSMSTriangle',
+                                                    'fa-circle':$ctrl.label.Symbol.Style=='esriSMSCircle',
+                                                    'fa-plus':$ctrl.label.Symbol.Style=='esriSMSCross',
+                                                    'fa-stop not-rotate':$ctrl.label.Symbol.Style=='esriSMSDiamond',
+                                                    'fa-times':$ctrl.label.Symbol.Style=='esriSMSX'
+                                                    }"
+           ng-style="{
+                                    'font-size': $ctrl.label.Symbol.Size-2*$ctrl.label.Symbol.Outline.Width,
+                                    'color': $ctrl.label.Symbol.Color,
+                                    }"></i>
+
+    </i>    
+    
     {{$ctrl.label.Name}}
 </a>

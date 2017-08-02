@@ -49,16 +49,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 hidden">
+                <div class="row" ng-show="$ctrl.labelFeature.GeometryType=='esriGeometryPoint'">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Symbol type:</label>
                             <ui-select ng-model="$ctrl.drawing.SymbolType"
                                        theme="bootstrap"
-                                       ng-disabled="true"
                                        reset-search-input="false">
                                 <ui-select-match>{{$select.selected.Name}}</ui-select-match>
-                                <ui-select-choices repeat="s in $ctrl.symbolTypes |propsFilter: {Value: $select.search}">
+                                <ui-select-choices repeat="s.Value as s in $ctrl.symbolTypes | filter: {Description: $ctrl.labelFeature.GeometryType} |propsFilter: {Name: $select.search}">
                                     <div ng-bind-html="s.Name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>

@@ -117,4 +117,15 @@ body > .breadcrumb {
 }
 b, strong {
     font-weight: 600;
-}   
+}
+.marker-border {
+    position: relative;
+    text-align: center;
+}
+.marker {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}

@@ -9,13 +9,15 @@
             <div class="modal-body">
                 
                 <ul class="nav nav-tabs">
-                    <li ng-show="$ctrl.symbolType.Value=='PictureMarkerSymbol'" ng-class="{'active':$ctrl.activeTab==0}"><a ng-click="$ctrl.activeTab=0">Shape</a></li>
-                    <li ng-show-start="$ctrl.symbolType.Value=='SimpleFillSymbol'" ng-class="{'active':$ctrl.activeTab==1}"><a ng-click="$ctrl.activeTab=1">Fill</a></li>
+                    <li ng-show="$ctrl.symbolType=='PictureMarkerSymbol'" ng-class="{'active':$ctrl.activeTab==0}"><a ng-click="$ctrl.activeTab=0">Shape</a></li>
+                    <li ng-show-start="$ctrl.symbolType=='SimpleFillSymbol'" ng-class="{'active':$ctrl.activeTab==1}"><a ng-click="$ctrl.activeTab=1">Fill</a></li>
                     <li  ng-class="{'active':$ctrl.activeTab==2}" ng-show-end><a ng-click="$ctrl.activeTab=2">Outline</a></li>
-                    <li ng-show="$ctrl.symbolType.Value=='SimpleLineSymbol'" ng-class="{'active':$ctrl.activeTab==3}"><a ng-click="$ctrl.activeTab=3">Line</a></li>
+                    <li ng-show="$ctrl.symbolType=='SimpleLineSymbol'" ng-class="{'active':$ctrl.activeTab==3}"><a ng-click="$ctrl.activeTab=3">Line</a></li>
+                    <li ng-show-start="$ctrl.symbolType=='SimpleMarkerSymbol'" ng-class="{'active':$ctrl.activeTab==4}"><a ng-click="$ctrl.activeTab=4">Shape</a></li>
+                    <li ng-show-end ng-class="{'active':$ctrl.activeTab==5}"><a ng-click="$ctrl.activeTab=5">Outline</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div ng-show="$ctrl.symbolType.Value=='PictureMarkerSymbol'" class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==0}">
+                    <div ng-show="$ctrl.symbolType=='PictureMarkerSymbol'" class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==0}">
                        
                         <div class="form-group ui-select-icon">
                             <ui-select ng-model="$ctrl.label.Symbol.ImageUrl"
@@ -64,13 +66,15 @@
                             <input type="number" ng-model="$ctrl.label.Symbol.Size" ng-min="1" class="form-control" />
                         </div>
                     </div>
-                    <div ng-show-start="$ctrl.symbolType.Value=='SimpleFillSymbol'" ng-class="{'active':$ctrl.activeTab==1}" class="tab-pane fade in">
+                    <div ng-show-start="$ctrl.symbolType=='SimpleFillSymbol'" ng-class="{'active':$ctrl.activeTab==1}" class="tab-pane fade in">
                         <div class="form-group">
+                            <label>Color: </label>
                             <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Fill.Color}" ng-model="$ctrl.label.Symbol.Fill.Color" />
                         </div>
                     </div>
                     <div ng-show-end class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==2}">
                         <div class="form-group">
+                            <label>Outline color: </label>
                             <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
                         </div>
                         <div class="form-group">
@@ -90,8 +94,9 @@
                             </ui-select>
                         </div>
                     </div>      
-                    <div ng-show="$ctrl.symbolType.Value=='SimpleLineSymbol'" class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==3}">
+                    <div ng-show="$ctrl.symbolType=='SimpleLineSymbol'" class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==3}">
                         <div class="form-group">
+                            <label>Color: </label>
                             <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
                         </div>
                         <div class="form-group">
@@ -111,6 +116,49 @@
                             </ui-select>
                         </div>                      
                     </div>
+                    <div ng-show-start="$ctrl.symbolType=='SimpleMarkerSymbol'" ng-class="{'active':$ctrl.activeTab==4}" class="tab-pane fade in">
+                        <div class="form-group">
+                            <label>Style: </label>
+                            <ui-select ng-model="$ctrl.label.Symbol.Style"
+                                       theme="bootstrap"
+                                       reset-search-input="false">
+                                <ui-select-match><i class="fa" ng-class="{'fa-stop':$ctrl.label.Symbol.Style=='esriSMSSquare',
+                                                    'fa-play rotate-150':$ctrl.label.Symbol.Style=='esriSMSTriangle',
+                                                    'fa-circle':$ctrl.label.Symbol.Style=='esriSMSCircle',
+                                                    'fa-plus':$ctrl.label.Symbol.Style=='esriSMSCross',
+                                                    'fa-stop rotate-45':$ctrl.label.Symbol.Style=='esriSMSDiamond',
+                                                    'fa-times':$ctrl.label.Symbol.Style=='esriSMSX',
+                                                    }"></i></ui-select-match>
+                                <ui-select-choices repeat="p.Value as p in $ctrl.smsStyles |propsFilter: {Value: $select.search}">
+                                    <i class="fa" ng-class="{'fa-stop':p.Value=='esriSMSSquare',
+                                                    'fa-play rotate-150':p.Value=='esriSMSTriangle',
+                                                    'fa-circle':p.Value=='esriSMSCircle',
+                                                    'fa-plus':p.Value=='esriSMSCross',
+                                                    'fa-stop rotate-45':p.Value=='esriSMSDiamond',
+                                                    'fa-times':p.Value=='esriSMSX',
+                                                    }"></i>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <label>Size: </label>
+                            <input type="number" ng-min="1" ng-model="$ctrl.label.Symbol.Size" class="form-control" />
+                        </div>
+                        <div ng-show="['esriSMSCross','esriSMSX'].indexOf($ctrl.label.Symbol.Style)==-1" class="form-group">
+                            <label>Color: </label>
+                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
+                        </div>
+                    </div>
+                    <div ng-show-end class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==5}">
+                        <div class="form-group">
+                            <label>Outline color: </label>
+                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
+                        </div>
+                        <div class="form-group">
+                            <label>Line width: </label>
+                            <input type="number" ng-min="1" ng-model="$ctrl.label.Symbol.Outline.Width" class="form-control" />
+                        </div>                        
+                    </div>  
                 </div>
             </div>
             <div class="modal-footer">

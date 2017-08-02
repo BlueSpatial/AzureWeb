@@ -3,7 +3,7 @@
     <table class="table table-borderless">
         <tr ng-repeat="l in $ctrl.labels" ng-init="l.Id=$index" class="col-sm-12 m-b">
             <td>
-                <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+                <symbol-component sms-styles="$ctrl.smsStyles" symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
             </td>
             <td class="align-middle">
                 <a ng-if="$index!=0" title="Delete" class="btn btn-danger btn-xs" ng-click="$ctrl.removeLabel(l);$ctrl.rendererForm.$dirty=true">
@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="col-md-4 m-t-20" ng-if="$ctrl.drawing.DrawingStyle.Id==0">
-    <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="$ctrl.labels[0]" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+    <symbol-component sms-styles="$ctrl.smsStyles" symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="$ctrl.labels[0]" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
 </div>
 <div class="col-md-4" ng-show="($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)" ng-if="$ctrl.drawing.DrawingStyle.Id==2">
     <div class="row">
@@ -52,9 +52,9 @@
     </div>
     <div ng-repeat="l in $ctrl.getClassBreakLabels()" ng-init="l.Id=$index" class="row">
         <div class="col-sm-12 m-b">
-            <symbol-component symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
+            <symbol-component sms-styles="$ctrl.smsStyles" symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
         </div>
     </div>
 </div>
 
-<symbol-modal-component symbol-type="$ctrl.drawing.SymbolType" label="$ctrl.activeLabel" patterns="$ctrl.patterns" errorMessage="$ctrl.errorMessage" isLoading="$ctrl.isLoading"></symbol-modal-component>
+<symbol-modal-component sms-styles="$ctrl.smsStyles" symbol-type="$ctrl.drawing.SymbolType" label="$ctrl.activeLabel" patterns="$ctrl.patterns" errorMessage="$ctrl.errorMessage" isLoading="$ctrl.isLoading"></symbol-modal-component>

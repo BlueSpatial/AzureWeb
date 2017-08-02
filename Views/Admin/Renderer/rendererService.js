@@ -173,7 +173,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
             }
             return [
                 {
-                    labelPlacement: labelFeature.IsPointType ? labelFeature.Alignment.Value : "esriServerPolygonPlacementAlwaysHorizontal",
+                    labelPlacement: (labelFeature.GeometryType == 'esriGeometryPoint') ? labelFeature.Alignment.Value : "esriServerPolygonPlacementAlwaysHorizontal",
                     labelExpression: labelFeature.Text,
                     symbol: createLabelSymbol(),
                     maxScale: 0,
@@ -194,7 +194,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     width: symbol.LineWidth,
                 };
             }
-            if (drawing.SymbolType.Value == 'PictureMarkerSymbol') {               
+            if (drawing.SymbolType == 'PictureMarkerSymbol') {               
                 symbol = {
                     type: "esriPMS",
                     contentType: "image/png",
@@ -207,7 +207,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     yoffset: 0,
                 }
             }
-            else if (drawing.SymbolType.Value == 'SimpleFillSymbol') {
+            else if (drawing.SymbolType == 'SimpleFillSymbol') {
                
                 symbol = {
                     type: "esriSFS",
@@ -215,9 +215,19 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     style: 'esriSFSSolid',
                     outline: getLineSymbol(label.Symbol.Outline) 
                 };
-            } else if (drawing.SymbolType.Value == 'SimpleLineSymbol') {
+            } else if (drawing.SymbolType == 'SimpleLineSymbol') {
                 symbol = getLineSymbol(label.Symbol);
+            } else if (drawing.SymbolType == 'SimpleMarkerSymbol') {
+                symbol.type = 'esriSMS';
+                symbol.style = label.Symbol.Style;
+                symbol.color = getColorArray(label.Symbol.Color);
+                symbol.size = label.Symbol.Size*0.75;
+                symbol.angle = symbol.xoffset = symbol.yoffset = 0
+                symbol.outline = {};
+                symbol.outline.color = getColorArray(label.Symbol.Outline.Color);
+                symbol.outline.width = label.Symbol.Outline.Width;
             }
+
             return symbol;
         };
         var createRendererObject = function () {
@@ -357,11 +367,12 @@ myApp.factory(factoryName, ['$http', function ($http) {
             label.Symbol = label.Symbol || {};
             switch (symbol.type) {
                 case 'esriPMS':
+                    drawing.SymbolType = "PictureMarkerSymbol";
                     label.Symbol.Size = symbol.width/0.75;
                     label.Symbol.ImageUrl = "data:image/png;base64," + symbol.imageData;
                     break;
                 case 'esriSFS':
-                    
+                    drawing.SymbolType = "SimpleFillSymbol";
                     label.Symbol.Fill = label.Symbol.Fill || {};
                     label.Symbol.Fill.Color = convertColorArray(symbol.color);
                     label.Symbol.Outline = label.Symbol.Outline || {};
@@ -372,11 +383,21 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     label.Symbol.Outline.LineWidth = symbol.outline.width;
                     break;
                 case 'esriSLS':
+                    drawing.SymbolType = "SimpleLineSymbol";
                     label.Symbol.Color = convertColorArray(symbol.color);
                     label.Symbol.Pattern = patterns.filter(function (pattern, idx) {
                         return pattern.Value == symbol.style;
                     })[0];
                     label.Symbol.LineWidth = symbol.width;
+                    break;
+                case 'esriSMS':
+                    drawing.SymbolType = "SimpleMarkerSymbol";
+                    label.Symbol.Color = convertColorArray(symbol.color);
+                    label.Symbol.Style = symbol.style;
+                    label.Symbol.Size = symbol.size / 0.75;
+                    label.Symbol.Outline = label.Symbol.Outline|| {};
+                    label.Symbol.Outline.Color = convertColorArray(symbol.outline.color);
+                    label.Symbol.Outline.Width = symbol.outline.width;
                     break;
             }
         }
@@ -482,6 +503,30 @@ myApp.factory(factoryName, ['$http', function ($http) {
                 }
                
             }
+        } else if (symbolType.Id == 3) { // simple marker symbol
+            if (!label.Symbol) {
+                messages.push(labelName + "Symbol is required.");
+            }
+            else {
+
+                if (!label.Symbol.Color) {
+                    messages.push(labelName + "Color is required.");
+                }
+                if (!label.Symbol.Size) {
+                    messages.push(labelName + "Size is required.");
+                }
+                if (!label.Symbol.Style) {
+                    messages.push(labelName + "Style is required.");
+                }
+                label.Symbol.Outline = label.Symbol.Outline || {};
+                if (!label.Symbol.Outline.Color) {
+                    messages.push(labelName + "Outline color is required.");
+                }
+                if (!label.Symbol.Outline.Width) {
+                    messages.push(labelName + "Outline width is required.");
+                }
+
+            }
         };
     };
     var validateSaveRender = function (drawing, labels, defaultClassBreakLabel, sliders, labelFeature) {
@@ -507,7 +552,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                         messages.push("Label: Halo color is required.");
                     }
                 };
-                if (labelFeature.IsPointType && !labelFeature.Alignment) {
+                if (labelFeature.GeometryType == 'esriGeometryPoint' && !labelFeature.Alignment) {
                     messages.push("Label: Alignment is required.");
                 };
                 if (!labelFeature.VisibleRange) {

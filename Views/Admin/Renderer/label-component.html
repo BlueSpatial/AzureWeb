@@ -65,7 +65,7 @@
                     <input title="Halo color" ng-show-end colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.labelFeature.HaloColor}" ng-model="$ctrl.labelFeature.HaloColor" />
                 </div>
             </div>
-            <div ng-if="$ctrl.labelFeature.IsPointType" class="form-group">
+            <div ng-if="$ctrl.labelFeature.GeometryType=='esriGeometryPoint'" class="form-group">
                 <label class="col-md-5 control-label">
                     Alignment:
                 </label>

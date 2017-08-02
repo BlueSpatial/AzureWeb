@@ -31,7 +31,7 @@
                 return $http.get("/Renderer/GetRendererInfo").success(function (res) {
                     if (!res.Error) {
                         $ctrl.drawingStyles = res.DrawingStyles;
-                      
+                        $ctrl.smsStyles = res.SmsStyles;
                         $ctrl.patterns = res.Patterns;
                         $ctrl.symbolTypes = res.SymbolTypes;
                     }
@@ -87,20 +87,8 @@
                     $ctrl.drawing.Layer = res.Layer;
                     var layerInfo = res.LayerInfo;
                     $ctrl.layerUrl = res.LayerBreadCrumb.Url;
-                    // chose default symbol type base on geometry type
-                    if (layerInfo.geometryType == "esriGeometryPoint") {
-                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[0]// 0 for picture marker symbol
-                        $ctrl.labelFeature.IsPointType = true;
-                    }
-                    else if (layerInfo.geometryType == "esriGeometryPolygon") {
-                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[1] // 1 for simple fill symbol
-                        $ctrl.labelFeature.IsPointType = false;
-                    }
-                    else // line
-                    {
-                        $ctrl.drawing.SymbolType = $ctrl.symbolTypes[2] // 1 for simple line symbol
-                        $ctrl.labelFeature.IsPointType = false;
-                    }
+                    $ctrl.labelFeature.GeometryType = layerInfo.geometryType;
+                    
 
                     // get attribute
                     $ctrl.attributes = [];
