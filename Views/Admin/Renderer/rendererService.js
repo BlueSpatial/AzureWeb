@@ -116,6 +116,9 @@ myApp.factory(factoryName, ['$http', function ($http) {
     }];
    
     var getColorArray = function (strColor) {
+        if (!strColor) {
+            strColor = '1,1,1,1'; // set defaut color if we have no color for X and cross
+        }
         strColor = strColor.replace("rgba(", "").replace(")", "");
         var array = strColor.split(',', 4);
         for (var i = 0; i < 3; i++) {
@@ -300,7 +303,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
     var updateDrawingInfoToUI = function (drawingInfo, drawingStyles, patterns, attributes, getFieldValues,minScale,
                                         drawing, labels, defaultClassBreakLabel, sliders, labelFeature)
     {
-        var convertColorArray = function (colors) {
+        var convertColorArray = function (colors) {            
             colors[3] = colors[3] / 255;
             return "rgba(" + colors.join(',') + ")"
         };
@@ -452,7 +455,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
         if (!notShowLabelName) {
             labelName=label.Name + ": ";
         };
-        if (symbolType.Id == 0) {// Picture Marker Symbol
+        if (symbolType == 'PictureMarkerSymbol') {
             if (!label.Symbol) {
                 messages.push(labelName + "Symbol is required.");
             } else {
@@ -464,7 +467,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                 };
             }
         }
-        else if (symbolType.Id == 1) { // simple fill symbol
+        else if (symbolType == 'SimpleFillSymbol') {
             if (!label.Symbol) {
                 messages.push(labelName + "Symbol is required.");
             }
@@ -486,7 +489,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
                     }
                 };
             }
-        } else if (symbolType.Id == 2) { // simple line symbol
+        } else if (symbolType == 'SimpleLineSymbol') {
             if (!label.Symbol) {
                 messages.push(labelName + "Symbol is required.");
             }
@@ -503,14 +506,16 @@ myApp.factory(factoryName, ['$http', function ($http) {
                 }
                
             }
-        } else if (symbolType.Id == 3) { // simple marker symbol
+        } else if (symbolType == 'SimpleMarkerSymbol') {
             if (!label.Symbol) {
                 messages.push(labelName + "Symbol is required.");
             }
             else {
 
                 if (!label.Symbol.Color) {
-                    messages.push(labelName + "Color is required.");
+                    if (['esriSMSCross', 'esriSMSX'].indexOf(label.Symbol.Style) == -1) { // don't required for esriSMSCross and esriSMSX
+                        messages.push(labelName + "Color is required.");
+                    }
                 }
                 if (!label.Symbol.Size) {
                     messages.push(labelName + "Size is required.");
