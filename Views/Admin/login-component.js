@@ -18,7 +18,12 @@
             $rootScope.isLoading = false;
         });
         if (authorizeService.isAuthorize()) {
-            $location.path("/ManageServices");
+            if (localStorageService.get('authorizationData').Role == "Admin") {
+                $location.path("/ManageServices");
+            }
+            else {
+                document.location.href = "/";
+            }
         }
         
         $ctrl.login = function () {
@@ -27,8 +32,13 @@
             $http.post("/Account/Login", { UserName: $ctrl.userName, Password: $ctrl.password }
             ).success(function (res) {
                 if (!res.Error) {
-                    localStorageService.set('authorizationData', { UserName: $ctrl.userName /*, Token: res.Token.AccessToken*/ });
-                    $location.path("/ManageServices");
+                    localStorageService.set('authorizationData', { UserName: $ctrl.userName, Role: res.Role });
+                    if (res.Role == "Admin") {
+                        $location.path("/ManageServices");
+                    }
+                    else {
+                        document.location.href = "/";
+                    }
                 }
                 else {
                     $ctrl.errorMessage = res.Message;

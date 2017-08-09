@@ -1,0 +1,3 @@
+﻿<a ng-if="!$ctrl.getCurrentUser()" class="pull-right" href="/admin#/UserLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+<a ng-if="$ctrl.getCurrentUser()" class="pull-right" ng-click="$ctrl.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+<a ng-if="$ctrl.getCurrentUser().Role=='Admin'" class="pull-right m-r-8" href="/admin#/ManageServices"><span class="glyphicon glyphicon-user"></span> Admin</a>
