@@ -12,12 +12,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-class="{'tile-done':t.TotalTiles==t.TilesCreated}" ng-repeat="t in $ctrl.tilesStatuses">
+        <tr ng-class="{'tile-done':t.TotalTiles<=t.TilesCreated}" ng-repeat="t in $ctrl.tilesStatuses">
             <td><input type="checkbox" ng-model="t.IsSelected" /></td>
             <td>{{t.Level}}</td>
             <td>1:{{t.Scale|number:0}}</td>
             <td>{{t.TotalTiles|number:0}}</td>
-            <td>{{t.TilesCreated|number:0}}</td>
+            <td ng-if="t.TotalTiles<=t.TilesCreated">{{t.TotalTiles|number:0}}</td> <!--tile created sometime greater than total tile-->
+            <td ng-if="t.TotalTiles>t.TilesCreated">{{t.TilesCreated|number:0}}</td> 
             <td>{{t.Storage|fileSize}}</td>            
         </tr>
     </tbody>
