@@ -6,6 +6,9 @@
     left: 0;
     right: 0;
 }*/
+.init-min-width {
+    min-width:initial!important;
+}
 .introjs-overlay, .introjs-button.introjs-nextbutton, .introjs-button.introjs-prevbutton {
     display: none;
 }

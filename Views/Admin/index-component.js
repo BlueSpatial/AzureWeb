@@ -11,10 +11,12 @@
         $rootScope.successMessage = "";
         $ctrl.getLoginState = authorizeService.getLoginState;
         $ctrl.logout = authorizeService.logout;
+        $rootScope.isCheckingLogin = true;
         $http.get("/Account/CheckLogin").success(function (res) {
             if (!res.IsLogin) {
                 authorizeService.logout();// logout client site when server is timeout
             }
+            $rootScope.isCheckingLogin = false;
         });
         $ctrl.clearError = function () {
             $rootScope.errorMessage = '';

@@ -25,31 +25,92 @@
         </a>
         <!--Layer-->
 
-        <a ng-if-start="node.MetadataType==2" class="btn btn-success btn-xs tree-button pull-right m-r-8"  href="/map?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
+
+        <a ng-if-start="node.MetadataType==2" ng-show="$ctrl.havePreview" class="btn btn-success btn-xs tree-button pull-right m-r-8"  href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
             <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
         </a>
-        <a class="pull-right btn btn-success btn-xs tree-button m-r-8" data-nodrag ng-link="['PopupConfiguation', {id:node.Id }]">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                More
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right init-min-width" role="menu">
+                <li>
+                    <a ng-link="['PopupConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-embed-close tree-icon"></span> Config HTML
+                    </a>
+                </li>
+                <li>
+                    <a  ng-link="['FieldConfiguation', {id:node.Id }]">
+                        <span class="glyphicon glyphicon-cog"></span> Config Field
+                    </a>
+                </li>
+                <li>
+                    <a ng-link="['LayerConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-settings tree-icon"></span> Config Layer
+                    </a>
+                </li> 
+                <li>
+                    <a ng-link="['RelatedRecord', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-record tree-icon"></span> Related record
+                    </a>
+                </li> 
+            </ul>
+        </div>
+        <!--<a class="pull-right btn btn-success btn-xs tree-button m-r-8" data-nodrag ng-link="['PopupConfiguation', {id:node.Id }]">
             <span class="glyphicons glyphicons-embed-close tree-icon"></span> Config HTML
         </a>
         <a class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['FieldConfiguation', {id:node.Id }]">
             <span class="glyphicon glyphicon-cog"></span> Config Field
         </a>
+        <a class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['LayerConfiguation', {id:node.Id }]">
+            <span class="glyphicon glyphicon-cog"></span> Config Layer
+        </a>-->
         <a ng-if-end class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['Renderer', {id:node.Id }]">
             <span class="glyphicon glyphicon-picture"></span> Edit Renderer
         </a>
         <!--Layer-->
+
+        
         <a ng-if="node.MetadataType!=2" class="pull-right btn btn-success btn-xs m-r-8 tree-button" data-nodrag ng-click="$ctrl.editNode(this)">
             <span class="glyphicon glyphicon-pencil"></span> Edit
         </a>
-
-        <a class="pull-right btn btn-success btn-xs m-r-8 tree-button" ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached" ng-click="$ctrl.clearTileCache(this)">
+        <!--Service-->
+        <div  ng-if="node.MetadataType==1" class="btn-group pull-right">
+            <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                More
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right init-min-width" role="menu">
+                <li ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached">
+                    <a ng-click="$ctrl.clearTileCache(this)">
+                        <span class="glyphicon glyphicon-erase"></span> Clear Cache
+                    </a>
+                </li>
+                <li ng-if-end>
+                    <a ng-link="['BuildTiles', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
+                    </a>
+                </li>
+                <li>
+                    <a ng-link="['ServiceConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-settings tree-icon"></span> Config Service
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--<a ng-if="node.MetadataType==1" class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['ServiceConfiguation', {id:node.Id }]">
+            <span class="glyphicon glyphicon-cog"></span> Config Service
+        </a>
+        <a class="pull-right btn btn-success btn-xs m-r-8 tree-button" ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached" ng-click="$ctrl.clearTileCache(this)">-->
             <!--Only show for Map Service and cached-->
-            <span class="glyphicon glyphicon-erase"></span> Clear Cache
+            <!--<span class="glyphicon glyphicon-erase"></span> Clear Cache
         </a>        
         <a ng-if-end class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['BuildTiles', {id:node.Id }]">
             <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
-        </a>
-
+        </a>-->
+       
+        <!--Service-->
 
         <a id="intro3" class="pull-right btn blue btn-xs m-r-8" data-nodrag
            ng-if="node.MetadataType==1" ng-click="$ctrl.showLayerModal(this);$root.exitIntro()">

@@ -1,5 +1,5 @@
 ﻿<!-- Not login page -->
-<div ng-show="!$root.isActiveRoute('/UserLogin')">
+<div ng-show="!$root.isActiveRoute('/UserLogin')&&!$root.isCheckingLogin">
     <div ng-include="'tpl/header.html'" ng-controller="HeaderController" class="page-header navbar navbar-fixed-top"> </div>
     <!-- END HEADER -->
     <div class="clearfix"> </div>

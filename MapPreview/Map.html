@@ -1,0 +1,51 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Map preview</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin=""></script>
+
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.1.1/dist/esri-leaflet.js"
+            integrity="sha512-ECQqaYZke9cSdqlFG08zSkudgrdF6I1d8ViSa7I3VIszJyVqw4ng1G8sehEXlumdMnFYfzY0tMgdQa4WCs9IUw=="
+            crossorigin=""></script>
+
+    <script src="esri-leaflet-legend-compat-src.js"></script>
+    <!-- Esri Leaflet Related -->
+    <script src="http://cdn.jsdelivr.net/leaflet.esri.related/2.0.0/esri-leaflet-related.js"></script>
+    <script src="./jquery-1.9.1.min.js"></script>
+
+    <link href="./map.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Load Esri Leaflet Renderers -->
+    <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6"></script>
+
+    <div id="map"></div>   
+    <div id="basemaps-wrapper" class="leaflet-bar">
+        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+            <option value="Topographic">Topographic</option>
+            <option value="Streets">Streets</option>
+            <option value="NationalGeographic">National Geographic</option>
+            <option value="Oceans">Oceans</option>
+            <option value="Gray">Gray</option>
+            <option value="DarkGray">Dark Gray</option>
+            <option value="Imagery">Imagery</option>
+            <option value="ShadedRelief">Shaded Relief</option>
+        </select>
+    </div>
+    <script src="./map.js"></script>
+
+</body>
+</html>

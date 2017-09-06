@@ -193,6 +193,7 @@
                         $ctrl.callIntro();
                         $rootScope.isIntro = true;
                     }
+                    $ctrl.havePreview = res.HavePreview;
                 }
                 else {
                     $rootScope.errorMessage = res.Message;

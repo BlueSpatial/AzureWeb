@@ -72,7 +72,7 @@
             $http.post("/Account/CreateLogin", { UserName: $ctrl.userName, Password: $ctrl.password }
             ).success(function (res) {
                 if (!res.Error) {
-                    localStorageService.set('authorizationData', { UserName: $ctrl.userName /*, Token: res.Token.AccessToken*/ });
+                    localStorageService.set('authorizationData', { UserName: $ctrl.userName, Role: 'Admin' });
                     $location.path("/ManageServices");
                     $ctrl.isFirstTime = false;
                 }

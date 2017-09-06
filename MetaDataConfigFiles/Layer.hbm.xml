@@ -50,6 +50,15 @@
     <property name="PopupContent" type="String">
       <column name="PopupContent" sql-type="nvarchar(max)" not-null="false" />
     </property>
+    <property name="MinScale" type="Int32">
+      <column name="MinScale" sql-type="int" />
+    </property>
+    <property name="MaxScale" type="Int32">
+      <column name="MaxScale" sql-type="int"  />
+    </property>
+    <property name="RelationshipsJson" type="StringClob">
+      <column name="RelationshipsJson" sql-type="nvarchar(max)" not-null="false" />
+    </property>
     <bag name="Attachment">
       <key column="LayerId" />
       <one-to-many class="Attachment" />

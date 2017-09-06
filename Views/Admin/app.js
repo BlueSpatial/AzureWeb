@@ -40,7 +40,10 @@ myApp.config(function ($locationProvider) {
        { path: '/OtherSetting', name: 'OtherSetting', component: 'otherSettingComponent' },
        { path: '/AzureAdSetting', name: 'AzureAdSetting', component: 'azureAdSettingComponent' },
       { path: '/LicenseInfo', name: 'LicenseInfo', component: 'licenseInfoComponent' },
-      { path: '/UserLogin', name: 'UserLogin', component: 'userLoginComponent', useAsDefault: true},
+      { path: '/UserLogin', name: 'UserLogin', component: 'userLoginComponent', useAsDefault: true },
+      { path: '/ServiceConfiguation', name: 'ServiceConfiguation', component: 'serviceConfigComponent' },
+      { path: '/LayerConfiguation', name: 'LayerConfiguation', component: 'layerConfigComponent' },
+      { path: '/RelatedRecord', name: 'RelatedRecord', component: 'relatedRecordComponent' },
       { path: '/**', redirectTo: ['UserLogin'] },
     ]
 });

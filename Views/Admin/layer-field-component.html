@@ -12,7 +12,7 @@
         
         <form name="$ctrl.fieldsForm">
             <div class="row">
-                <label ng-if-start="$ctrl.haveIncludeDateTimeField()" class="col-xs-2 form-label"><input type="checkbox" ng-model="$ctrl.layer.IsSupportTime" /> Support time</label>
+                <label ng-if-start="$ctrl.haveIncludeDateTimeField()" class="col-xs-2 form-label"><input type="checkbox" ng-model="$ctrl.layer.IsSupportTime" /> Time Aware</label>
                 <div ng-if-end ng-show="$ctrl.layer.IsSupportTime" class="col-xs-8 form-group">
                     <label class="col-xs-2 text-right form-label">Time field:</label>
                     <div class="col-xs-4">
@@ -44,6 +44,7 @@
                         <th width="25%">Field name</th>
                         <th width="20%">Field type</th>
                         <th width="30%">Alias</th>
+                        <th width="30%">Domain</th>
                         <th width="2%">Included</th>
                         <th width="2%">Editable</th>
                         <th class="no-wrap" width="2%">Display field</th>
@@ -55,6 +56,7 @@
                         <td>{{field.Name}}</td>
                         <td>{{$ctrl.fieldTypes[field.Type].Name}}</td>
                         <td ng-if-start="($index!=0&&$ctrl.fieldTypes[field.Type].Name!='Geometry')"><input type="text" ng-model="field.Alia" /></td>
+                        <td><a ng-click="$ctrl.openDomainModal(field.Domain)">Domain</a> ({{field.Domain.type?$ctrl.domains[field.Domain.type]:'None'}})</td>
                         <td><input type="checkbox" ng-model="field.IsIncluded" /></td>
                         <td><input type="checkbox" ng-model="field.IsEditable" /></td>
                         <td ng-if-end><input name="displayField" type="radio" ng-click="$ctrl.updateIsDisplay()" ng-value="field.Id" ng-model="$ctrl.displayField" /></td>
@@ -70,6 +72,7 @@
             <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
                 <span class="glyphicon glyphicon-remove"></span> Cancel
             </button>
+            <field-domain-modal-component domain="$ctrl.activeDomain"></field-domain-modal-component>
     </form>
 </div>
 </div>

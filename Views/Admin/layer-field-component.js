@@ -7,7 +7,20 @@
 
     // The controller that handles our component logic
     controller: ['$rootScope', '$http', 'authorizeService', 'layerService', function ($rootScope, $http, authorizeService, layerService) {
-        var $ctrl = this;       
+        var $ctrl = this;     
+        $ctrl.domains = {
+            none: "None",
+            range: "Range",
+            codedValue: "Coded Value"
+        };
+        $ctrl.openDomainModal = function (domain) {
+            //domainJsObjectToAngularObject(domain);
+            $ctrl.activeDomain = domain;
+            $ctrl.activeDomain.range = $ctrl.activeDomain.range || [];
+            $("#fieldDomainModal").modal("show");
+        }
+
+       
         // get field data
         var getFields = function (id) {           
             $rootScope.errorMessage = "";
@@ -17,7 +30,7 @@
                     if (res.LayerNotFound) {
                         $rootScope.currentLayerId = null;
                     } else {
-                        $ctrl.fields = res.Fields;
+                        $ctrl.fields = res.Fields;                        
                         $ctrl.updateDisplayField();
                         $ctrl.beginFields = angular.copy($ctrl.fields);
                         $ctrl.fieldTypes = res.FieldTypes;
@@ -81,7 +94,9 @@
                 }
             }
             $rootScope.isLoading = true;
-            
+            $ctrl.fields.forEach(function (item, idx) {                                             
+                item.JsonDomain = JSON.stringify(item.Domain);
+            });
             $http.post("/Field/PostField", { fields: $ctrl.fields, layerId: $rootScope.currentLayerId, isSupportTime: $ctrl.layer.IsSupportTime, timeFieldId: $ctrl.SelectedTimeField.Id, filterExpression: $ctrl.layer.FilterExpression }
             ).success(function (res) {
                 if (res.Error) {
