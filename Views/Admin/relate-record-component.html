@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.layerId"></breadcrumb-component>
 <div class="row">
     <div class="col-md-6">    
@@ -26,32 +25,3 @@
     </div>
 </div>
 
-=======
-﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.layerId"></breadcrumb-component>
-<div class="row">
-    <div class="col-md-6">    
-        <div class="form-group col-md-12" ng-if="$ctrl.tables.length">
-            <label>Select related tables</label>
-            <ui-select multiple ui-select-add-remove-all ng-model="$ctrl.relateRecord.SelectedTables" theme="bootstrap">
-                <ui-select-match>
-                    {{$item.Name}}
-                </ui-select-match>
-                <ui-select-choices position="auto" repeat="s in $ctrl.tables | propsFilter: {Name: $select.search}">
-                    <div ng-bind-html="s.Name">                       
-                    </div>
-                </ui-select-choices>
-            </ui-select>
-        </div>  
-        <div class="form-group col-md-12" ng-if="!$ctrl.tables.length&&!$root.isLoading">
-            <label>No related tables found. Their must be a foreign key from the related table that references the primary key in the selected layer.</label>            
-        </div>  
-        <div class="form-group col-md-12">
-            <button ng-click="$ctrl.saveRelatedTables()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
-                <span class="glyphicon glyphicon-remove"></span> Cancel
-            </button>
-        </div>       
-    </div>
-</div>
-
->>>>>>> Stashed changes
