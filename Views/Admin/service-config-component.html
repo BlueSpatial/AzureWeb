@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿<breadcrumb-component metadata-type="1" metadata-id="$ctrl.serviceId"></breadcrumb-component>
 <div class="row">
     <div class="col-md-6">    
@@ -22,3 +23,29 @@
     </div>
 </div>
 
+=======
+﻿<breadcrumb-component metadata-type="1" metadata-id="$ctrl.serviceId"></breadcrumb-component>
+<div class="row">
+    <div class="col-md-6">    
+        <div class="form-group col-md-12">
+            <label>Min scale</label>
+            <input class="form-control" type="number" ng-min="0" ng-model="$ctrl.serviceSetting.MinScale" />
+        </div>
+        <div class="form-group col-md-12">
+            <label>Max scale</label>
+            <input class="form-control" type="number" ng-min="0" ng-model="$ctrl.serviceSetting.MaxScale" />
+        </div>
+        <div class="form-group col-md-12">
+            <label>Max record count</label>
+            <input class="form-control" type="number" ng-min="0"  ng-model="$ctrl.serviceSetting.MaxRecordCount" />
+        </div>
+        <div class="form-group col-md-12">
+            <button ng-click="$ctrl.saveServiceSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+>>>>>>> Stashed changes

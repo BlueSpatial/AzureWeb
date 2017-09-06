@@ -36,6 +36,7 @@
             </button>
             <ul class="dropdown-menu pull-right init-min-width" role="menu">
                 <li>
+<<<<<<< Updated upstream
                     <a ng-link="['PopupConfiguation', {id:node.Id }]">
                         <span class="glyphicons glyphicons-embed-close tree-icon"></span> Config HTML
                     </a>
@@ -53,6 +54,25 @@
                 <li>
                     <a ng-link="['RelatedRecord', {id:node.Id }]">
                         <span class="glyphicons glyphicons-record tree-icon"></span> Related record
+=======
+                    <a ng-link="['LayerConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-settings tree-icon"></span> Layer Config
+                    </a>
+                </li> 
+                <li>
+                    <a ng-link="['FieldConfiguation', {id:node.Id }]">
+                        <span class="glyphicon glyphicon-cog"></span> Field Config
+                    </a>
+                </li>
+                <li>
+                    <a ng-link="['PopupConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-embed-close tree-icon"></span> HTML Config
+                    </a>
+                </li>
+                <li>
+                    <a ng-link="['RelatedRecord', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-record tree-icon"></span> Related Records
+>>>>>>> Stashed changes
                     </a>
                 </li> 
             </ul>
@@ -83,18 +103,32 @@
             </button>
             <ul class="dropdown-menu pull-right init-min-width" role="menu">
                 <li ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached">
+<<<<<<< Updated upstream
                     <a ng-click="$ctrl.clearTileCache(this)">
                         <span class="glyphicon glyphicon-erase"></span> Clear Cache
                     </a>
                 </li>
                 <li ng-if-end>
+=======
+                    <a ng-link="['ServiceConfiguation', {id:node.Id }]">
+                        <span class="glyphicons glyphicons-settings tree-icon"></span> Service Config
+                    </a>
+                </li>
+                <li>
+>>>>>>> Stashed changes
                     <a ng-link="['BuildTiles', {id:node.Id }]">
                         <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
                     </a>
                 </li>
+<<<<<<< Updated upstream
                 <li>
                     <a ng-link="['ServiceConfiguation', {id:node.Id }]">
                         <span class="glyphicons glyphicons-settings tree-icon"></span> Config Service
+=======
+                <li ng-if-end>
+                    <a ng-click="$ctrl.clearTileCache(this)">
+                        <span class="glyphicon glyphicon-erase"></span> Clear Cache
+>>>>>>> Stashed changes
                     </a>
                 </li>
             </ul>
