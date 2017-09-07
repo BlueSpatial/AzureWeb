@@ -53,8 +53,7 @@
                     <label>Role:</label>
                     <ui-select ng-model="$ctrl.selectedUser.Role"
                                theme="bootstrap"
-                               reset-search-input="false"
-                               title="Choose a database">
+                               reset-search-input="false">
                         <ui-select-match placeholder="Choose a role">{{$ctrl.getRoleName($ctrl.selectedUser.Role)}}</ui-select-match>
                         <ui-select-choices repeat="r.Value as r in $ctrl.roles  | propsFilter: {Name: $select.search}">
                             <div ng-bind-html="r.Name | highlight: $select.search"></div>
