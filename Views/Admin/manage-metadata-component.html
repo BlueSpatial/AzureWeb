@@ -82,12 +82,12 @@
                 <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-menu pull-right init-min-width" role="menu">
-                <li ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached">
+                <li>
                     <a ng-link="['ServiceConfiguation', {id:node.Id }]">
                         <span class="glyphicons glyphicons-settings tree-icon"></span> Service Config
                     </a>
                 </li>
-                <li>
+                <li ng-if-start="node.ServiceType==0&&node.IsCached">
                     <a ng-link="['BuildTiles', {id:node.Id }]">
                         <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
                     </a>

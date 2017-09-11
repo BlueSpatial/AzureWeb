@@ -229,7 +229,7 @@
             var link = attrs.ngLink || '';
             function getLink(params) {
                 instruction = router.generate(params);
-                return './' + angular.stringifyInstruction(instruction);
+                return '#/' + angular.stringifyInstruction(instruction);
             }
             var routeParamsGetter = $parse(link);
             // we can avoid adding a watcher if it's a literal
