@@ -186,7 +186,7 @@
         var getMetadataTree = function () {
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
-            $http.get("/Admin/GetMetadataTree").success(function (res) {
+            return $http.get("/Admin/GetMetadataTree").success(function (res) {
                 if (!res.Error) {
                     $ctrl.data = res.Data;
                     if (!$ctrl.data.length) {
@@ -202,6 +202,7 @@
             }).error(authorizeService.onError);
         }
         getMetadataTree();
+        $ctrl.importServiceCallBack = getMetadataTree;
 
        $ctrl.pushFolder = null; // this function difference for create and update
         $ctrl.pushService = null;
@@ -247,22 +248,22 @@
             $ctrl.single.NewService = { IsCached: false };
             if ($rootScope.isNotFullVersion()) {
                 // auto select the default connection for basic version
-                if ($rootScope.isBasicVersion()) {
-                    $ctrl.connections.forEach(function (item, index) {
-                        if (item.IsDefault) {
-                            $ctrl.single.NewService.ConnectionId = item.Id;
-                        }
-                    });
-                }
+                //if ($rootScope.isBasicVersion()) {
+                //    $ctrl.connections.forEach(function (item, index) {
+                //        if (item.IsDefault) {
+                //            $ctrl.single.NewService.ConnectionId = item.Id;
+                //        }
+                //    });
+                //}
                 // map service for all not full version
                 $ctrl.single.NewService.ServiceType = 0;
             }
-            else {
-                // select the first connection if have only one connection
-                if ($ctrl.connections.length == 1) {
-                    $ctrl.single.NewService.ConnectionId = $ctrl.connections[0].Id;
-                }
+           
+            // select the first connection if have only one connection
+            if ($ctrl.connections.length == 1) {
+                $ctrl.single.NewService.ConnectionId = $ctrl.connections[0].Id;
             }
+            
             var nodeFolder = scope.$modelValue;
             generateFolderBreadcrumb(scope);
             var folder = {Id: nodeFolder.Id, Name: nodeFolder.Name};
@@ -330,7 +331,13 @@
                 }
                 return ["This ", metaName, " was disabled, please upgrade to PRO version to unlock it"].join("");
             }
-        }        
+        }     
+        $ctrl.openImportServiceDialog = function (scope) {
+            var nodeFolder = scope.$modelValue;
+            var folder = { Id: nodeFolder.Id, Name: nodeFolder.Name };
+            $ctrl.single.Folder = folder;
+            $('#importServiceModal').modal('show');
+        }
          
     }]
 });

@@ -36,7 +36,7 @@
                     <!-- disable when edit or basic version  -->
                     <ui-select ng-model="$ctrl.single.NewService.ConnectionId"
                                theme="bootstrap"
-                               ng-disabled="$ctrl.single.NewService.Id||$root.isBasicVersion()||$ctrl.connections.length==1"
+                               ng-disabled="$ctrl.single.NewService.Id||$ctrl.connections.length==1"
                                reset-search-input="false"
                                title="{{$root.isBasicVersion()?'The BASIC version is limited to the default installed database connection':''}}">
                         <ui-select-match placeholder="Choose database connection">{{$select.selected.Name +'.'+$select.selected.DatabaseName}}</ui-select-match>

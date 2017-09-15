@@ -90,7 +90,7 @@
                 formData.append("serviceId", $ctrl.single.Service.Id);
                 formData.append("connectionHubId", $.connection.hub.id);
 
-                $ctrl.progressBar = { Value: 0, Text: "Uploading..." };
+                $rootScope.progressBar = { Value: 0, Text: "Uploading..." };
 
                 $http.post("/Admin/UploadShapFile", formData, {
                     transformRequest: angular.identity,
@@ -107,7 +107,7 @@
                             $("#creatLayerModal").modal('hide');
                             $ctrl.uploadFile = {};
                             $('#shapeFile').val("");
-                            $ctrl.progressBar.Max = 0;
+                            $rootScope.progressBar.Max = 0;
                             $rootScope.currentLayerId = res.Layer.Id;
                         }
                         else {
@@ -116,7 +116,7 @@
                                 console.log(res.FullError);
                             }
                         };
-                        $ctrl.progressBar.Text = "";
+                        $rootScope.progressBar.Text = "";
                         $.connection.hub.stop();
                        
                     }).error(function (res, status) {
@@ -126,7 +126,7 @@
                         else {
                             $rootScope.errorMessage = 'Server error ' + status;
                         }
-                        $ctrl.progressBar.Text = "";
+                        $rootScope.progressBar.Text = "";
                         $.connection.hub.stop();                       
                     });
             });
@@ -137,29 +137,7 @@
             $ctrl.uploadFile.File = files[0];
         }
 
-        var initProgress = function () {
-            var progressNotifier = $.connection.progressHub;
-
-            // client-side sendMessage function that will be called from the server-side
-            progressNotifier.client.updateProgressMax = function (max) {
-                $scope.$apply(function () {
-                    $ctrl.progressBar.Max = max;
-                });
-            };
-            progressNotifier.client.updateProgressValue = function (i) {
-                $scope.$apply(function () {
-                    $ctrl.progressBar.Value += i;
-                });
-            };
-            progressNotifier.client.updateProgressText = function (text) {
-                $scope.$apply(function () {
-                    $ctrl.progressBar.Text = text;
-                });
-            };
-
-
-        }
-        initProgress();
+       
         $ctrl.filterByFolder = function (service) {
             if (service.Id == -1 || !$ctrl.single.Folder || service.FolderId == $ctrl.single.Folder.Id) {
                 return true;

@@ -1,0 +1,4 @@
+﻿<div ng-show-start="$root.progressBar.Text" class="modal-backdrop loader-backdrop fade in"></div>
+<span ng-show-end=>{{$root.progressBar.Text}} <span ng-show="$root.progressBar.Value" class="progress-bar-text">{{$root.progressBar.Value}} / {{$root.progressBar.Max}} features</span></span>
+<uib-progressbar ng-show="$root.progressBar.Text||$root.progressBar.Max" max="$root.progressBar.Max" value="$root.progressBar.Value">
+</uib-progressbar>

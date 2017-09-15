@@ -87,6 +87,7 @@
                         <span class="glyphicons glyphicons-settings tree-icon"></span> Service Config
                     </a>
                 </li>
+               
                 <li ng-if-start="node.ServiceType==0&&node.IsCached">
                     <a ng-link="['BuildTiles', {id:node.Id }]">
                         <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
@@ -112,13 +113,16 @@
        
         <!--Service-->
 
-        <a id="intro3" class="pull-right btn blue btn-xs m-r-8" data-nodrag
+        <a id="intro3" class="pull-right btn blue btn-xs m-r-8" 
            ng-if="node.MetadataType==1" ng-click="$ctrl.showLayerModal(this);$root.exitIntro()">
             <!--Only show for Map Service and cached-->
             <span class="glyphicon glyphicon-plus"></span> Add Layer
         </a>
-        <a id="intro2" ng-if="node.MetadataType==0" class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-click="$ctrl.addNewService(this);$root.exitIntro()">
+        <a id="intro2" ng-if-start="node.MetadataType==0" class="pull-right btn blue btn-xs m-r-8" ng-click="$ctrl.addNewService(this);$root.exitIntro()">
             <span class="glyphicon glyphicon-plus"></span> Add Service
+        </a>
+        <a ng-if-end class="pull-right btn blue btn-xs m-r-8" ng-click="$ctrl.openImportServiceDialog(this)">
+            <span class="glyphicon glyphicon-import"></span> Import Service
         </a>
         <label ng-if="$ctrl.isFeatureLayer(this)" class="pull-right editable-checkbox tree-checkbox">
             <input ng-model="node.HasAttachments" ng-change="$ctrl.updateLayerBoolField('HasAttachments',node)" type="checkbox" /> Has attachments
@@ -163,3 +167,4 @@
 <create-folder-modal-component callback="$ctrl.pushFolder" single="$ctrl.single"></create-folder-modal-component>
 <create-service-modal-component callback="$ctrl.pushService" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></create-service-modal-component>
 <create-layer-modal-component callback="$ctrl.saveLayerCallback" single="$ctrl.single"></create-layer-modal-component>
+<import-service-modal-component callback="$ctrl.importServiceCallBack" single="$ctrl.single" connections="$ctrl.connections"></import-service-modal-component>

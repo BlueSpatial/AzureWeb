@@ -303,7 +303,10 @@ myApp.factory(factoryName, ['$http', function ($http) {
     var updateDrawingInfoToUI = function (drawingInfo, drawingStyles, patterns, attributes, getFieldValues,minScale,
                                         drawing, labels, defaultClassBreakLabel, sliders, labelFeature)
     {
-        var convertColorArray = function (colors) {            
+        var convertColorArray = function (colors) {
+            if (!colors) {
+                return "";
+            }
             colors[3] = colors[3] / 255;
             return "rgba(" + colors.join(',') + ")"
         };
@@ -368,6 +371,9 @@ myApp.factory(factoryName, ['$http', function ($http) {
         updateSymbolToUI = function (symbol, label) {
             label = label || {};
             label.Symbol = label.Symbol || {};
+            if (!symbol) {
+                return;
+            }
             switch (symbol.type) {
                 case 'esriPMS':
                     drawing.SymbolType = "PictureMarkerSymbol";
