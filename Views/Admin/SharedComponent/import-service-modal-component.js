@@ -4,6 +4,7 @@
         callback: '=',
         single: '=',
         connections: '=',
+        breadcrumb:'='
     },
 
     templateUrl: '/Views/Admin/SharedComponent/import-service-modal-component.html',

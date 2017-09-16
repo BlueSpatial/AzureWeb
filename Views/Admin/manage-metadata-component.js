@@ -337,6 +337,7 @@
             var folder = { Id: nodeFolder.Id, Name: nodeFolder.Name };
             $ctrl.single.Folder = folder;
             $('#importServiceModal').modal('show');
+            generateFolderBreadcrumb(scope);
         }
          
     }]
