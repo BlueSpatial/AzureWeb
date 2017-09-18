@@ -60,24 +60,24 @@
             $rootScope.errorMessage = "";
             var messages = [];
             if ($ctrl.domain) {
-                if ($ctrl.domain && $ctrl.domain.type != 'none') {
+                if ($ctrl.domain && $ctrl.domain.type&& $ctrl.domain.type != 'none') {
                     if (!$ctrl.domain.name) {
                         messages.push("Domain: Name is required!");
                     }
                     switch ($ctrl.domain.type) {
                         case 'range':
-                            if (!$ctrl.domain.range[0] && $ctrl.domain.range[0] != 0) {
+                            if (!$ctrl.domain.range||(!$ctrl.domain.range[0] && $ctrl.domain.range[0] != 0)) {
                                 messages.push("Domain: Min value is required!");
                             }
-                            if (!$ctrl.domain.range[1] && $ctrl.domain.range[1] != 0) {
+                            if (!$ctrl.domain.range||(!$ctrl.domain.range[1] && $ctrl.domain.range[1] != 0)) {
                                 messages.push("Domain: Max value is required!");
                             }
                             break;
                         case 'codedValue':
-                            if (!$ctrl.domain.codedValues.length) {
+                            if (!$ctrl.domain.codedValues||!$ctrl.domain.codedValues.length) {
                                 messages.push("Domain: coded values is required!");
                             }
-                           
+
                             break;
                     }
                 }
