@@ -305,7 +305,40 @@
                                     currentNode.IsCached = service.IsCached;
                                 };
             }
+            else if (currentNode.MetadataType == 2) {// layer
+                $ctrl.single.NewLayer = {};
+                $ctrl.single.NewLayer.Id = currentNode.Id;
+                $ctrl.single.NewLayer.Name = currentNode.Name;
+                $("#editLayerModal").modal('show');
+                $ctrl.pushLayer = function (layerName) {
+                    currentNode.Name = layerName;                   
+                };
+            }
         };
+        $ctrl.updateLayerName = function () {
+            // post layer to server to update layer name
+            $rootScope.errorMessage = "";
+            if (!$ctrl.single.NewLayer.Name) {
+                $rootScope.errorMessage = "Layer name is required!";
+                return;
+            }
+            if (!authorizeService.isAuthorize()) return;
+
+            $rootScope.isLoading = true;
+            $http.post("/Admin/UpdateLayerName", { layerId: $ctrl.single.NewLayer.Id, layerName: $ctrl.single.NewLayer.Name }
+            ).success(function (res) {
+                if (!res.Error) {
+                    $ctrl.pushLayer(res.LayerName);
+                    $("#editLayerModal").modal('hide');
+                }
+                else {
+                    $rootScope.errorMessage = res.Message;
+                };
+                $rootScope.isLoading = false;
+            })
+                .error(authorizeService.onError);
+
+        }
         $ctrl.isFeatureLayer = function (scope) {
             if (scope.node.MetadataType != 2) { // !layer
                 return false;

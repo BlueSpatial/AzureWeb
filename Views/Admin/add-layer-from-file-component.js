@@ -16,7 +16,7 @@
         //    $ctrl.layers = res.data.Layers;
         //});
        
-        $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss";
+        $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
         $ctrl.uploadFile = {};
@@ -97,18 +97,25 @@
                     headers: { 'Content-Type': undefined }
                 }
                     ).success(function (res) {
-                        if (!res.Error) {
-                            $rootScope.successMessage = "Layer \"" + res.Layer.Name + "\" was generated successfully.";
+                        if (!res.Error) {                           
                             $rootScope.isIntro = false;
-                            $ctrl.single.Layer = res.Layer;
+                            $ctrl.single.Layer = res.Layers[0];
                             //$ctrl.layers.push(res.Layer);
-                            $ctrl.callback(res.Layer);
+                            var layerNames = "";
+                            res.Layers.forEach(function (item, idx) {
+                                $ctrl.callback(item);
+                                layerNames += item.Name;
+                                if (idx != res.Layers.length - 1) { // not the last item
+                                    layerNames += ", ";
+                                }
+                            });
+                            $rootScope.successMessage = "Layer \"" + layerNames + "\" was generated successfully.";
                             //$ctrl.getTables();
                             $("#creatLayerModal").modal('hide');
                             $ctrl.uploadFile = {};
                             $('#shapeFile').val("");
                             $rootScope.progressBar.Max = 0;
-                            $rootScope.currentLayerId = res.Layer.Id;
+                            $rootScope.currentLayerId = res.Layers[0].Id;
                         }
                         else {
                             $rootScope.errorMessage = res.Message;

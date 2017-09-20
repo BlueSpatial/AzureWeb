@@ -23,23 +23,29 @@
         <a class="pull-right btn btn-danger btn-xs tree-button btn-enable" data-nodrag ng-click="$ctrl.removeMetadata(this)">
             <span class="glyphicon glyphicon-remove"></span> Delete
         </a>
+        <a class="pull-right btn btn-success btn-xs m-r-8 tree-button" data-nodrag ng-click="$ctrl.editNode(this)">
+            <span class="glyphicon glyphicon-pencil"></span> Edit
+        </a>
         <!--Layer-->
 
 
-        <a ng-if-start="node.MetadataType==2" ng-show="$ctrl.havePreview" class="btn btn-success btn-xs tree-button pull-right m-r-8"  href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
-            <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
-        </a>
-        <div class="btn-group pull-right">
+       
+        <div ng-if-start="node.MetadataType==2" class="btn-group pull-right">
             <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                 More
                 <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-menu pull-right init-min-width" role="menu">
                 <li>
+                    <a href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
+                        <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
+                    </a>
+                </li>
+                <li>
                     <a ng-link="['LayerConfiguation', {id:node.Id }]">
                         <span class="glyphicons glyphicons-settings tree-icon"></span> Layer Config
                     </a>
-                </li> 
+                </li>
                 <li>
                     <a ng-link="['FieldConfiguation', {id:node.Id }]">
                         <span class="glyphicon glyphicon-cog"></span> Field Config
@@ -54,7 +60,7 @@
                     <a ng-link="['RelatedRecord', {id:node.Id }]">
                         <span class="glyphicons glyphicons-record tree-icon"></span> Related Records
                     </a>
-                </li> 
+                </li>
             </ul>
         </div>
         <!--<a class="pull-right btn btn-success btn-xs tree-button m-r-8" data-nodrag ng-link="['PopupConfiguation', {id:node.Id }]">
@@ -72,9 +78,7 @@
         <!--Layer-->
 
         
-        <a ng-if="node.MetadataType!=2" class="pull-right btn btn-success btn-xs m-r-8 tree-button" data-nodrag ng-click="$ctrl.editNode(this)">
-            <span class="glyphicon glyphicon-pencil"></span> Edit
-        </a>
+       
         <!--Service-->
         <div  ng-if="node.MetadataType==1" class="btn-group pull-right">
             <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -168,3 +172,24 @@
 <create-service-modal-component callback="$ctrl.pushService" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></create-service-modal-component>
 <create-layer-modal-component callback="$ctrl.saveLayerCallback" single="$ctrl.single"></create-layer-modal-component>
 <import-service-modal-component callback="$ctrl.importServiceCallBack" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></import-service-modal-component>
+
+<div class="modal fade" id="editLayerModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Layer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Layer name: </label>
+                    <input ng-model="$ctrl.single.NewLayer.Name" class="form-control">
+                </div>
+                <button ng-click="$ctrl.updateLayerName()" type="button" class="btn blue">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="SR" table="SR" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+    </id>
+    <property name="Wkt" type="String">
+      <column name="Wkt" sql-type="nvarchar(max)" not-null="true" />
+    </property>   
+  </class>
+</hibernate-mapping>

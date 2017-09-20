@@ -1,0 +1,23 @@
+﻿@model BlueSpatial.Models.AdminViewModels.Popup
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Html Popup</title>
+</head>
+<body>
+    @if (Model != null)
+    {
+    @Html.Raw(@Model.PopupContent)
+    }
+    else
+    {
+        <span>Feature not found</span>
+    }
+</body>
+</html>
