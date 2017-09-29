@@ -1,0 +1,77 @@
+﻿<?xml version="1.0"?>
+<WMS_Capabilities xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.3.0" xmlns="http://www.opengis.net/wms">
+  <Service>
+    <Name>OGC:WMS</Name>
+    <Title>Web Map Service</Title>
+    <Abstract>Web Map Service</Abstract>
+    <KeywordList>
+      <Keyword vocabulary="mapping" />
+      <Keyword vocabulary="online" />
+    </KeywordList>
+    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" />
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson></ContactPerson>
+        <ContactOrganization></ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactAddress>
+        <AddressType></AddressType>
+        <Address></Address>
+        <City></City>
+        <StateOrProvince></StateOrProvince>
+        <PostCode></PostCode>
+        <Country></Country>
+      </ContactAddress>
+      <ContactVoiceTelephone></ContactVoiceTelephone>
+      <ContactFacsimileTelephone></ContactFacsimileTelephone>
+      <ContactElectronicMailAddress></ContactElectronicMailAddress>
+    </ContactInformation>
+    <LayerLimit>10</LayerLimit>
+    <MaxWidth>1024</MaxWidth>
+    <MaxHeight>768</MaxHeight>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>text/xml</Format>
+        <DCPType>
+         <!--dynamic add-->
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/bmp</Format>
+        <Format>image/jpeg</Format>
+        <Format>image/gif</Format>
+        <Format>image/tiff</Format>
+        <Format>image/png</Format>
+        <DCPType>
+          <!--dynamic add-->
+        </DCPType>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/html</Format>
+        <Format>text/xml</Format>
+        <DCPType>
+          <!--dynamic add-->
+        </DCPType>
+      </GetFeatureInfo>
+    </Request>
+    
+    <Exception>
+      <Format>text/xml</Format>
+    </Exception>
+
+    
+    <!--<UserDefinedSymbolization SupportSLD="1" UserLayer="1" UserStyle="1" RemoteWFS="0">
+      <SupportedSLDVersion>1.0.0</SupportedSLDVersion>
+    </UserDefinedSymbolization>-->
+    
+    <Layer queryable="1" cascaded="0" opaque="0" noSubsets="0" fixedWidth="0" fixedHeight="0">
+      <Title>ALL LAYERS</Title>
+      <KeywordList />
+      <CRS>EPSG:4326</CRS>
+      <!--extent dynamic add-->
+    </Layer>
+   
+  </Capability>
+</WMS_Capabilities>

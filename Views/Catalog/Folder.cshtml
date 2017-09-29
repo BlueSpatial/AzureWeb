@@ -27,6 +27,12 @@
             <li>
                 <a href="@Model.ParentFolder/@Path.GetFileName(service.name)/@service.type">@Path.GetFileName(service.name)</a> (@service.type)<br>
             </li>
+            if (service.type == GlobalConstant.MapServer)
+            {
+                <li>
+                    <a href="@Model.ParentFolder/@Path.GetFileName(service.name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.name)</a> (WMSServer)<br>
+                </li>
+            }
         }
     </ul>
 }
