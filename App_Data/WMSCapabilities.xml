@@ -57,7 +57,7 @@
     </Request>
     
     <Exception>
-      <Format>text/xml</Format>
+      <Format>XML</Format>
     </Exception>
 
     
