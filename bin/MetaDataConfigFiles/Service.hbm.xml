@@ -22,6 +22,9 @@
     <property name="IsCached" type="bool">
       <column name="IsCached" sql-type="bit" not-null="true" />
     </property>
+    <property name="IsWMSEnabled" type="bool">
+      <column name="IsWMSEnabled" sql-type="bit" not-null="true" />
+    </property>
       <property name="IsAllowAnonymous" type="bool">
       <column name="IsAllowAnonymous" sql-type="bit" not-null="true" />
     </property>

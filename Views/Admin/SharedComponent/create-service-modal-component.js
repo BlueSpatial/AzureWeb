@@ -42,7 +42,7 @@
             if (_validateService()) {
                 $rootScope.isLoading = true;
                 $ctrl.single.NewService.Id = $ctrl.single.NewService.Id || 0;
-                $http.post("/Admin/PostService", { service: { Id: $ctrl.single.NewService.Id, Name: $ctrl.single.NewService.Name, FolderId: $ctrl.single.Folder.Id, ServiceType: parseInt($ctrl.single.NewService.ServiceType), IsCached: $ctrl.single.NewService.IsCached, ConnectionId: parseInt($ctrl.single.NewService.ConnectionId) } }
+                $http.post("/Admin/PostService", { service: { Id: $ctrl.single.NewService.Id, Name: $ctrl.single.NewService.Name, FolderId: $ctrl.single.Folder.Id, ServiceType: parseInt($ctrl.single.NewService.ServiceType), IsCached: $ctrl.single.NewService.IsCached, IsWMSEnabled: $ctrl.single.NewService.IsWMSEnabled, ConnectionId: parseInt($ctrl.single.NewService.ConnectionId) } }
                 ).success(function (res) {
                     if (!res.Error) {
                         if ($ctrl.single.NewService.Id == 0) {

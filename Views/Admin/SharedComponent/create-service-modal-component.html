@@ -25,10 +25,17 @@
                         </ui-select-choices>
                     </ui-select>                    
                 </div>
-                <div ng-show="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}"> <!--only show for map service-->
+                <div ng-show-start="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}"> <!--only show for map service-->
                     <label  ng-class="{'disabled':$root.isNotFullVersion()}">                       
                         <input type="checkbox" ng-model="$ctrl.single.NewService.IsCached" >
                         Cached Tiles
+                    </label>
+                </div>
+                <div ng-show-end class="form-group">
+                    <!--only show for map service-->
+                    <label>
+                        <input type="checkbox" ng-model="$ctrl.single.NewService.IsWMSEnabled">
+                        Enable WMS
                     </label>
                 </div>
                 <div class="form-group">

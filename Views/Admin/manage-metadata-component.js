@@ -245,7 +245,7 @@
         $ctrl.addNewService = function (scope) {
            
             $ctrl.single.IsEditMode = false;
-            $ctrl.single.NewService = { IsCached: false };
+            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled:true };
             if ($rootScope.isNotFullVersion()) {
                 // auto select the default connection for basic version
                 //if ($rootScope.isBasicVersion()) {
@@ -293,6 +293,7 @@
                 $ctrl.single.NewService.Id = currentNode.Id;
                 $ctrl.single.NewService.Name = currentNode.Name;
                 $ctrl.single.NewService.IsCached = currentNode.IsCached;
+                $ctrl.single.NewService.IsWMSEnabled = currentNode.IsWMSEnabled;
                 var folder = scope.$parentNodeScope.$modelValue;
                 generateFolderBreadcrumb(scope.$parentNodeScope);
                 $ctrl.single.Folder = { Id: folder.Id, Name: folder.Name };
@@ -303,6 +304,7 @@
                                     currentNode.Name = service.Name;
                                     currentNode.ServiceType = service.ServiceType;
                                     currentNode.IsCached = service.IsCached;
+                                    currentNode.IsWMSEnabled = service.IsWMSEnabled;
                                 };
             }
             else if (currentNode.MetadataType == 2) {// layer

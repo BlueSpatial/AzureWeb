@@ -22,15 +22,15 @@
 {
     <strong>Services:</strong>
     <ul>
-        @foreach (var service in Model.Catalog.services)
+        @foreach (var service in Model.ServiceConfigs)
         {
             <li>
-                <a href="@Model.ParentFolder/@Path.GetFileName(service.name)/@service.type">@Path.GetFileName(service.name)</a> (@service.type)<br>
+                <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/@service.ServiceType.ToString()">@Path.GetFileName(service.Name)</a> (@service.ServiceType.ToString())<br>
             </li>
-            if (service.type == GlobalConstant.MapServer)
+            if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer && service.IsWMSEnabled)
             {
                 <li>
-                    <a href="@Model.ParentFolder/@Path.GetFileName(service.name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.name)</a> (WMSServer)<br>
+                    <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMSServer)<br>
                 </li>
             }
         }

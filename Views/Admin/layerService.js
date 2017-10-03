@@ -52,7 +52,7 @@ myApp.factory(factoryName, ['$http', '$rootScope', 'authorizeService', function 
         single.NewFolder = {};       
     };
     var callNewServiceDialog = function (item, single) {
-        single.NewService = { IsCached: true };       
+        single.NewService = { };       
     };
    
 
