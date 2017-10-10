@@ -49,7 +49,6 @@
       </GetMap>
       <GetFeatureInfo>
         <Format>text/html</Format>
-        <Format>text/xml</Format>
         <DCPType>
           <!--dynamic add-->
         </DCPType>
