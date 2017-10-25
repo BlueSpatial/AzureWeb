@@ -27,11 +27,17 @@
             <li>
                 <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/@service.ServiceType.ToString()">@Path.GetFileName(service.Name)</a> (@service.ServiceType.ToString())<br>
             </li>
-            if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer && service.IsWMSEnabled)
+            if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer)
             {
+                if (service.IsWMSEnabled) {
                 <li>
                     <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMSServer)<br>
                 </li>
+                <li>
+                    <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WTMSServer">@Path.GetFileName(service.Name)</a> (WTMSServer)<br>
+                </li>
+                }
+
             }
         }
     </ul>
