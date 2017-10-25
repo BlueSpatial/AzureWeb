@@ -24,7 +24,7 @@
                     <div ng-if="$root.successMessage">
                         <div class="fade-in-up alert custom-alert alert-success alert-dismissible">
                             <button ng-click="$ctrl.clearSuccess()" type="button" class="close"><span>&times;</span></button>
-                            {{$root.successMessage}}
+                            <span ng-bind-html="$root.successMessage"></span>
                         </div>
                     </div>
                 </div>

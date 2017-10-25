@@ -31,32 +31,33 @@
                 return;
             }
             if (!authorizeService.isAuthorize()) return;
-           
+            $rootScope.progressBar = { Value: 0, Text: "Connecting..." };
             $.connection.hub.start().done(function () {
-                $rootScope.progressBar = { Value: 0, Text: "Connecting..." };
-                $http.post("/Admin/ImportService", { folderId: $ctrl.single.Folder.Id, serviceURL: $ctrl.serviceURL, connectionId: $ctrl.connectionId, connectionHubId: $.connection.hub.id }
-                ).success(function (res) {
-                    if (!res.Error) {
-                        $ctrl.callback().then(function () {
-                            $rootScope.successMessage = "Service was imported successfully.";
-                            $ctrl.serviceURL = "";
-                            setDefaultConnection();
-                        });
-                        $("#importServiceModal").modal('hide');
-                    }
-                    else {
-                        $ctrl.callback(); // to get the list again because some layer is insert
-                        $rootScope.errorMessage = res.Message;                       
-                    };
-                    $rootScope.progressBar.Text = "";
-                    $rootScope.progressBar.Max = 0;
-                    $.connection.hub.stop();
-                })
-                    .error(function () {
-                        authorizeService.onError();
-                        $rootScope.progressBar.Text = "";
-                        $.connection.hub.stop(); 
-                    });
+               
+               
+                $.connection.progressHub.server.importService($ctrl.single.Folder.Id, $ctrl.serviceURL, $ctrl.connectionId, $.connection.hub.id);
+                //$http.post("/Admin/ImportService", { folderId: $ctrl.single.Folder.Id, serviceURL: $ctrl.serviceURL, connectionId: $ctrl.connectionId, connectionHubId: $.connection.hub.id }
+                //).success(function (res) {
+                //    if (!res.Error) {
+                //        $ctrl.callback().then(function () {                            
+                //            $ctrl.serviceURL = "";
+                //            setDefaultConnection();
+                //        });
+                //        $("#importServiceModal").modal('hide');
+                //    }
+                //    else {
+                //        $ctrl.callback(); // to get the list again because some layer is insert
+                //        $rootScope.errorMessage = res.Message;                       
+                //    };
+                //    $rootScope.progressBar.Text = "";
+                //    $rootScope.progressBar.Max = 0;
+                //    $.connection.hub.stop();
+                //})
+                //    .error(function () {
+                //        authorizeService.onError();
+                //        $rootScope.progressBar.Text = "";
+                //        $.connection.hub.stop(); 
+                //    });
             });
         };
 
@@ -82,6 +83,29 @@
             progressNotifier.client.updateProgressText = function (text) {
                 $scope.$apply(function () {
                     $rootScope.progressBar.Text = text;
+                });
+            };
+            var finishImportService = function () {
+                $rootScope.progressBar.Text = "";
+                $rootScope.progressBar.Max = 0;
+                $.connection.hub.stop();
+            }
+            progressNotifier.client.importServiceErrorCallBack = function (text) {
+                $scope.$apply(function () {                       
+                    $ctrl.callback(); // to get the list again because some layer is insert
+                    $rootScope.errorMessage = text;
+                    finishImportService();
+                });
+            };
+            progressNotifier.client.importServiceSuccessCallBack = function (text) {
+                $scope.$apply(function () {
+                    $ctrl.callback().then(function () {
+                        $ctrl.serviceURL = "";
+                        setDefaultConnection();
+                        $rootScope.successMessage = text;
+                    });
+                    $("#importServiceModal").modal('hide');
+                    finishImportService();
                 });
             };
 
