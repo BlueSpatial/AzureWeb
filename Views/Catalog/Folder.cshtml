@@ -29,15 +29,18 @@
             </li>
             if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer)
             {
-                if (service.IsWMSEnabled) {
-                <li>
-                    <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMSServer)<br>
-                </li>
-                <li>
-                    <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WTMSServer">@Path.GetFileName(service.Name)</a> (WTMSServer)<br>
-                </li>
+                if (service.IsWMSEnabled)
+                {
+                    <li>
+                        <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMS Server)<br>
+                    </li>
+                    if (service.IsCached)
+                    {
+                        <li>
+                            <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMTSServer?service=WMTS&Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMTS Server)<br>
+                        </li>
+                    }
                 }
-
             }
         }
     </ul>

@@ -12,19 +12,31 @@ version="1.0.0">
     <ows:ServiceType>OGC WMTS</ows:ServiceType>
     <ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>
   </ows:ServiceIdentification>
+  <ows:ServiceProvider>
+    <ows:ProviderName>KOAIT</ows:ProviderName>
+    <ows:ProviderSite xlink:href="http://koait.com/"/>
+    <ows:ServiceContact>
+      <ows:IndividualName>CONTACT NAME</ows:IndividualName>
+      <ows:ContactInfo>
+        <ows:Phone>
+          <ows:Voice>1.555.555.555</ows:Voice>
+        </ows:Phone>
+        <ows:Address>
+          <ows:DeliveryPoint>foo</ows:DeliveryPoint>
+          <ows:City>foo</ows:City>
+          <ows:AdministrativeArea>foo</ows:AdministrativeArea>
+          <ows:PostalCode>foo</ows:PostalCode>
+          <ows:Country>foo</ows:Country>
+          <ows:ElectronicMailAddress>info@koait.com</ows:ElectronicMailAddress>
+        </ows:Address>
+      </ows:ContactInfo>
+    </ows:ServiceContact>
+  </ows:ServiceProvider>
   <!-- Operations Metadata -->
   <ows:OperationsMetadata>
     <ows:Operation name="GetCapabilities">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="{{url}}/1.0.0/WMTSCapabilities.xml">
-            <ows:Constraint name="GetEncoding">
-              <ows:AllowedValues>
-                <ows:Value>RESTful</ows:Value>
-              </ows:AllowedValues>
-            </ows:Constraint>
-          </ows:Get>
-          <!-- add KVP binding in 10.1 -->
           <ows:Get xlink:href="{{url}}?">
             <ows:Constraint name="GetEncoding">
               <ows:AllowedValues>
@@ -38,7 +50,7 @@ version="1.0.0">
     <ows:Operation name="GetTile">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Get xlink:href="{{url}}/tile/1.0.0/">
+          <ows:Get xlink:href="{{url}}/tile/1.0.0?">
             <ows:Constraint name="GetEncoding">
               <ows:AllowedValues>
                 <ows:Value>RESTful</ows:Value>
@@ -427,5 +439,5 @@ version="1.0.0">
       </TileMatrix>
     </TileMatrixSet>
   </Contents>
-  <ServiceMetadataURL xlink:href="{{url}}/1.0.0/WMTSCapabilities.xml" />
+  <ServiceMetadataURL xlink:href="{{url}}/1.0.0/WMTSCapabilities.xml?" />
 </Capabilities>
