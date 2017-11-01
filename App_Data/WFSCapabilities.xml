@@ -1,12 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <wfs:WFS_Capabilities version="1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wfs https://ahocevar.com/geoserver/schemas/wfs/1.1.0/wfs.xsd" xmlns:nasa="http://nasa.gov" xmlns:topp="http://www.openplans.org/topp" xmlns:ne="http://naturalearthdata.com" xmlns:osm="http://openstreemap.org" xmlns:opengeo="http://opengeo.org" xmlns:usa="http://census.gov" updateSequence="158">
   <ows:ServiceIdentification>
-    <ows:Title>GeoServer Web Feature Service</ows:Title>
-    <ows:Abstract>Web Feature Service implementation for vector data supporting WFS 1.0.0, WFS 1.1.0 and WFS 2.0.0. All layers published by this service are available via WMS.</ows:Abstract>
+    <ows:Title>Blue Spatial Web Feature Service</ows:Title>
+    <ows:Abstract>Web Feature Service implementation for vector data supporting WFS 1.0.0, WFS 1.1.0 </ows:Abstract>
     <ows:Keywords>
-      <ows:Keyword>WFS</ows:Keyword>
-      <ows:Keyword>WMS</ows:Keyword>
-      <ows:Keyword>GEOSERVER</ows:Keyword>
+      <ows:Keyword>BlueSpatial</ows:Keyword>
     </ows:Keywords>
     <ows:ServiceType>WFS</ows:ServiceType>
     <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
@@ -14,9 +12,9 @@
     <ows:AccessConstraints>NONE</ows:AccessConstraints>
   </ows:ServiceIdentification>
   <ows:ServiceProvider>
-    <ows:ProviderName>ahocevar geospatial</ows:ProviderName>
+    <ows:ProviderName></ows:ProviderName>
     <ows:ServiceContact>
-      <ows:IndividualName>Andreas Hocevar</ows:IndividualName>
+      <ows:IndividualName></ows:IndividualName>
       <ows:PositionName/>
       <ows:ContactInfo>
         <ows:Phone>
@@ -25,10 +23,10 @@
         </ows:Phone>
         <ows:Address>
           <ows:DeliveryPoint/>
-          <ows:City>Graz</ows:City>
+          <ows:City></ows:City>
           <ows:AdministrativeArea/>
-          <ows:PostalCode>8020</ows:PostalCode>
-          <ows:Country>Austria</ows:Country>
+          <ows:PostalCode></ows:PostalCode>
+          <ows:Country></ows:Country>
           <ows:ElectronicMailAddress/>
         </ows:Address>
       </ows:ContactInfo>
