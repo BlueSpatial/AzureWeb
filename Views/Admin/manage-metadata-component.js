@@ -311,9 +311,11 @@
                 $ctrl.single.NewLayer = {};
                 $ctrl.single.NewLayer.Id = currentNode.Id;
                 $ctrl.single.NewLayer.Name = currentNode.Name;
+                $ctrl.single.NewLayer.IsODataEnabled = currentNode.IsODataEnabled;
                 $("#editLayerModal").modal('show');
-                $ctrl.pushLayer = function (layerName) {
+                $ctrl.pushLayer = function (layerName, isODataEnabled) {
                     currentNode.Name = layerName;                   
+                    currentNode.IsODataEnabled = isODataEnabled;   
                 };
             }
         };
@@ -327,10 +329,10 @@
             if (!authorizeService.isAuthorize()) return;
 
             $rootScope.isLoading = true;
-            $http.post("/Admin/UpdateLayerName", { layerId: $ctrl.single.NewLayer.Id, layerName: $ctrl.single.NewLayer.Name }
+            $http.post("/Admin/UpdateLayerName", { layerId: $ctrl.single.NewLayer.Id, layerName: $ctrl.single.NewLayer.Name, isODataEnabled: ($ctrl.single.NewLayer.IsODataEnabled ? true : false) }
             ).success(function (res) {
                 if (!res.Error) {
-                    $ctrl.pushLayer(res.LayerName);
+                    $ctrl.pushLayer(res.LayerName, $ctrl.single.NewLayer.IsODataEnabled);
                     $("#editLayerModal").modal('hide');
                 }
                 else {

@@ -185,6 +185,12 @@
                     <label>Layer name: </label>
                     <input ng-model="$ctrl.single.NewLayer.Name" class="form-control">
                 </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" ng-model="$ctrl.single.NewLayer.IsODataEnabled">
+                        Enable OData
+                    </label>
+                </div>
                 <button ng-click="$ctrl.updateLayerName()" type="button" class="btn blue">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                     Save

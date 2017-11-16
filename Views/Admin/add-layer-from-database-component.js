@@ -45,7 +45,7 @@
             if (!$ctrl.layerName) {
                 $rootScope.errorMessage = "Layer name is required";
             }
-            $http.post("/Admin/GenerateHibernateCongfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Service.Id, layerName: $ctrl.layerName }
+            $http.post("/Admin/GenerateHibernateCongfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Service.Id, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false) }
            ).success(function (res) {
                if (!res.Error) {
                    $ctrl.callback(res.Layer);

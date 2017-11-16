@@ -32,6 +32,9 @@
     <property name="IsEditable" type="bool">
       <column name="IsEditable" sql-type="bit" not-null="true" />
     </property>
+    <property name="IsODataEnabled" type="bool">
+      <column name="IsODataEnabled" sql-type="bit"/>
+    </property>
     <property name="HasAttachments" type="bool">
       <column name="HasAttachments" sql-type="bit" not-null="true" />
     </property>

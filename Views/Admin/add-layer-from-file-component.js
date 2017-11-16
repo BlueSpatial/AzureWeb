@@ -19,7 +19,7 @@
         $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
-        $ctrl.uploadFile = {};
+        $ctrl.uploadFile = {  };
         var validateUploadFile = function () {
             var isValid = true;
             var messages = [];
@@ -87,6 +87,7 @@
                 //formData.append("Password", $ctrl.connectionInfo.Password);
                 //formData.append("DatabaseName", $ctrl.connectionInfo.DatabaseName);
                 formData.append("tableName", $ctrl.uploadFile.TableName);
+                formData.append("isODataEnabled", $ctrl.uploadFile.IsODataEnabled ? true : false);
                 formData.append("serviceId", $ctrl.single.Service.Id);
                 formData.append("connectionHubId", $.connection.hub.id);
 
