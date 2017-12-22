@@ -11,22 +11,25 @@
     controller: ['$http', '$rootScope', "$scope", 'authorizeService', 'layerService', function ($http, $rootScope, $scope, authorizeService, layerService) {
         var $ctrl = this;
         $scope.$watch("$ctrl.metadataId", function () {
-            if ($ctrl.metadataId != undefined && $ctrl.metadataId != null) {
-                $rootScope.isLoading = true;
-                $http.get("/Admin/GetBreadcrumb/" + $ctrl.metadataType + "/" + $ctrl.metadataId).success(function (res) {
-                    if (!res.Error) {
-                        if (res.LayerNotFound) {
-                            $rootScope.currentLayerId = null;
-                        } else {
-                            $ctrl.breadcrumb = res.Breadcrumb;
-                        }
+            if (!$ctrl.metadataId) {
+                $ctrl.breadcrumb = {};
+                return;
+            }           
+            $rootScope.isLoading = true;
+            $http.get("/Admin/GetBreadcrumb/" + $ctrl.metadataType + "/" + $ctrl.metadataId).success(function (res) {
+                if (!res.Error) {
+                    if (res.LayerNotFound) {
+                        $rootScope.currentLayerId = null;
+                    } else {
+                        $ctrl.breadcrumb = res.Breadcrumb;
                     }
-                    else {
-                        $rootScope.errorMessage = res.Message;
-                    };
-                    $rootScope.isLoading = false;
-                }).error(authorizeService.onError);
-            }
+                }
+                else {
+                    $rootScope.errorMessage = res.Message;
+                };
+                $rootScope.isLoading = false;
+            }).error(authorizeService.onError);
+            
         })
 
         $rootScope.$on('changeBreadcrumbServiceName', function (event, service) {

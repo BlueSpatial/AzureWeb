@@ -20,7 +20,7 @@
             'glyphicons glyphicons-nearby-square': node.MetadataType==1&&node.ServiceType==1,
 
             'icon polygon': node.MetadataType==2&&(node.Type==1||node.Type==2),
-            'icon point': node.MetadataType==2&&node.Type==0,
+            'icon point': node.MetadataType==2&&!node.Type,
             'icon polyline': node.MetadataType==2&&node.Type==3}">
 
             <span class="node-text">{{node.Name}} {{$ctrl.getNodeTypeName(this,$index)}}</span>
