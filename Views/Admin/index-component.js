@@ -37,16 +37,14 @@
         $rootScope.isActiveRoute = function (route) {
             return $location.path().substr(0, route.length).toLowerCase() == route.toLowerCase();
         }
-        //$rootScope.$watch('[successMessage,errorMessage]', function () {
-        //    if ($rootScope.successMessage || $rootScope.errorMessage) {// scroll top when have message
-        //        setTimeout(function () {
-        //            if (!$rootScope.isHoverMessage) { // auto close after 5 second if not hover
-        //                $rootScope.successMessage = $rootScope.errorMessage = "";
-        //                $rootScope.$apply();
-        //            }
-        //        },10000);
-        //    }
-        //}, true);
+        $rootScope.$watch('successMessage', function () {
+            if ($rootScope.successMessage) {
+                setTimeout(function () {                   
+                        $rootScope.successMessage = "";
+                        $rootScope.$apply();                    
+                },3000);
+            }
+        }, true);
         $rootScope.$watch('[errorMessage]', function () {
             if ($rootScope.errorMessage) {// scroll top when have message
                 $rootScope.successMessage = "";

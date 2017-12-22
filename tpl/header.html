@@ -5,21 +5,68 @@
         <a href="/">
             <img src="/Images/logo-vertical.png" alt="logo" class="logo-default" /> 
         </a>
-        <div class="menu-toggler sidebar-toggler" ng-click="$root.sidebarShow=!$root.sidebarShow">
-            <span></span>
-            <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-        </div>
+       
     </div>
     <!-- END LOGO -->
-    <!-- BEGIN HEADER SEARCH BOX -->
-    <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
     
-    <!-- END HEADER SEARCH BOX -->
-    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-        <span></span>
-    </a>
-    <!-- END RESPONSIVE MENU TOGGLER -->
+    <!-- BEGIN MEGA MENU -->
+    <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) in the responsive menu below along with sidebar menu. So the horizontal menu has 2 seperate versions -->
+    <div class="hor-menu">
+        <ul class="nav navbar-nav">
+            <li class="classic-menu-dropdown" ng-class="{active:$root.isActiveRoute('/ManageServices')}">
+                <a ng-link="['ManageServices']">
+                    <i class="fa fa-map-o"></i>
+                    <span class="title">Manage Services</span>        
+                    <span ng-if="$root.isActiveRoute('/ManageServices')" class="selected"></span>
+                </a>
+            </li>
+            <li class="classic-menu-dropdown" ng-class="{active:$root.isActiveRoute('/ManageConnection')}">
+                <a ng-link="['ManageConnection']">
+                    <i class="fa fa-database"></i>
+                    <span class="title">Manage Connections</span>
+                    <span ng-if="$root.isActiveRoute('/ManageConnection')" class="selected"></span>
+                </a>
+            </li>
+            <li class="mega-menu-dropdown" ng-init="$root.securityRoutes=['/ManageUser','/Cors','/AzureAdSetting','/OtherSetting']" ng-class="{active:$root.isActiveRoutes($root.securityRoutes)}">
+                <a class="dropdown-toggle">
+                    <i class="fa fa-shield"></i>
+                    <span class="title">Security</span>
+                    <span class="arrow"></span>
+                    <span ng-if="$root.isActiveRoutes($root.securityRoutes)" class="selected"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item" ng-class="{active:$root.isActiveRoute('/ManageUser')}">
+                        <a ng-link="['ManageUser']">
+                            <i class="fa fa-user"></i> Manage Users
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{active:$root.isActiveRoute('/Cors')}">
+                        <a ng-link="['Cors']">
+                            <i class="fa fa-star"></i> CORS
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{active:$root.isActiveRoute('/AzureAdSetting')}">
+                        <a ng-link="['AzureAdSetting']">
+                            <i class="fa fa-cloud"></i> Azure AD Settings
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{active:$root.isActiveRoute('/OtherSetting')}">
+                        <a ng-link="['OtherSetting']">
+                            <i class="fa fa-cog"></i> Other Settings
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+           
+        
+        </ul>
+    </div>
+    <!-- END MEGA MENU -->
+
+
+   
+   
     <!-- BEGIN TOP NAVIGATION MENU -->
     <div class="top-menu">
         <ul class="nav navbar-nav pull-right">

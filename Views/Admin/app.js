@@ -41,8 +41,8 @@ myApp.config(function ($locationProvider) {
        { path: '/AzureAdSetting', name: 'AzureAdSetting', component: 'azureAdSettingComponent' },
       { path: '/LicenseInfo', name: 'LicenseInfo', component: 'licenseInfoComponent' },
       { path: '/UserLogin', name: 'UserLogin', component: 'userLoginComponent', useAsDefault: true },
-      { path: '/ServiceConfiguation', name: 'ServiceConfiguation', component: 'serviceConfigComponent' },
       { path: '/LayerConfiguation', name: 'LayerConfiguation', component: 'layerConfigComponent' },
+      { path: '/EventConfiguation', name: 'EventConfiguation', component: 'eventConfigComponent' },
       { path: '/RelatedRecord', name: 'RelatedRecord', component: 'relatedRecordComponent' },
       { path: '/**', redirectTo: ['UserLogin'] },
     ]

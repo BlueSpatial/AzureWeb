@@ -24,7 +24,7 @@
             $ctrl.connections = $ctrl.connections || [];
             setDefaultConnection();
         });
-        $ctrl.importService = function (folder) {
+        $ctrl.importService = function () {
             $rootScope.errorMessage = "";
             if (!$ctrl.serviceURL) {
                 $rootScope.errorMessage = "Service URL is required!";
@@ -34,30 +34,9 @@
             $rootScope.progressBar = { Value: 0, Text: "Connecting..." };
             $.connection.hub.start().done(function () {
                
-               
-                $.connection.progressHub.server.importService($ctrl.single.Folder.Id, $ctrl.serviceURL, $ctrl.connectionId, $.connection.hub.id);
-                //$http.post("/Admin/ImportService", { folderId: $ctrl.single.Folder.Id, serviceURL: $ctrl.serviceURL, connectionId: $ctrl.connectionId, connectionHubId: $.connection.hub.id }
-                //).success(function (res) {
-                //    if (!res.Error) {
-                //        $ctrl.callback().then(function () {                            
-                //            $ctrl.serviceURL = "";
-                //            setDefaultConnection();
-                //        });
-                //        $("#importServiceModal").modal('hide');
-                //    }
-                //    else {
-                //        $ctrl.callback(); // to get the list again because some layer is insert
-                //        $rootScope.errorMessage = res.Message;                       
-                //    };
-                //    $rootScope.progressBar.Text = "";
-                //    $rootScope.progressBar.Max = 0;
-                //    $.connection.hub.stop();
-                //})
-                //    .error(function () {
-                //        authorizeService.onError();
-                //        $rootScope.progressBar.Text = "";
-                //        $.connection.hub.stop(); 
-                //    });
+
+                $.connection.progressHub.server.importService($rootScope.currentFolderId, $ctrl.serviceURL, $ctrl.connectionId, $.connection.hub.id);
+                
             });
         };
 

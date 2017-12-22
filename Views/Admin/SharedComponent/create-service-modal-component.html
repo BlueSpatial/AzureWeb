@@ -1,59 +1,86 @@
-﻿<div class="modal fade" id="creatServiceModel" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{$ctrl.single.IsEditMode?'Edit':'Add'}} service</h4>
+﻿<!--<h4>{{$ctrl.single.IsEditMode?'Edit':'Add'}} service</h4>-->
+<form name="$ctrl.form">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>Service name: </label>
+                <input ng-model="$ctrl.single.NewService.Name" class="form-control">
             </div>
-            <div class="modal-body">
-                <div class="layer-modal-breadcrumb" ng-include="'/Views/Admin/SharedComponent/breadcrumb-component.html'"></div>                        
-                <div class="form-group">
-                    <label>Service name: </label>
-                    <input ng-model="$ctrl.single.NewService.Name" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Service type: </label>
-                    <ui-select ng-model="$ctrl.single.NewService.ServiceType"
-                               theme="bootstrap"
-                               ng-disabled="$root.isNotFullVersion()"
-                               ng-attr-title="{{$root.isNotFullVersion()?'Only Map Services are available with the BASIC/PRO version':''}}"
-                               reset-search-input="false"
-                               title="Choose service type">
-                        <ui-select-match placeholder="Choose service type">{{$select.selected.DisplayName}}</ui-select-match>
-                        <ui-select-choices repeat="st.Id as st in $ctrl.serviceTypes  | propsFilter: {DisplayName: $select.search}">
-                            <div ng-bind-html="st.DisplayName | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>                    
-                </div>
-                <div ng-show-start="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}"> <!--only show for map service-->
-                    <label  ng-class="{'disabled':$root.isNotFullVersion()}">                       
-                        <input type="checkbox" ng-model="$ctrl.single.NewService.IsCached" >
-                        Cached Tiles
-                    </label>
-                </div>
-                <div ng-show-end class="form-group">
-                    <!--only show for map service-->
-                    <label>
-                        <input type="checkbox" ng-model="$ctrl.single.NewService.IsWMSEnabled">
-                        Enable WMS
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Database connection: </label>
-                    <!-- disable when edit or basic version  -->
-                    <ui-select ng-model="$ctrl.single.NewService.ConnectionId"
-                               theme="bootstrap"
-                               ng-disabled="$ctrl.single.NewService.Id||$ctrl.connections.length==1"
-                               reset-search-input="false"
-                               title="{{$root.isBasicVersion()?'The BASIC version is limited to the default installed database connection':''}}">
-                        <ui-select-match placeholder="Choose database connection">{{$select.selected.Name +'.'+$select.selected.DatabaseName}}</ui-select-match>
-                        <ui-select-choices repeat="c.Id as c in $ctrl.connections  | propsFilter: {Name: $select.search}">
-                            <div ng-bind-html="c.Name+'.'+c.DatabaseName | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>       
-                <button ng-click="$ctrl.creatNewService()" type="button" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            </div>            
+            <div class="form-group">
+                <label>Service type: </label>
+                <ui-select ng-model="$ctrl.single.NewService.ServiceType"
+                           theme="bootstrap"
+                           ng-disabled="$root.isNotFullVersion()"
+                           ng-attr-title="{{$root.isNotFullVersion()?'Only Map Services are available with the BASIC/PRO version':''}}"
+                           reset-search-input="false"
+                           title="Choose service type">
+                    <ui-select-match placeholder="Choose service type">{{$select.selected.DisplayName}}</ui-select-match>
+                    <ui-select-choices repeat="st.Id as st in $ctrl.serviceTypes  | propsFilter: {DisplayName: $select.search}">
+                        <div ng-bind-html="st.DisplayName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="form-group">
+                <label>Database connection: </label>
+                <!-- disable when edit or basic version  -->
+                <ui-select ng-model="$ctrl.single.NewService.ConnectionId"
+                           theme="bootstrap"
+                           ng-disabled="$ctrl.single.NewService.Id||$ctrl.connections.length==1"
+                           reset-search-input="false"
+                           title="{{$root.isBasicVersion()?'The BASIC version is limited to the default installed database connection':''}}">
+                    <ui-select-match placeholder="Choose database connection">{{$select.selected.Name +'.'+$select.selected.DatabaseName}}</ui-select-match>
+                    <ui-select-choices repeat="c.Id as c in $ctrl.connections  | propsFilter: {Name: $select.search}">
+                        <div ng-bind-html="c.Name+'.'+c.DatabaseName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Min scale:</label>
+                <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.single.NewService.MinScale" />
+            </div>
+            <div class="form-group">
+                <label>Max scale:</label>
+                <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.single.NewService.MaxScale" />
+            </div>
+            <div class="form-group">
+                <label>Max record count:</label>
+                <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.single.NewService.MaxRecordCount" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ng-show-start="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}">
+                <!--only show for map service-->
+                <label ng-class="{'disabled':$root.isNotFullVersion()}">
+                    <input type="checkbox" ng-model="$ctrl.single.NewService.IsCached">
+                    Cached Tiles
+                    <!-- only show when cached enabled and wms enabled -->
+                    <a ng-show="$ctrl.single.NewService.IsCached&&$ctrl.single.NewService.IsCachedSavedValue"
+                       ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/gsr/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMTSServer?service=WMTS&Request=GetCapabilities">(WMTS URL)</a>
+                </label>
+            </div>
+            <div ng-show-end class="form-group">
+                <!--only show for map service-->
+                <label>
+                    <input type="checkbox" ng-model="$ctrl.single.NewService.IsWMSEnabled">
+                    Enable WMS
+                    <a ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/gsr/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMSServer?Request=GetCapabilities">(WMS URL)</a>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input ng-model="$ctrl.single.NewService.IsAllowAnonymous" type="checkbox" /> Allow anonymous
+                </label>
+            </div>
         </div>
     </div>
-</div>
+    <div>
+        <button ng-click="$ctrl.creatNewService()" type="button" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+        <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+            <span class="glyphicon glyphicon-remove"></span> Cancel
+        </button>
+    </div>
+</form>

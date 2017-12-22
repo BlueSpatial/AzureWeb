@@ -32,6 +32,15 @@
     <property name="IsEditable" type="bool">
       <column name="IsEditable" sql-type="bit" not-null="true" />
     </property>
+     <property name="IsAddEventEnabled" type="bool">
+      <column name="IsAddEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="IsUpdateEventEnabled" type="bool">
+      <column name="IsUpdateEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="IsDeleteEventEnabled" type="bool">
+      <column name="IsDeleteEventEnabled" sql-type="bit" not-null="false" />
+    </property>
     <property name="IsODataEnabled" type="bool">
       <column name="IsODataEnabled" sql-type="bit"/>
     </property>

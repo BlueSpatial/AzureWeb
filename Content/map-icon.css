@@ -1,0 +1,42 @@
+﻿@font-face {
+    font-family: 'icon';
+    src: url('/fonts/icon.eot');
+    src: url('/fonts/icon1.eot') format('embedded-opentype'), url('/fonts/icon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.icon.polygon:before {
+    content: "\e97a";
+}
+.icon.point:before {
+    content: "\e979";
+}
+.icon.polyline:before {
+    content: "\e97b";
+}
+ .icon:not(.big):before {
+    margin-right: 5px;
+}
+
+ .rcon:after, .icon:before {
+    font-family: 'icon';
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: inherit;
+    vertical-align: top;
+    -webkit-background-size: 4320px 60px;
+    background-size: 4320px 60px;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+

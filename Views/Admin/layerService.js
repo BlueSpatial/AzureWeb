@@ -1,19 +1,7 @@
 ﻿var factoryName = 'layerService';
 
 myApp.factory(factoryName, ['$http', '$rootScope', 'authorizeService', function ($http, $rootScope, authorizeService) {
-    var updateLayerBoolField = function (fieldName,layer) {
-    	$rootScope.errorMessage = "";
-    	$rootScope.isLoading = true;
-    	$http.post("/Admin/UpdateLayerBoolField", { fieldName: fieldName, layerId: layer.Id, boolValue: layer[fieldName] }
-        ).success(function (res) {
-        	if (res.Error) {
-        		layer[fieldName] = !layer[fieldName] ;
-        		$rootScope.errorMessage = res.Message;
-        	};
-        	$rootScope.isLoading = false;
-        })
-        .error(authorizeService.onError);
-    }
+   
     //var getMetaDatas = function () {
     //    $rootScope.errorMessage = "";
     //    $rootScope.isLoading = true;
@@ -58,7 +46,7 @@ myApp.factory(factoryName, ['$http', '$rootScope', 'authorizeService', function 
 
    
     return {
-        updateLayerBoolField: updateLayerBoolField,
+      
         //getMetaDatas: getMetaDatas,
         callNewFolderDialog: callNewFolderDialog,
         callNewServiceDialog: callNewServiceDialog,

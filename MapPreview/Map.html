@@ -23,6 +23,7 @@
     <script src="esri-leaflet-legend-compat-src.js"></script>
     <!-- Esri Leaflet Related -->
     <script src="https://cdn.jsdelivr.net/leaflet.esri.related/2.0.0/esri-leaflet-related.js"></script>
+    <script src="./leaflet-providers.js"></script>
     <script src="./jquery-1.9.1.min.js"></script>
 
     <link href="./map.css" rel="stylesheet" />
@@ -35,14 +36,12 @@
     <div id="map"></div>   
     <div id="basemaps-wrapper" class="leaflet-bar">
         <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-            <option value="Topographic">Topographic</option>
-            <option value="Streets">Streets</option>
-            <option value="NationalGeographic">National Geographic</option>
-            <option value="Oceans">Oceans</option>
-            <option value="Gray">Gray</option>
-            <option value="DarkGray">Dark Gray</option>
-            <option value="Imagery">Imagery</option>
-            <option value="ShadedRelief">Shaded Relief</option>
+            <option value="OpenStreetMap.Mapnik">Mapnik</option>
+            <option value="OpenStreetMap.BlackAndWhite">BlackAndWhite</option>
+            <option value="OpenStreetMap.DE">DE</option>
+            <option value="OpenStreetMap.France">France</option>
+            <option value="OpenStreetMap.HOT">HOT</option>
+            <option value="OpenStreetMap.BZH">BZH</option>            
         </select>
     </div>
     <script src="./map.js"></script>

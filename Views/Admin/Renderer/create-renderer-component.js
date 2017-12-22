@@ -5,9 +5,10 @@
     templateUrl: '/Views/Admin/Renderer/create-renderer-component.html',
 
     // The controller that handles our component logic
-    controller: ['$scope', '$rootScope', '$http', 'rendererService', 'authorizeService', function ($scope, $rootScope, $http, rendererService, authorizeService) {
+    controller: ['$scope', '$rootScope', '$http', 'rendererService', 'authorizeService', 'commonService', function ($scope, $rootScope, $http, rendererService, authorizeService, commonService) {
         $ctrl = this;
-        $ctrl.labelFeature = {};
+        var layerInfo = {};
+        $ctrl.geometryType ="";
         $ctrl.filteredAttributes = [];
         $ctrl.sliders = [];
         var initLabels = function () {
@@ -50,13 +51,15 @@
             $rootScope.successMessage = "";
             $rootScope.errorMessage = "";
             if (!authorizeService.isAuthorize()) return;
-            var messages = rendererService.validateSaveRender($ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders, $ctrl.labelFeature);
+            var messages = rendererService.validateSaveRender($ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders);
             if (messages.length) {// if error 
                 $rootScope.errorMessage = messages.join('<br/>');
                 return;
             }          
             $rootScope.isLoading = true;
-            drawingInfoStr = rendererService.createDrawingInfo($ctrl.drawing, $ctrl.labels, defaultClassBreakLabel,$ctrl.sliders, $ctrl.sliderSetting, $ctrl.labelFeature);
+            var drawingInfoObject = rendererService.createDrawingInfo($ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders, $ctrl.sliderSetting);
+            drawingInfoObject.labelingInfo = layerInfo.drawingInfo.labelingInfo;// keep labeling info
+            var drawingInfoStr = JSON.stringify(drawingInfoObject);
             var postObject = {
                 layerId: $ctrl.drawing.Layer.Id,
                 drawing: drawingInfoStr,
@@ -65,7 +68,7 @@
             $http.post("/Renderer/PostRenderer", postObject).success(function (res) {
                 if (!res.Error) {
                     $rootScope.successMessage = "Save successful!";
-                    $ctrl.rendererForm.$setPristine();
+                    $ctrl.form.$setPristine();
                 }
                 else {
                     $rootScope.errorMessage = res.Message;
@@ -85,9 +88,9 @@
                         return;
                     }
                     $ctrl.drawing.Layer = res.Layer;
-                    var layerInfo = res.LayerInfo;
+                    layerInfo = res.LayerInfo;
                     $ctrl.layerUrl = res.LayerBreadCrumb.Url;
-                    $ctrl.labelFeature.GeometryType = layerInfo.geometryType;
+                    $ctrl.geometryType = layerInfo.geometryType;
                     
 
                     // get attribute
@@ -101,7 +104,7 @@
                     $ctrl.sliders = [];
                     $ctrl.renderSlider = false; // if show sliders now some code will make the value to not a number
                     rendererService.updateDrawingInfoToUI(layerInfo.drawingInfo, $ctrl.drawingStyles, $ctrl.patterns, $ctrl.attributes, $ctrl.getFieldValues, layerInfo.minScale,
-                                                                $ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders, $ctrl.labelFeature);
+                                                                $ctrl.drawing, $ctrl.labels, defaultClassBreakLabel, $ctrl.sliders);
                     $rootScope.isLoading = false;
                 }
                 else {
@@ -111,7 +114,7 @@
 
             });
         }
-        
+        $ctrl.reset = getLayerInfo;
         $ctrl.onLayerChange = function () {
             if ($rootScope.currentLayerId) {
                 getRendererInfo().then(function () {
@@ -119,11 +122,14 @@
                 });
             }
         }
-        $ctrl.$routerOnActivate = function (next) {
-            
-            $rootScope.currentLayerId= parseInt(next.params.id);
+        this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
             $ctrl.onLayerChange();
-        };
+        });
+        //$ctrl.$routerOnActivate = function (next) {
+            
+        //    $rootScope.currentLayerId= parseInt(next.params.id);
+        //    $ctrl.onLayerChange();
+        //};
         $ctrl.onTotalClassChange = function () {
             if ($ctrl.drawing.TotalClasses < 1) {
                 $ctrl.drawing.TotalClasses = 1;
@@ -281,21 +287,8 @@
         };
 
         // waring when have change
-        var warningMessage = "You have pending changes. Click OK to undo changes.";
-        window.onbeforeunload = function () {
-            if ($ctrl.rendererForm&&$ctrl.rendererForm.$dirty) {
-                return warningMessage;
-            }
-        }
-        this.$routerCanDeactivate = function () { // return false to not allow navigate to other page
-            if ($ctrl.rendererForm&&$ctrl.rendererForm.$dirty) {
-                if (confirm(warningMessage)) {
-                    return true
-                } else {
-                    return false;
-                }; 
-            }
-            return true;
-        }
+        commonService.warmningWhenHaveChange($ctrl);
+       
+        
     }]
 });

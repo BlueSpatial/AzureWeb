@@ -1,8 +1,8 @@
 ﻿
 <!-- full -->
-<span ng-if="$root.licenseInfo.VersionType==1" class="about-highlight hidden-sm hidden-xs" >Used {{$root.licenseInfo.CurrentEvaluationDay}} days of {{$root.licenseInfo.TotalEvaluationDay}} total trial days</span>
+<span ng-if="$root.licenseInfo.VersionType==1" class="about-highlight hidden-sm hidden-xs hidden-md" >Used {{$root.licenseInfo.CurrentEvaluationDay}} days of {{$root.licenseInfo.TotalEvaluationDay}} total trial days</span>
 
-<a ng-if="$root.licenseInfo.VersionType!=4" class="btn btn-outline red navbar-btn" ng-link="['LicenseInfo']">{{$ctrl.getVersionName()}} version</a><!--4 unknown version-->
+<a ng-if="$root.licenseInfo.VersionType!=4" class="btn btn-outline navbar-btn {{$root.licenseInfo.VersionType==1?'red':'green'}}" ng-link="['LicenseInfo']">{{$ctrl.getVersionName()}} version</a><!--4 unknown version-->
 <!-- trial -->
 
 

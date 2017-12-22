@@ -3,7 +3,7 @@ Metronic AngularJS App Main Script
 ***/
 
 /* Metronic App */
-var myApp = angular.module('myApp', ["angular-intro", "ui.bootstrap", "oc.lazyLoad", 'ngComponentRouter', 'about', 'licenseInfo', 'ngSanitize', 'ui.select', 'ui.tree', 'colorpicker.module', 'angularMultiSlider', 'LocalStorageModule', 'ui.bootstrap.progressbar', 'ckeditor'])
+var myApp = angular.module('myApp', ["angular-intro", "ui.bootstrap", "oc.lazyLoad", 'ngComponentRouter', 'about', 'licenseInfo', 'ngSanitize', 'ui.select', 'ui.tree', 'colorpicker.module', 'angularMultiSlider', 'LocalStorageModule', 'ui.bootstrap.progressbar', 'ckeditor', 'ui.bootstrap.contextMenu'])
 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */

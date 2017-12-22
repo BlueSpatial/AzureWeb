@@ -6,8 +6,9 @@
     templateUrl: '/Views/Admin/layer-field-component.html',
 
     // The controller that handles our component logic
-    controller: ['$rootScope', '$http', 'authorizeService', 'layerService', function ($rootScope, $http, authorizeService, layerService) {
-        var $ctrl = this;     
+    controller: ['$rootScope', '$http', 'authorizeService', 'layerService', 'commonService', function ($rootScope, $http, authorizeService, layerService, commonService) {
+        var $ctrl = this;
+        $ctrl.layer = { IsSupportTime: false };
         $ctrl.domains = {
             none: "None",
             range: "Range",
@@ -77,11 +78,13 @@
          
        
 
-        $ctrl.$routerOnActivate = function (next) { 
-            $rootScope.currentLayerId = parseInt(next.params.id);
+        //$ctrl.$routerOnActivate = function (next) { 
+        //    $rootScope.currentLayerId = parseInt(next.params.id);
+        //    $ctrl.onLayerChange();
+        //};
+        this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
             $ctrl.onLayerChange();
-        };
-       
+        });
        
        
         $ctrl.saveFields = function () {
@@ -106,7 +109,7 @@
                     $ctrl.fields = res.Fields;                  
                     $ctrl.beginFields = angular.copy($ctrl.fields);
                     $rootScope.successMessage = "Save successfully!";
-                    $ctrl.fieldsForm.$setPristine();
+                    $ctrl.form.$setPristine();
                 };
                 $rootScope.isLoading = false;
                 $ctrl.updateDisplayField();
@@ -132,25 +135,11 @@
         }
         $ctrl.reset = function () {
             $ctrl.fields = angular.copy($ctrl.beginFields);
-            $ctrl.fieldsForm.$setPristine();
+            $ctrl.form.$setPristine();
         };
-        var warningMessage = "You have pending changes. Click OK to undo changes.";
-        window.onbeforeunload = function () {
-            if ($ctrl.fieldsForm&&$ctrl.fieldsForm.$dirty) {
-                return warningMessage;
-            }
-        }
-        // waring when have message
-        this.$routerCanDeactivate = function () { // return false to not allow navigate to other page
-            if ($ctrl.fieldsForm&&$ctrl.fieldsForm.$dirty) {
-                if (confirm(warningMessage)) {
-                    return true
-                } else {
-                    return false;
-                };
-            }
-            return true;
-        }
+        // waring when have change
+        commonService.warmningWhenHaveChange($ctrl);
+        
     }]
        
        

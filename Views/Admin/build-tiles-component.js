@@ -28,25 +28,51 @@
             // calculator the total
             calculatorTilesTotal();
         };
+        var getCurrentTilesStatuses = function () {
+            $rootScope.errorMessage = "";
+            $rootScope.isLoading = true;
+            $http.get("/Export/CurrentTilesStatuses/" + $rootScope.currentServiceId).success(function (res) {
+                if (!res.Error) {
+                    updateTilesStatuse(res.TilesStatuses);
+
+                }
+                else {
+                    $rootScope.errorMessage = res.Message;
+                };
+                $rootScope.isLoading = false;
+            }).error(authorizeService.onError);
+        }
         //get tiles status
+        this.$onDestroy = $rootScope.$watch('currentServiceId', function () {
+            if ($rootScope.currentServiceId) {
+                getCurrentTilesStatuses();
+            }
+        });
         $ctrl.$routerOnActivate = function (next) {
             // Get the hero identified by the route parameter
-            var id = $ctrl.serviceId = next.params.id;
-            var getCurrentTilesStatuses = function () {
+           
+        };
+        $ctrl.clearTileCache = function () {
+            if (!authorizeService.isAuthorize()) return;
+            var confirmMessage = "Are you sure you want to clear tiles cache of service '" + $rootScope.currentNode.Name + "'?";
+
+            if (confirm(confirmMessage)) {
+                $rootScope.successMessage = "";
                 $rootScope.errorMessage = "";
                 $rootScope.isLoading = true;
-                $http.get("/Export/CurrentTilesStatuses/" + id).success(function (res) {
+                $http.post("/Admin/ClearCache", { serviceId: $rootScope.currentNode.Id }
+                ).success(function (res) {
                     if (!res.Error) {
-                        updateTilesStatuse(res.TilesStatuses);
-
+                        getCurrentTilesStatuses();
+                        $rootScope.successMessage = "Tiles cache has been cleared successfully!";
                     }
                     else {
                         $rootScope.errorMessage = res.Message;
                     };
                     $rootScope.isLoading = false;
-                }).error(authorizeService.onError);
+                })
+                    .error(authorizeService.onError);
             }
-            getCurrentTilesStatuses();
         };
         $ctrl.buildTiles = function () {
             if (!authorizeService.isAuthorize()) return;
@@ -62,7 +88,7 @@
                     return;
                 }
                 $ctrl.progressBar = { Value: 0,IsLoading: true, Text: "Connecting...", Max: $ctrl.totalTilesToCreate() };
-                $http.post("/Export/BuildTiles", { Levels: levels, ServiceId: $ctrl.serviceId, ConnectionHubId: $.connection.hub.id }
+                $http.post("/Export/BuildTiles", { Levels: levels, ServiceId: $rootScope.currentServiceId, ConnectionHubId: $.connection.hub.id }
                 ).success(function (res) {
                     if (res.Error) {
                         $rootScope.errorMessage = res.Message;

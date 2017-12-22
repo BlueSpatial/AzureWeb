@@ -45,7 +45,7 @@
             //        isValid = false;
             //    };
             //}
-            if (!$ctrl.single.Service) {
+            if (!$ctrl.single.Layer || !$ctrl.single.Layer.ServiceId) {
                 messages.push("Service is required");
                 isValid = false;
             }
@@ -88,7 +88,7 @@
                 //formData.append("DatabaseName", $ctrl.connectionInfo.DatabaseName);
                 formData.append("tableName", $ctrl.uploadFile.TableName);
                 formData.append("isODataEnabled", $ctrl.uploadFile.IsODataEnabled ? true : false);
-                formData.append("serviceId", $ctrl.single.Service.Id);
+                formData.append("serviceId", $ctrl.single.Layer.ServiceId);
                 formData.append("connectionHubId", $.connection.hub.id);
 
                 $rootScope.progressBar = { Value: 0, Text: "Uploading..." };
@@ -146,12 +146,7 @@
         }
 
        
-        $ctrl.filterByFolder = function (service) {
-            if (service.Id == -1 || !$ctrl.single.Folder || service.FolderId == $ctrl.single.Folder.Id) {
-                return true;
-            }
-            return false;
-        };
+      
         $ctrl.pushFolder = function (folder) {
             $ctrl.folders.push(folder);
         }

@@ -146,46 +146,8 @@ myApp.factory(factoryName, ['$http', function ($http) {
     }
     // input: *
     // output: drawingInfo
-    var createDrawingInfo = function (drawing, labels, defaultClassBreakLabel, sliders, sliderSetting, labelFeature) {
-        var createLabelingInfo = function () {
-            var createLabelSymbol = function () {
-                return {
-                    angle:0,
-                    backgroundColor: null,
-                    borderLineColor: null,
-                    color: getColorArray(labelFeature.TextColor),
-                    font:
-                        {
-                            size: labelFeature.TextSize*0.75,
-                            decoration: labelFeature.Underline ? "underline" : "none",
-                            style: labelFeature.Italic ? "italic" : "normal",
-                            weight: labelFeature.Bold? "bold" : "normal",
-                            family: "Arial Unicode MS"
-                        },
-                    haloColor: labelFeature.IsHalo ? getColorArray(labelFeature.HaloColor) : null,
-                    haloSize: labelFeature.IsHalo ? labelFeature.HaloSize * 0.75 : 0,
-                    horizontalAlignment:"center",
-                    kerning:true,
-                    rightToLeft:false,
-                    rotated:false,
-                    text:"",
-                    type:"esriTS",
-                    xoffset: 0,
-                    yoffset: 0
-                }
-            }
-            return [
-                {
-                    labelPlacement: (labelFeature.GeometryType == 'esriGeometryPoint') ? labelFeature.Alignment.Value : "esriServerPolygonPlacementAlwaysHorizontal",
-                    labelExpression: labelFeature.Text,
-                    symbol: createLabelSymbol(),
-                    maxScale: 0,
-                    minScale: labelFeature.VisibleRange.Value,
-                    useCodedValues: true,//todo
-                    where:null
-                }
-            ];
-        }
+    var createDrawingInfo = function (drawing, labels, defaultClassBreakLabel, sliders, sliderSetting) {
+      
         // create symbol
         var createSymbol = function (label) {
             var symbol = {};
@@ -292,81 +254,36 @@ myApp.factory(factoryName, ['$http', function ($http) {
         };
 
         var drawingInfo = {
-            labelingInfo: labelFeature.IsActive? createLabelingInfo():[],
             transparency: drawing.Transparency,
             renderer: createRendererObject(),
         }
-        return JSON.stringify(drawingInfo);
+        return drawingInfo;
+    };
+    var findVisibleRange = function (visibleRange) {
+        var visibleRangeItems = visibleRanges.filter(function (item, i) {
+            return item.Value == visibleRange;
+        })
+        if (visibleRangeItems.length == 1) {
+            return visibleRangeItems[0];
+        }
+        return {};
+    }
+    var convertColorArray = function (colors) {
+        if (!colors) {
+            return "";
+        }
+        colors[3] = colors[3] / 255;
+        return "rgba(" + colors.join(',') + ")"
     };
     // input: drawingInfo, drawingStyles, patterns, attributes, getFieldValues,minScale
-    //ref: drawing, labels, sliders, labelFeature
+    //ref: drawing, labels, sliders
     var updateDrawingInfoToUI = function (drawingInfo, drawingStyles, patterns, attributes, getFieldValues,minScale,
-                                        drawing, labels, defaultClassBreakLabel, sliders, labelFeature)
+                                        drawing, labels, defaultClassBreakLabel, sliders)
     {
-        var convertColorArray = function (colors) {
-            if (!colors) {
-                return "";
-            }
-            colors[3] = colors[3] / 255;
-            return "rgba(" + colors.join(',') + ")"
-        };
-        var findVisibleRange = function (visibleRange) {
-            var visibleRangeItems = visibleRanges.filter(function (item, i) {
-                return item.Value == visibleRange;
-            })
-            if (visibleRangeItems.length == 1) {
-                return visibleRangeItems[0];
-            }
-            return {};
-        }
+       
+      
         drawing.VisibleRange = findVisibleRange(minScale);
-        var updateLabelFeature = function () {
-            if (drawingInfo.labelingInfo && drawingInfo.labelingInfo.length != 0) {
-                var labelingInfo = drawingInfo.labelingInfo[0];
-                labelFeature.IsActive = true;
-                var alignmentItems = alignments.filter(function (item, i) {
-                    return item.Value == labelingInfo.labelPlacement;
-                })
-                if (alignmentItems.length == 1) {
-                    labelFeature.Alignment = alignmentItems[0];
-                }
-
-                labelFeature.VisibleRange = findVisibleRange(labelingInfo.minScale);
-                labelFeature.Text = labelingInfo.labelExpression;
-                labelFeature.TextColor = convertColorArray(labelingInfo.symbol.color);
-                labelFeature.TextSize = labelingInfo.symbol.font.size / 0.75;
-                if (labelingInfo.symbol.font.decoration == 'underline') {
-                    labelFeature.Underline = true;
-                };
-                if (labelingInfo.symbol.font.style == 'italic') {
-                    labelFeature.Italic = true;
-                };
-                if (labelingInfo.symbol.font.weight == 'bold') {
-                    labelFeature.Bold = true;
-                };
-                if (labelingInfo.symbol.haloColor) {
-                    labelFeature.IsHalo = true;
-                    labelFeature.HaloColor = convertColorArray(labelingInfo.symbol.haloColor);
-                    labelFeature.HaloSize = labelingInfo.symbol.haloSize / 0.75;
-                };
-            }
-            else {
-                // init label feature
-                labelFeature.IsActive = null;
-                labelFeature.Alignment = null;
-                labelFeature.VisibleRange = null;
-                labelFeature.Text = "";
-                labelFeature.TextColor = null;
-                labelFeature.TextSize = null;
-                labelFeature.Underline = null;
-                labelFeature.Italic = null;
-                labelFeature.Bold = null;
-                labelFeature.IsHalo = null;
-                labelFeature.HaloColor = null;
-                labelFeature.HaloSize = null;
-            };
-        };
-        updateLabelFeature();
+       
         drawing.Transparency = drawingInfo.transparency;
         updateSymbolToUI = function (symbol, label) {
             label = label || {};
@@ -540,38 +457,11 @@ myApp.factory(factoryName, ['$http', function ($http) {
             }
         };
     };
-    var validateSaveRender = function (drawing, labels, defaultClassBreakLabel, sliders, labelFeature) {
+    var validateSaveRender = function (drawing, labels, defaultClassBreakLabel, sliders) {
        
        
         var messages = [];
-        var validateLabelFeature = function () {
-            if (labelFeature.IsActive) {
-                if (!labelFeature.Text) {
-                    messages.push("Label: text is required.");
-                };
-                if (!labelFeature.TextSize) {
-                    messages.push("Label: text size is required.");
-                };
-                if (!labelFeature.TextColor) {
-                    messages.push("Label: text color is required.");
-                };
-                if (labelFeature.IsHalo) {
-                    if (!labelFeature.HaloSize) {
-                        messages.push("Label: Halo size is required.");
-                    }
-                    if (!labelFeature.HaloColor) {
-                        messages.push("Label: Halo color is required.");
-                    }
-                };
-                if (labelFeature.GeometryType == 'esriGeometryPoint' && !labelFeature.Alignment) {
-                    messages.push("Label: Alignment is required.");
-                };
-                if (!labelFeature.VisibleRange) {
-                    messages.push("Label: Visible range is required.");
-                };
-            }
-        };
-        validateLabelFeature();
+       
         if (drawing.Transparency != 0 && !drawing.Transparency) {
             messages.push("Transparency is required.");
         }
@@ -615,6 +505,9 @@ myApp.factory(factoryName, ['$http', function ($http) {
         validateSaveRender: validateSaveRender,
         alignments: alignments, // data for labeling info
         visibleRanges: visibleRanges,
-        validateLabel: validateLabel
+        validateLabel: validateLabel,
+        findVisibleRange: findVisibleRange,
+        convertColorArray: convertColorArray,
+        getColorArray: getColorArray
     };
 }]);

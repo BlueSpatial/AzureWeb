@@ -1,4 +1,4 @@
-﻿<breadcrumb-component metadata-type="1" metadata-id="$ctrl.serviceId"></breadcrumb-component>
+﻿<breadcrumb-component metadata-type="1" metadata-id="$rootScope.currentServiceId"></breadcrumb-component>
 
 <table class="table table-hover">
     <thead>
@@ -39,3 +39,6 @@
 </uib-progressbar>
 
 <button class="btn blue" ng-click="$ctrl.buildTiles()">Create tiles</button>
+<button class="btn btn-danger tree-button" ng-click="$ctrl.clearTileCache()">
+    <span class="glyphicon glyphicon-erase"></span> Clear Cache
+</button>

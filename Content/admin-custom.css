@@ -70,17 +70,20 @@ body > .breadcrumb {
 .page-spinner-bar > div {
     background: #3598dc;
 }
-.glyphicons.tree-icon{
-    line-height:0.5;
+.glyphicons.tree-icon, .glyphicons.metadata-icon {
+    line-height: 0;
+    vertical-align: middle;
 }
 .glyphicons-folder-open {
-    color: #f8d775;
+    color: #ecb921;
+    /*color: #f8d775;*/
 }
 
-
-.glyphicons-sort {
+/*all layer icon (mapbox icon)*/
+.metadata-icon.icon { 
     color: #2c3e50;
 }
+
 .glyphicons-nearby-circle {
     color: #27ae60;
 }
@@ -128,4 +131,33 @@ b, strong {
     right: 0;
     bottom: 0;
     position: absolute;
+}
+.angular-ui-tree-node .node-text {
+    font-family: "Open Sans", sans-serif;
+    margin-left: -10px;
+    line-height: 1.2;
+    font-weight: normal;
+}
+.page-header.navbar .page-logo {
+    float: left;
+    display: block;
+    width: 174px;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 0px;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.active > a, .page-header.navbar .hor-menu .navbar-nav > li.current > a {
+    color: #fff !important;
+    background: #3598dc !important;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.active .selected, .page-header.navbar .hor-menu .navbar-nav > li.current .selected {
+    border-top: 6px solid #3598dc;
+}
+.page-header.navbar .hor-menu .navbar-nav > li.active > a > i, .page-header.navbar .hor-menu .navbar-nav > li.current > a > i {
+    color: #fff;
+}
+.page-content-wrapper .page-content {
+ 
+     min-height:initial!important;
+   
 }

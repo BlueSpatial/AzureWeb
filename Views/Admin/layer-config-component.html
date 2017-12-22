@@ -1,20 +1,48 @@
 ﻿<breadcrumb-component metadata-type="2" metadata-id="$ctrl.layerId"></breadcrumb-component>
-<div class="row">
-    <div class="col-md-6">    
-        <div class="form-group col-md-12">
-            <label>Min scale</label>
-            <input class="form-control" type="number" ng-min="0" ng-model="$ctrl.layerSetting.MinScale" />
-        </div>
-        <div class="form-group col-md-12">
-            <label>Max scale</label>
-            <input class="form-control" type="number" ng-min="0" ng-model="$ctrl.layerSetting.MaxScale" />
-        </div>       
-        <div class="form-group col-md-12">
-            <button ng-click="$ctrl.saveLayerSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
-                <span class="glyphicon glyphicon-remove"></span> Cancel
-            </button>
+<form name="$ctrl.form">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Layer name: </label>
+                <input ng-model="$ctrl.layerSetting.Name" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Min scale:</label>
+                <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.layerSetting.MinScale" />
+            </div>
+            <div class="form-group">
+                <label>Max scale:</label>
+                <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.layerSetting.MaxScale" />
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" ng-model="$ctrl.layerSetting.IsODataEnabled">
+                    Enable OData
+                    <!-- link to odata -->
+                    <a ng-if="$ctrl.layerSetting.IsODataEnabled&&$ctrl.layerSetting.IsODataEnabledSavedValue" target="_blank" href="/odata/layers/{{$ctrl.layerSetting.Name}}">(OData URL)</a>
+                </label>
+            </div>
+            <div ng-if="$ctrl.layerSetting.IsFeatureLayer">
+                <div class="form-group">
+                    <label>
+                        <input ng-model="$ctrl.layerSetting.HasAttachments" type="checkbox" /> Has attachments
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input ng-model="$ctrl.layerSetting.IsEditable" type="checkbox" /> Editable
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button ng-click="$ctrl.saveLayerSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</form>
 

@@ -1,12 +1,14 @@
-﻿<h4> Azure AD Settings </h4>
-<div class="col-md-6">
-    <div class="form-group">
-        <label>Tenant:</label>
-        <input class="form-control" placeholder="e.g: example.onmicrosoft.com" ng-model="$ctrl.azureAdSetting.Tenant" />
+﻿<div class="portlet light bordered ng-scope" id="mainPanel">
+    <h4> Azure AD Settings </h4>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Tenant:</label>
+            <input class="form-control" placeholder="e.g: example.onmicrosoft.com" ng-model="$ctrl.azureAdSetting.Tenant" />
+        </div>
+        <div class="form-group">
+            <label>App ID:</label>
+            <input class="form-control" placeholder="e.g: 3886c6d6-b3b5-485e-a390-6f0054f119a7" ng-model="$ctrl.azureAdSetting.AppId" />
+        </div>
+        <button ng-click="$ctrl.saveAzureAdSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
     </div>
-    <div class="form-group">
-        <label>App ID:</label>
-        <input class="form-control" placeholder="e.g: 3886c6d6-b3b5-485e-a390-6f0054f119a7" ng-model="$ctrl.azureAdSetting.AppId" />
-    </div>
-    <button ng-click="$ctrl.saveAzureAdSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
 </div>

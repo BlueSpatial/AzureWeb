@@ -1,0 +1,45 @@
+﻿<breadcrumb-component metadata-type="2" metadata-id="$rootScope.currentLayerId"></breadcrumb-component>
+<div class="row">
+    <div class="col-md-6">  
+        <div class="form-group col-md-12">
+            <label>               
+               SignalR URL: {{$ctrl.currentHost}}/signalr
+            </label>
+        </div>
+        <div class="form-group col-md-12">
+            <label>
+                Hubs URL: {{$ctrl.currentHost}}/signalr/hubs
+            </label>
+        </div>
+        <div class="form-group col-md-12">
+            <label>               
+                Group ID: {{$root.currentLayerId}}
+            </label>
+        </div>
+        <div class="form-group col-md-12">
+            <label>
+                <input type="checkbox" ng-model="$ctrl.layerSetting.IsAddEventEnabled" />
+                Enable add event
+            </label>         
+        </div>
+        <div class="form-group col-md-12">
+            <label>
+                <input type="checkbox" ng-model="$ctrl.layerSetting.IsUpdateEventEnabled" />
+                Enable update event
+            </label>
+        </div> 
+        <div class="form-group col-md-12">
+            <label>
+                <input type="checkbox" ng-model="$ctrl.layerSetting.IsDeleteEventEnabled" />
+                Enable delete event
+            </label>
+        </div> 
+        <div class="form-group col-md-12">
+            <button ng-click="$ctrl.saveLayerSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
+        </div>
+    </div>
+</div>
+

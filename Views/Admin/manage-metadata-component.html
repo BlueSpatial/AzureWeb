@@ -1,7 +1,8 @@
 ﻿<script type="text/ng-template" id="nodes_renderer.html">
-    <div ng-click="$ctrl.activeLayer(node)" ui-tree-handle class="tree-node tree-node-content"
+    <div id="node{{node.MetadataType}}_{{node.Id}}" ng-click="$ctrl.activeNode(this,$index)"  context-menu="$ctrl.menuOptions"
+                 ui-tree-handle class="tree-node tree-node-content"
          title="{{$ctrl.getDisableTitle(node)}}"
-         ng-class="{'folder':node.MetadataType==0,'service':node.MetadataType==1, 'layer':node.MetadataType==2,'disabled': node.IsDisabled,'active':node.Id==$root.currentLayerId&&node.MetadataType==2}">
+         ng-class="{'folder':node.MetadataType==0,'service':node.MetadataType==1, 'layer':node.MetadataType==2,'disabled': node.IsDisabled,'active':node.Id==$root.currentNode.Id&&node.MetadataType==$root.currentNode.MetadataType}">
         <a class="btn expand-button btn-xs btn-enable" ng-if="node.Nodes && node.Nodes.length > 0" data-nodrag ng-click="toggle(this)">
             <span class="glyphicon"
                   ng-class="{
@@ -10,139 +11,21 @@
         }"></span>
         </a>
        
-        <a href="{{$ctrl.getNodeLink(this,$index)}}" target="_blank"><span class="glyphicons tree-icon"
-      ng-class="{
-          'glyphicons-folder-open': node.MetadataType==0,
-          'glyphicons-nearby-circle': node.MetadataType==1&&node.ServiceType==0,
-          'glyphicons-nearby-square': node.MetadataType==1&&node.ServiceType==1,
-          'glyphicons-sort': node.MetadataType==2
-
-        }"></span> {{node.Name}} {{$ctrl.getNodeTypeName(this,$index)}}</a>
-        
-
-        <a class="pull-right btn btn-danger btn-xs tree-button btn-enable" data-nodrag ng-click="$ctrl.removeMetadata(this)">
-            <span class="glyphicon glyphicon-remove"></span> Delete
-        </a>
-        <a class="pull-right btn btn-success btn-xs m-r-8 tree-button" data-nodrag ng-click="$ctrl.editNode(this)">
-            <span class="glyphicon glyphicon-pencil"></span> Edit
-        </a>
-        <!--Layer-->
-
-
        
-        <div ng-if-start="node.MetadataType==2" class="btn-group pull-right">
-            <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                More
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right init-min-width" role="menu">
-                <li>
-                    <a href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink(this,$index)}}" target="_blank">
-                        <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
-                    </a>
-                </li>
-                <li>
-                    <a ng-link="['LayerConfiguation', {id:node.Id }]">
-                        <span class="glyphicons glyphicons-settings tree-icon"></span> Layer Config
-                    </a>
-                </li>
-                <li>
-                    <a ng-link="['FieldConfiguation', {id:node.Id }]">
-                        <span class="glyphicon glyphicon-cog"></span> Field Config
-                    </a>
-                </li>
-                <li>
-                    <a ng-link="['PopupConfiguation', {id:node.Id }]">
-                        <span class="glyphicons glyphicons-embed-close tree-icon"></span> HTML Config
-                    </a>
-                </li>
-                <li>
-                    <a ng-link="['RelatedRecord', {id:node.Id }]">
-                        <span class="glyphicons glyphicons-record tree-icon"></span> Related Records
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!--<a class="pull-right btn btn-success btn-xs tree-button m-r-8" data-nodrag ng-link="['PopupConfiguation', {id:node.Id }]">
-            <span class="glyphicons glyphicons-embed-close tree-icon"></span> Config HTML
-        </a>
-        <a class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['FieldConfiguation', {id:node.Id }]">
-            <span class="glyphicon glyphicon-cog"></span> Config Field
-        </a>
-        <a class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['LayerConfiguation', {id:node.Id }]">
-            <span class="glyphicon glyphicon-cog"></span> Config Layer
-        </a>-->
-        <a ng-if-end class="pull-right btn blue btn-xs m-r-8" data-nodrag ng-link="['Renderer', {id:node.Id }]">
-            <span class="glyphicon glyphicon-picture"></span> Edit Renderer
-        </a>
-        <!--Layer-->
+        <!--3 top for folder and service, 3 button for layer-->
+        <span class="metadata-icon"
+              ng-class="{
+            'glyphicons glyphicons-folder-open': node.MetadataType==0,
+            'glyphicons glyphicons-nearby-circle': node.MetadataType==1&&node.ServiceType==0,
+            'glyphicons glyphicons-nearby-square': node.MetadataType==1&&node.ServiceType==1,
 
-        
-       
-        <!--Service-->
-        <div  ng-if="node.MetadataType==1" class="btn-group pull-right">
-            <button type="button" class="btn btn-xs m-r-8 btn-success tree-button dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                More
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right init-min-width" role="menu">
-                <li>
-                    <a ng-link="['ServiceConfiguation', {id:node.Id }]">
-                        <span class="glyphicons glyphicons-settings tree-icon"></span> Service Config
-                    </a>
-                </li>
-               
-                <li ng-if-start="node.ServiceType==0&&node.IsCached">
-                    <a ng-link="['BuildTiles', {id:node.Id }]">
-                        <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
-                    </a>
-                </li>
-                <li ng-if-end>
-                    <a ng-click="$ctrl.clearTileCache(this)">
-                        <span class="glyphicon glyphicon-erase"></span> Clear Cache
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!--<a ng-if="node.MetadataType==1" class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['ServiceConfiguation', {id:node.Id }]">
-            <span class="glyphicon glyphicon-cog"></span> Config Service
-        </a>
-        <a class="pull-right btn btn-success btn-xs m-r-8 tree-button" ng-if-start="node.MetadataType==1&&node.ServiceType==0&&node.IsCached" ng-click="$ctrl.clearTileCache(this)">-->
-            <!--Only show for Map Service and cached-->
-            <!--<span class="glyphicon glyphicon-erase"></span> Clear Cache
-        </a>        
-        <a ng-if-end class="btn btn-success btn-xs tree-button pull-right m-r-8" ng-link="['BuildTiles', {id:node.Id }]">
-            <span class="glyphicons glyphicons-more-items tree-icon"></span> Build Tiles
-        </a>-->
-       
-        <!--Service-->
+            'icon polygon': node.MetadataType==2&&(node.Type==1||node.Type==2),
+            'icon point': node.MetadataType==2&&node.Type==0,
+            'icon polyline': node.MetadataType==2&&node.Type==3}">
 
-        <a id="intro3" class="pull-right btn blue btn-xs m-r-8" 
-           ng-if="node.MetadataType==1" ng-click="$ctrl.showLayerModal(this);$root.exitIntro()">
-            <!--Only show for Map Service and cached-->
-            <span class="glyphicon glyphicon-plus"></span> Add Layer
-        </a>
-        <a id="intro2" ng-if-start="node.MetadataType==0" class="pull-right btn blue btn-xs m-r-8" ng-click="$ctrl.addNewService(this);$root.exitIntro()">
-            <span class="glyphicon glyphicon-plus"></span> Add Service
-        </a>
-        <a ng-if-end class="pull-right btn blue btn-xs m-r-8" ng-click="$ctrl.openImportServiceDialog(this)">
-            <span class="glyphicon glyphicon-import"></span> Import Service
-        </a>
-        <label ng-if="$ctrl.isFeatureLayer(this)" class="pull-right editable-checkbox tree-checkbox">
-            <input ng-model="node.HasAttachments" ng-change="$ctrl.updateLayerBoolField('HasAttachments',node)" type="checkbox" /> Has attachments
-        </label>
-
-        <label ng-if="$ctrl.isFeatureLayer(this)" class="pull-right editable-checkbox tree-checkbox">
-            <input ng-model="node.IsEditable" ng-change="$ctrl.updateLayerBoolField('IsEditable',node)" type="checkbox" /> Editable
-        </label>
-        <!--Only show for Service-->
-        <label ng-if="node.MetadataType==1" class="pull-right editable-checkbox tree-checkbox">
-            <input ng-model="node.IsAllowAnonymous" ng-change="$ctrl.updateServiceAllowAnonymousState(node)" type="checkbox" /> Allow anonymous
-        </label>
-        <!--Only show for Map Service-->
-        <label ng-if="node.MetadataType==1&&node.ServiceType==0" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}" ng-class="{'disabled':$root.isNotFullVersion()}" class="pull-right editable-checkbox tree-checkbox">
-            <input ng-model="node.IsCached" ng-change="$ctrl.updateServiceCachedState(node)" type="checkbox" /> Cached Tiles
-        </label>
+            <span class="node-text">{{node.Name}} {{$ctrl.getNodeTypeName(this,$index)}}</span>
+        </span>
+      
 
     </div>
     <ol ui-tree-nodes="" ng-model="node.Nodes" ng-class="{hidden: collapsed}">
@@ -151,51 +34,128 @@
     </ol>
 </script>
 
-<div class="row" ng-intro-options="$ctrl.introOptions" ng-intro-autorefresh="1" ng-intro-method="$ctrl.callIntro" ng-intro-exit-method="$root.exitIntro">
-    <div class="col-sm-12">
-        <button class="btn btn-default expand-button" ng-click="$ctrl.expandAll()"><span class="glyphicon glyphicon-expand"></span> Expand all</button>
-        <button class="btn btn-default expand-button" ng-click="$ctrl.collapseAll()"><span class="glyphicon glyphicon-collapse-down"></span> Collapse all</button>
-        <button id="intro1" class="btn blue" ng-click="$ctrl.addNewFolder();$root.exitIntro()"><span class="glyphicon glyphicon-plus"></span> Add folder</button>
-    </div>
-</div>
+
 
 <div class="row">
-    <div class="col-sm-12">
-        <div ui-tree data-drag-enabled="false" id="tree-root">
+    <div class="col-sm-4">
+        <div ui-tree data-drag-enabled="false" class="portlet light bordered" id="tree-root">
+            <div class="row" ng-intro-options="$ctrl.introOptions" ng-intro-autorefresh="1" ng-intro-method="$ctrl.callIntro" ng-intro-exit-method="$root.exitIntro">
+                <div class="col-sm-12">
+                    <button class="btn btn-default expand-button" ng-click="$ctrl.expandAll()"><span class="glyphicon glyphicon-expand"></span> Expand </button>
+                    <button class="btn btn-default expand-button" ng-click="$ctrl.collapseAll()"><span class="glyphicon glyphicon-collapse-down"></span> Collapse </button>
+                    <button id="intro1" class="btn blue" ng-click="$ctrl.addNewFolder();$root.exitIntro()"><span class="glyphicon glyphicon-plus"></span> Add Folder</button>
+                </div>
+            </div>
             <ol ui-tree-nodes ng-model="$ctrl.data">
                 <li ng-repeat="node in $ctrl.data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
             </ol>
         </div>
     </div>
-</div>
-<create-folder-modal-component callback="$ctrl.pushFolder" single="$ctrl.single"></create-folder-modal-component>
-<create-service-modal-component callback="$ctrl.pushService" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></create-service-modal-component>
-<create-layer-modal-component callback="$ctrl.saveLayerCallback" single="$ctrl.single"></create-layer-modal-component>
-<import-service-modal-component callback="$ctrl.importServiceCallBack" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></import-service-modal-component>
+    <!--main panel-->
+    <div class="col-sm-8">
+        <!--folder-->
+        <div class="portlet light bordered" id="mainPanel" ng-if="$root.currentNode.MetadataType==0">      
+            <div class="right-buttons" ng-if-start="$root.currentNode.Id"> <!--this is folder function only show when edit folder (when it aready have id)-->
+                <a class="btn blue" ng-click="$ctrl.openImportServiceDialog($root.currentScope)">
+                    <span class="glyphicon glyphicon-import"></span> Import Service
+                </a>
+                <a id="intro2" class="btn blue" ng-click="$ctrl.addNewService($root.currentScope);$root.exitIntro()">
+                    <span class="glyphicon glyphicon-plus"></span> Add Service
+                </a>
+                <a class="btn btn-outline red btn-enable" data-nodrag ng-click="$ctrl.removeMetadata($root.currentScope)">
+                    <span class="glyphicon glyphicon-remove"></span> Delete folder
+                </a>
+            </div>
+            <breadcrumb-component ng-if-end metadata-type="0" metadata-id="$root.currentNode.Id"></breadcrumb-component>
+            <create-folder-modal-component callback="$ctrl.pushFolder" single="$ctrl.single"></create-folder-modal-component>
+        </div>
+        <!--service-->
+        <div class="portlet light bordered" id="mainPanel" ng-if="$root.currentNode.MetadataType==1">
+            <div class="right-buttons" ng-show="$root.currentNode.Id">  <!--this is service function only show when edit service (when it aready have id)-->
+                <a id="intro3" class="btn blue"
+                   ng-click="$ctrl.showLayerModal($root.currentScope);$root.exitIntro()">
+                    <span class="glyphicon glyphicon-plus"></span> Add Layer
+                </a>
+                <a class="btn btn-outline red btn-enable" data-nodrag ng-click="$ctrl.removeMetadata($root.currentScope)">
+                    <span class="glyphicon glyphicon-remove"></span> Delete service
+                </a>
+            </div>
+            <breadcrumb-component metadata-type="1" metadata-id="$root.currentServiceId"></breadcrumb-component>
+            <div>
+                <ul class="nav nav-tabs">
+                    <!-- tab 1 hide for feature service or not cached or not have Id (when add) -->
+                    <li ng-hide="t.Id==1&&($root.currentNode.ServiceType==1||!$root.currentNode.IsCached||!$root.currentNode.Id)" ng-repeat="t in $ctrl.serviceTabs" ng-class="{'active': t.Id==$ctrl.currentServiceTab}">
+                        <a ng-click="$ctrl.activeServiceTab(t.Id)">{{t.Name}}</a>
+                    </li>
+                </ul>
+                <div class="tab-content ">
+                    <div class="tab-pane active" ng-if="$ctrl.currentServiceTab==0">
+                        <create-service-modal-component callback="$ctrl.pushService" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></create-service-modal-component>
+                    </div>
+                    <!-- hide for feature service -->
+                    <div ng-hide="$root.currentNode.ServiceType==1||!$root.currentNode.Id" class="tab-pane active" ng-if="$ctrl.currentServiceTab==1"> 
+                        <build-tiles-component></build-tiles-component>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <!--layer-->
+        <div class="portlet light bordered" id="mainPanel" ng-if="$root.currentNode.MetadataType==2">
+            <div class="right-buttons" ng-show="$root.currentNode.Id">
+                <a class="btn btn-primary blue" href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink($root.currentScope,$root.currentNodeIndex)}}" target="_blank">
+                    <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
+                </a>
+                <a class="btn btn-outline red btn-enable" data-nodrag ng-click="$ctrl.removeMetadata($root.currentScope)">
+                    <span class="glyphicon glyphicon-remove"></span> Delete layer
+                </a>
+            </div>
+            <!--layer breadcrumb-->
+            <div>
+                <breadcrumb-component ng-if="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
+            </div>
+            <ul class="nav nav-tabs">
+                <li ng-repeat="t in $ctrl.layerTabs" ng-class="{'active': t.Id==$ctrl.currentLayerTab}">
+                    <a ng-click="$ctrl.activeLayerTab(t.Id)">{{t.Name}}</a>
+                </li>                
+            </ul>
 
-<div class="modal fade" id="editLayerModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Layer</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Layer name: </label>
-                    <input ng-model="$ctrl.single.NewLayer.Name" class="form-control">
+            <div class="tab-content ">
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==0">
+                   <layer-config-component push-layer="$ctrl.pushLayer"></layer-config-component>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" ng-model="$ctrl.single.NewLayer.IsODataEnabled">
-                        Enable OData
-                    </label>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==1">
+                    <!--field-->
+                   <layer-field-component></layer-field-component>
                 </div>
-                <button ng-click="$ctrl.updateLayerName()" type="button" class="btn blue">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    Save
-                </button>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==2">
+                    <!--renderer-->
+                   <create-renderer-component></create-renderer-component>
+                </div>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==3">
+                   <!-- label content -->                    
+                    <label-component></label-component>                   
+                </div>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==4">
+                    <!--html-->
+                    <popup-component></popup-component>
+                </div>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==5">
+                    <!--relate record-->
+                    <related-record-component></related-record-component>
+                </div>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==6">
+                    <!--relate record-->
+                    <event-config-component></event-config-component>
+                </div>
+               
             </div>
+            
         </div>
     </div>
 </div>
+
+
+<create-layer-modal-component callback="$ctrl.saveLayerCallback" single="$ctrl.single"></create-layer-modal-component>
+<import-service-modal-component callback="$ctrl.importServiceCallBack" single="$ctrl.single" breadcrumb="$ctrl.folderBreadcrumb" connections="$ctrl.connections"></import-service-modal-component>
+

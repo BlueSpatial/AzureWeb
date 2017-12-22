@@ -11,10 +11,13 @@
   font-weight: bold;
 }
 .ui-select-icon .ui-select-choices-row{
-    width: 33.33333%;
+    width: 10%;
     display: inline-block;
 }
-.ui-select-icon span.ui-select-toggle{
+    .ui-select-icon .ui-select-choices-row > span {
+        padding-left: 12px!important;
+    }
+.ui-select-icon span.ui-select-toggle {
     padding-top: 0;
     padding-bottom: 0;
 }

@@ -18,12 +18,12 @@
         //    $ctrl.layers = res.data.Layers;
         //});
         $ctrl.getTables = function () {
-            if (!$ctrl.single.Service || !$ctrl.single.Service.Id) {
+            if (!$ctrl.single.Layer || !$ctrl.single.Layer.ServiceId) {
                 return;
             }
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
-            $http.post("/Admin/ListTables", { serviceId: $ctrl.single.Service.Id}
+            $http.post("/Admin/ListTables", { serviceId: $ctrl.single.Layer.ServiceId}
            ).success(function (res) {
                if (!res.Error) {
                    $ctrl.tables = res.Tables;
@@ -34,7 +34,7 @@
                $rootScope.isLoading = false;
            });
         };        
-        $scope.$watch('$ctrl.single.Service.Id', function () {
+        $scope.$watch('$ctrl.single.Layer.ServiceId', function () {
             $ctrl.getTables();
         });
         $ctrl.generateHibernateCongfig = function () {
@@ -45,7 +45,7 @@
             if (!$ctrl.layerName) {
                 $rootScope.errorMessage = "Layer name is required";
             }
-            $http.post("/Admin/GenerateHibernateCongfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Service.Id, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false) }
+            $http.post("/Admin/GenerateHibernateCongfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false) }
            ).success(function (res) {
                if (!res.Error) {
                    $ctrl.callback(res.Layer);
@@ -83,12 +83,7 @@
                }               
            });
         }
-        $ctrl.filterByFolder = function (service) {
-            if (service.Id == -1 || !$ctrl.single.Folder || service.FolderId == $ctrl.single.Folder.Id) {
-                return true;
-            }
-            return false;
-        };
+       
         $ctrl.pushFolder = function (folder) {
             $ctrl.folders.push(folder);
         }

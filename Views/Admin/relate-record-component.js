@@ -23,7 +23,7 @@
             });
             
 
-            $http.post("/Admin/SaveRelatedTables", { layerId: $ctrl.layerId, relatetionShips: JSON.stringify(relatetionShips) }
+            $http.post("/Admin/SaveRelatedTables", { layerId: $rootScope.currentLayerId, relatetionShips: JSON.stringify(relatetionShips) }
             ).success(function (res) {
                 if (res.Error) {                   
                     $rootScope.errorMessage = res.Message;
@@ -39,7 +39,7 @@
         var getRelateRecord = function () {
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
-            $http.get("/admin/GetRelatedTables", { params: { layerId: $ctrl.layerId } }).success(function (res) {
+            $http.get("/admin/GetRelatedTables", { params: { layerId: $rootScope.currentLayerId } }).success(function (res) {
                 if (!res.Error) {
                     $ctrl.tables = res.Tables;
                     $ctrl.relateRecord.SelectedTables=res.SelectTables;
@@ -51,11 +51,10 @@
             });
         }
         $ctrl.reset = getRelateRecord;
-        $ctrl.$routerOnActivate = function (next) {
-            $ctrl.layerId = parseInt(next.params.id);            
-            getRelateRecord();           
-        };
-       
+      
+        this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
+            getRelateRecord();
+        });
       
 
     }]

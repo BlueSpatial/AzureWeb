@@ -1,20 +1,18 @@
-﻿<div class="modal fade" id="creatFolderModel" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{$ctrl.single.IsEditMode?'Edit':'Add'}} folder</h4>
+﻿<!--<h4 class="modal-title">{{$ctrl.single.IsEditMode?'Edit':'Add'}} folder</h4>-->
+<form name="$ctrl.form">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Folder name: </label>
+                <input ng-model="$ctrl.single.NewFolder.Name" class="form-control">
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Folder name: </label>
-                    <input ng-model="$ctrl.single.NewFolder.Name" class="form-control">
-                </div>
-                <button ng-click="$ctrl.saveFolder()" type="button" class="btn blue">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    Save
-                </button>
-            </div>            
+            <button ng-click="$ctrl.saveFolder()" type="button" class="btn blue">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+                Save
+            </button>
+            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
         </div>
     </div>
-</div>
+</form>

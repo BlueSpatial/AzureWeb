@@ -33,11 +33,14 @@
                 getPopupContent();
             }
         };
-        $ctrl.$routerOnActivate = function (next) {
-            // Get the layer Id by the route parameter
-            $rootScope.currentLayerId =parseInt(next.params.id);     
+        //$ctrl.$routerOnActivate = function (next) {
+        //    // Get the layer Id by the route parameter
+        //    $rootScope.currentLayerId =parseInt(next.params.id);     
+        //    $ctrl.onLayerChange();
+        //};
+        this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
             $ctrl.onLayerChange();
-        };
+        });
         $ctrl.save = function () {
             if (!authorizeService.isAuthorize()) return;
             $rootScope.errorMessage = "";

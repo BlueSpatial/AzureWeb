@@ -11,10 +11,10 @@
 
     @RenderSection("styles", required: false)
 </head>
-<body class="{{isActiveRoute('/UserLogin')?'login':'page-header-fixed page-sidebar-closed-hide-logo page-md page-sidebar-fixed'}} " ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': !$root.sidebarShow}" >   
+<body class="{{isActiveRoute('/UserLogin')?'login':'page-header-fixed page-content-white page-full-width page-md'}} " ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid}" >   
     @RenderBody()
     <!-- BEGIN FOOTER -->
-    <div ng-show="(!$root.isActiveRoute('/UserLogin')&&!$root.isCheckingLogin)||$root.isActiveRoute('/UserLogin')" ng-class="{'footer-login':$root.isActiveRoute('/UserLogin')}" ng-include="'tpl/footer.html'" ng-controller="FooterController" class="page-footer"> </div>
+    <div ng-show="(!$root.isActiveRoute('/UserLogin')&&!$root.isCheckingLogin)||$root.isActiveRoute('/UserLogin')" ng-class="{'footer-login':$root.isActiveRoute('/UserLogin')}" ng-include="'tpl/footer.html'" ng-controller="FooterController" class="page-footer" style="background-color:white"> </div>
     <script type="text/javascript">
     CKEDITOR_BASEPATH = "@Url.Content("~/scripts/ckeditor/")";
     </script>

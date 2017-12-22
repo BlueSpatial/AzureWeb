@@ -1,81 +1,82 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <a ng-class="{'disabled':$root.isBasicVersion()}" class="btn blue btn-xs" ng-click="$ctrl.addConnection()">
-            <span class="glyphicon glyphicon-plus"></span> Add connection
-        </a>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th width="30%">Server name</th>
-                    <th width="25%">User name</th>                   
-                    <th width="25%">Database name</th>
-                    <th width="30%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-attr-title="{{c.IsDefault?'This is the default connection':''}}" ng-show="c.Id" ng-repeat="c in $ctrl.connections">
-                    <td>{{c.Name}}</td>
-                    <td>{{c.UserName}}</td>                 
-                    <td>{{c.DatabaseName}}</td>
-                    <td>
-                        <a class="btn btn-danger btn-xs tree-button pull-right" ng-class="{'disabled':c.IsDefault}"  ng-click="$ctrl.deleteConnection(c,$index)"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-                        <button ng-click="$ctrl.editConnection(c)" class="btn blue btn-xs pull-right m-r-8"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+﻿<div class="portlet light bordered ng-scope" id="mainPanel">
+        <div class="row">
+            <div class="col-md-12">
+                <a ng-class="{'disabled':$root.isBasicVersion()}" class="btn blue btn-xs" ng-click="$ctrl.addConnection()">
+                    <span class="glyphicon glyphicon-plus"></span> Add connection
+                </a>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="30%">Server name</th>
+                            <th width="25%">User name</th>
+                            <th width="25%">Database name</th>
+                            <th width="30%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-attr-title="{{c.IsDefault?'This is the default connection':''}}" ng-show="c.Id" ng-repeat="c in $ctrl.connections">
+                            <td>{{c.Name}}</td>
+                            <td>{{c.UserName}}</td>
+                            <td>{{c.DatabaseName}}</td>
+                            <td>
+                                <a class="btn btn-danger btn-xs tree-button pull-right" ng-class="{'disabled':c.IsDefault}" ng-click="$ctrl.deleteConnection(c,$index)"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                                <button ng-click="$ctrl.editConnection(c)" class="btn blue btn-xs pull-right m-r-8"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    </div>
-</div>
-<!-- connection modal -->
-<div class="modal fade" id="creatConnectionModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{$ctrl.isEditMode?'Edit':'Add'}} connection</h4>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Server name: </label>
-                    <input ng-disabled="$ctrl.selectedConnection.Id" ng-model="$ctrl.selectedConnection.Name" class="form-control">
+        </div>
+        <!-- connection modal -->
+        <div class="modal fade" id="creatConnectionModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">{{$ctrl.isEditMode?'Edit':'Add'}} connection</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Server name: </label>
+                            <input ng-disabled="$ctrl.selectedConnection.Id" ng-model="$ctrl.selectedConnection.Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>User name:</label>
+                            <input ng-model="$ctrl.selectedConnection.UserName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input ng-model="$ctrl.selectedConnection.Password" type="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button ng-click="$ctrl.getDatabases()" class="btn btn-default">Connect</button>
+
+                        </div>
+                        <div class="form-group">
+                            <p ng-if="$ctrl.connectionDatabaseMessage"><strong>{{$ctrl.connectionDatabaseMessage}}</strong></p>
+                        </div>
+                        <!-- select database -->
+                        <div class="form-group">
+                            <label>Database name: </label>
+                            <ui-select ng-model="$ctrl.selectedConnection.DatabaseName"
+                                       theme="bootstrap"
+                                       ng-disabled="$ctrl.selectedConnection.Id"
+                                       reset-search-input="false"
+                                       title="Choose a database">
+                                <ui-select-match placeholder="Choose a database">{{$ctrl.selectedConnection.DatabaseName}}</ui-select-match>
+                                <ui-select-choices repeat="d.Name as d in $ctrl.databases  | propsFilter: {Name: $select.search}">
+                                    <div ng-bind-html="d.Name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <button ng-click="$ctrl.saveConnection($ctrl.selectedConnection)" class="btn blue">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                            Save
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>User name:</label>
-                    <input ng-model="$ctrl.selectedConnection.UserName" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Password:</label>
-                    <input ng-model="$ctrl.selectedConnection.Password" type="password" class="form-control">
-                </div>
-                <div class="form-group">
-                    <button ng-click="$ctrl.getDatabases()" class="btn btn-default">Connect</button>
-                   
-                </div>
-                <div class="form-group">
-                    <p ng-if="$ctrl.connectionDatabaseMessage"><strong>{{$ctrl.connectionDatabaseMessage}}</strong></p>
-                </div>
-                <!-- select database -->
-                <div class="form-group">
-                    <label>Database name: </label>
-                    <ui-select ng-model="$ctrl.selectedConnection.DatabaseName"
-                               theme="bootstrap"
-                               ng-disabled="$ctrl.selectedConnection.Id"
-                               reset-search-input="false"
-                               title="Choose a database">
-                        <ui-select-match placeholder="Choose a database">{{$ctrl.selectedConnection.DatabaseName}}</ui-select-match>
-                        <ui-select-choices repeat="d.Name as d in $ctrl.databases  | propsFilter: {Name: $select.search}">
-                            <div ng-bind-html="d.Name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-                <button ng-click="$ctrl.saveConnection($ctrl.selectedConnection)" class="btn blue">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                    Save
-                </button>
             </div>
         </div>
     </div>
-</div>
-
 

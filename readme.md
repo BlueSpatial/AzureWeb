@@ -20,3 +20,9 @@ about license:
 
 Error:
 Some time when the login function not work correctly (logout every f5) just restart computer (don't know why); install version also need restart some time
+
+Prevent unsave change:
+- When reload page
+- When active another node
+- When change layer tab
+- When navigate to another route from manage-metadata-component

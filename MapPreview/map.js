@@ -14,7 +14,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 var map = L.map('map').setView([20.61010242300902, -157.33770751953128], 8);
-var layer =L.esri.basemapLayer('Topographic').addTo(map);
+var layer=L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
+//var layer =L.esri.basemapLayer('Topographic').addTo(map);
 
 var layerUrl = getUrlParameter('layer');
 var featureLayer = L.esri.featureLayer({
@@ -138,24 +139,24 @@ function setBasemap(basemap) {
         map.removeLayer(layer);
     }
 
-    layer = L.esri.basemapLayer(basemap);
+    layer = L.tileLayer.provider(basemap);
 
     map.addLayer(layer);
 
-    if (layerLabels) {
-        map.removeLayer(layerLabels);
-    }
+    //if (layerLabels) {
+    //    map.removeLayer(layerLabels);
+    //}
 
-    if (basemap === 'ShadedRelief'
-        || basemap === 'Oceans'
-        || basemap === 'Gray'
-        || basemap === 'DarkGray'
-        || basemap === 'Imagery'
-        || basemap === 'Terrain'
-    ) {
-        layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-        map.addLayer(layerLabels);
-    }
+    //if (basemap === 'ShadedRelief'
+    //    || basemap === 'Oceans'
+    //    || basemap === 'Gray'
+    //    || basemap === 'DarkGray'
+    //    || basemap === 'Imagery'
+    //    || basemap === 'Terrain'
+    //) {
+    //    layerLabels = L.tileLayer.provider('OpenStreetMap.BlackAndWhite');
+    //    map.addLayer(layerLabels);
+    //}
 }
 
 function changeBasemap(basemaps) {

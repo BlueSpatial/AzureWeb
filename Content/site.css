@@ -25,6 +25,7 @@ label.disabled {
 .tree-node.disabled, .tree-node.disabled .btn:not(.btn-enable), .tree-node.disabled .tree-checkbox {
     background-color: rgba(220, 220, 220,0.5);
     cursor: not-allowed;
+    pointer-events:none;
 }
 .tree-node.disabled .btn:not(.btn-enable), .tree-node.disabled .tree-checkbox {
     pointer-events: none;
@@ -127,8 +128,12 @@ input[type=checkbox]{
     width: 38px !important;
     margin-right: 5px;
 }
+    .add-button-ui-select .ui-select-choices {
+        width:initial!important;
+    }
 #labelFeatureText {
     width: calc(100% - 43px);
+    overflow-x: hidden;
 }
 .add-button-ui-select i.caret{
     display:none;
@@ -446,4 +451,33 @@ a.disabled{
     -o-transform: rotate(150deg);
     -ms-transform: rotate(150deg);
     transform: rotate(150deg);
+}
+#metadataTree {
+    max-height: calc(100vh - 90px);
+    overflow-y: scroll;
+}
+.page-content-white .page-bar {
+    margin-top: 0;
+}
+input.number {
+    width: 75px;
+}
+.right-buttons{
+    float:right;
+}
+.right-buttons .btn {
+    z-index:1;
+}
+.page-content-white .page-bar {
+    margin-top: 3px;
+}
+#mainPanel {
+    min-height: calc(100vh - 120px);
+    margin-bottom: 0px;
+}
+.dropdown-menu {
+    min-width: initial;
+}
+.dropdown-menu > li > a {
+    padding: 8px 8px;
 }

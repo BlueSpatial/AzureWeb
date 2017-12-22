@@ -1,10 +1,10 @@
 ﻿<select-layer-component  on-layer-change="$ctrl.onLayerChange"></select-layer-component>
-<breadcrumb-component ng-if-start="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
+
 <div ng-if-end id="createRendererComponent">
-    <form name="$ctrl.rendererForm">
+    <form name="$ctrl.form">
         <div class="row">
            
-            <div class="col-md-4">               
+            <div class="col-md-6">               
                 <div class="row">
                     <div class="col-md-6">                        
                         <div class="form-group">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="$ctrl.labelFeature.GeometryType=='esriGeometryPoint'">
+                <div class="row" ng-show="$ctrl.geometryType=='esriGeometryPoint'">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Symbol type:</label>
@@ -57,7 +57,7 @@
                                        theme="bootstrap"
                                        reset-search-input="false">
                                 <ui-select-match>{{$select.selected.Name}}</ui-select-match>
-                                <ui-select-choices repeat="s.Value as s in $ctrl.symbolTypes | filter: {Description: $ctrl.labelFeature.GeometryType} |propsFilter: {Name: $select.search}">
+                                <ui-select-choices repeat="s.Value as s in $ctrl.symbolTypes | filter: {Description: $ctrl.geometryType} |propsFilter: {Name: $select.search}">
                                     <div ng-bind-html="s.Name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
@@ -69,15 +69,15 @@
             </div>
             <div ng-include="'/Views/Admin/Renderer/symbol-patial.html'">
             </div>
-            <div class="col-md-4">
-                <label-component label-feature="$ctrl.labelFeature" attributes="$ctrl.attributes"></label-component>
-            </div>
+           
         </div>
     </form>
-    <div class="row">
-        <hr />
+    <div class="row m-t-20">      
         <div class="col-md-12">
             <button ng-click="$ctrl.saveRenderer()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-danger tree-button" ng-click="$ctrl.reset();$ctrl.form.$setPristine();">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
         </div>
     </div>
 </div>

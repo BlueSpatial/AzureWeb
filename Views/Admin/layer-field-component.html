@@ -1,5 +1,4 @@
-﻿<breadcrumb-component ng-if="$root.currentLayerId" metadata-type="2" metadata-id="$root.currentLayerId"></breadcrumb-component>
-<!-- choose layer -->
+﻿<!-- choose layer -->
 <select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
 <div  ng-if="$root.currentLayerId" class="row">
     <div class="col-md-12">
@@ -10,7 +9,7 @@
         <strong>Table:</strong> {{$ctrl.layer.TableName}}</p>
         
         
-        <form name="$ctrl.fieldsForm">
+        <form name="$ctrl.form">
             <div class="row">
                 <label ng-if-start="$ctrl.haveIncludeDateTimeField()" class="col-xs-2 form-label"><input type="checkbox" ng-model="$ctrl.layer.IsSupportTime" /> Time Aware</label>
                 <div ng-if-end ng-show="$ctrl.layer.IsSupportTime" class="col-xs-8 form-group">
@@ -34,7 +33,7 @@
                 <div class="col-xs-12 form-group">
                     <label class="col-xs-2 form-label">Filter expression:</label>
                     <div class="col-xs-6">
-                        <input class="form-control" placeholder="Any valid SQL where statement, e.g: FID>10 or State='CA'" ng-model="$ctrl.layer.FilterExpression"/>
+                        <input class="form-control" placeholder="Any valid SQL where statement, e.g.: FID>10 or State='CA'" ng-model="$ctrl.layer.FilterExpression"/>
                     </div>
                 </div>
             </div>

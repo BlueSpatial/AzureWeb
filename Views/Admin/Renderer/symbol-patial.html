@@ -1,12 +1,12 @@
 ﻿
-<div class="col-md-4 m-t-20" ng-show="($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)" ng-if="$ctrl.drawing.DrawingStyle.Id==1">
+<div class="col-md-6 m-t-20" ng-show="($ctrl.drawing.Attribute&&$ctrl.drawing.Attribute.name)" ng-if="$ctrl.drawing.DrawingStyle.Id==1">
     <table class="table table-borderless">
         <tr ng-repeat="l in $ctrl.labels" ng-init="l.Id=$index" class="col-sm-12 m-b">
             <td>
                 <symbol-component sms-styles="$ctrl.smsStyles" symbol-type="$ctrl.drawing.SymbolType" transparency="$ctrl.drawing.Transparency" patterns="$ctrl.patterns" label="l" on-update-active-label="$ctrl.updateActiveLabel(label)"></symbol-component>
             </td>
             <td class="align-middle">
-                <a ng-if="$index!=0" title="Delete" class="btn btn-danger btn-xs" ng-click="$ctrl.removeLabel(l);$ctrl.rendererForm.$dirty=true">
+                <a ng-if="$index!=0" title="Delete" class="btn btn-danger btn-xs" ng-click="$ctrl.removeLabel(l);$ctrl.form.$dirty=true">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
             </td>
