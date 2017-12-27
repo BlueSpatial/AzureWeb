@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
-  <class entity-name="Field" table="Field" lazy="true" >
+  <class entity-name="Field" table="__Field" lazy="true" >
     <id name="Id" column="Id" type="Int32">
       <generator class="identity" />
     </id>

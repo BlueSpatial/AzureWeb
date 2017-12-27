@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
-  <class entity-name="SR" table="SR" lazy="true" >
+  <class entity-name="SR" table="__SR" lazy="true" >
     <id name="Id" column="Id" type="Int32">
     </id>
     <property name="Wkt" type="String">
