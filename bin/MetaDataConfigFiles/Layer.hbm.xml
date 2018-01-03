@@ -11,6 +11,9 @@
     <property name="Name" type="String">
       <column name="Name" sql-type="nvarchar(max)" not-null="false" />
     </property>
+     <property name="XmlMapping" type="String">
+      <column name="XmlMapping" sql-type="nvarchar(max)" not-null="false" />
+    </property>
     <property name="TableName" type="String">
       <column name="TableName" sql-type="nvarchar(max)" not-null="false" />
     </property>
