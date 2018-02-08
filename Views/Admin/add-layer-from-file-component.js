@@ -119,10 +119,7 @@
                             $rootScope.currentLayerId = res.Layers[0].Id;
                         }
                         else {
-                            $rootScope.errorMessage = res.Message;
-                            if (res.FullError) {
-                                console.log(res.FullError);
-                            }
+                            $rootScope.errorMessage = res.Message;                           
                         };
                         $rootScope.progressBar.Text = "";
                         $.connection.hub.stop();
@@ -132,7 +129,7 @@
                             authorizeService.logout();
                         }
                         else {
-                            $rootScope.errorMessage = 'Server error ' + status;
+                            $rootScope.errorMessage = 'Cannot generate Layer "' + $ctrl.uploadFile.TableName+'".';
                         }
                         $rootScope.progressBar.Text = "";
                         $.connection.hub.stop();                       

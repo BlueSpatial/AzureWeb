@@ -53,7 +53,9 @@
         $ctrl.reset = getRelateRecord;
       
         this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
-            getRelateRecord();
+            if ($rootScope.currentLayerId != 0) {
+                getRelateRecord();
+            }
         });
       
 

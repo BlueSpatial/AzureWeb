@@ -79,7 +79,7 @@
                    authorizeService.logout();
                }
                else {
-                   $rootScope.errorMessage = 'Server error ' + status;
+                   $rootScope.errorMessage = 'Cannot generate Layer "' + $ctrl.uploadFile.TableName + '".';
                }               
            });
         }

@@ -14,7 +14,7 @@
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
             $ctrl.layerSetting.Id = $rootScope.currentLayerId;
-            $http.post("/Admin/UpdateLayerEventSetting", { layerSetting: $ctrl.layerSetting }
+            $http.post("/Admin/UpdateLayerEventSetting", { layerSetting: $ctrl.layerSetting, pubnubSetting: $ctrl.pubNubSetting, azureSetting: $ctrl.azureSetting }
             ).success(function (res) {
                 if (res.Error) {                   
                     $rootScope.errorMessage = res.Message;
@@ -34,6 +34,8 @@
             $http.get("/admin/GetLayerEventSetting", { params: { layerId: $rootScope.currentLayerId } }).success(function (res) {
                 if (!res.Error) {
                     $ctrl.layerSetting = res.LayerSetting;
+                    $ctrl.pubNubSetting = res.PubNubSetting;
+                    $ctrl.azureSetting = res.AzureSetting;
                 }
                 else {
                     $rootScope.errorMessage = res.Message;

@@ -35,15 +35,37 @@
     <property name="IsEditable" type="bool">
       <column name="IsEditable" sql-type="bit" not-null="true" />
     </property>
-     <property name="IsAddEventEnabled" type="bool">
-      <column name="IsAddEventEnabled" sql-type="bit" not-null="false" />
+     <property name="SignalRIsAddEventEnabled" type="bool">
+      <column name="SignalRIsAddEventEnabled" sql-type="bit" not-null="false" />
     </property>
-     <property name="IsUpdateEventEnabled" type="bool">
-      <column name="IsUpdateEventEnabled" sql-type="bit" not-null="false" />
+     <property name="SignalRIsUpdateEventEnabled" type="bool">
+      <column name="SignalRIsUpdateEventEnabled" sql-type="bit" not-null="false" />
     </property>
-     <property name="IsDeleteEventEnabled" type="bool">
-      <column name="IsDeleteEventEnabled" sql-type="bit" not-null="false" />
+     <property name="SignalRIsDeleteEventEnabled" type="bool">
+      <column name="SignalRIsDeleteEventEnabled" sql-type="bit" not-null="false" />
     </property>
+    
+    <property name="PubNubIsAddEventEnabled" type="bool">
+      <column name="PubNubIsAddEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="PubNubIsUpdateEventEnabled" type="bool">
+      <column name="PubNubIsUpdateEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="PubNubIsDeleteEventEnabled" type="bool">
+      <column name="PubNubIsDeleteEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+    
+     <property name="AzureIsAddEventEnabled" type="bool">
+      <column name="AzureIsAddEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="AzureIsUpdateEventEnabled" type="bool">
+      <column name="AzuresUpdateEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+     <property name="AzureIsDeleteEventEnabled" type="bool">
+      <column name="AzureIsDeleteEventEnabled" sql-type="bit" not-null="false" />
+    </property>
+    
+      
     <property name="IsODataEnabled" type="bool">
       <column name="IsODataEnabled" sql-type="bit"/>
     </property>

@@ -1,39 +1,169 @@
 ﻿<breadcrumb-component metadata-type="2" metadata-id="$rootScope.currentLayerId"></breadcrumb-component>
 <div class="row">
-    <div class="col-md-6">  
-        <div class="form-group col-md-12">
-            <label>               
-               SignalR URL: {{$ctrl.currentHost}}/signalr
-            </label>
+
+   
+
+    <div class="col-md-6">
+        <!-- BEGIN PUBNUB-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    Pubnub event
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+             <div class="row">
+                 <div class="form-group col-md-12">
+                     <label>Publish key: </label>
+                     <input ng-model="$ctrl.pubNubSetting.PublishKey" class="form-control">
+                 </div>
+                 <div class="form-group col-md-12">
+                     <label>Subscribe key: </label>
+                     <input ng-model="$ctrl.pubNubSetting.SubscribeKey" class="form-control">
+                     <label>* Publish key, and subscribe key are used for all layers</label>
+                 </div>
+                
+                 <div class="form-group col-md-12">
+                     <label>
+                         Channel: {{$root.currentLayerId}}
+                     </label>
+                 </div>
+                 <div class="form-group col-md-12">
+                     <label>
+                         <input type="checkbox" ng-model="$ctrl.layerSetting.PubNubIsAddEventEnabled" />
+                         Enable add event
+                     </label>
+                 </div>
+                 <div class="form-group col-md-12">
+                     <label>
+                         <input type="checkbox" ng-model="$ctrl.layerSetting.PubNubIsUpdateEventEnabled" />
+                         Enable update event
+                     </label>
+                 </div>
+                 <div class="form-group col-md-12">
+                     <label>
+                         <input type="checkbox" ng-model="$ctrl.layerSetting.PubNubIsDeleteEventEnabled" />
+                         Enable delete event
+                     </label>
+                 </div>
+
+             </div>
+            </div>
         </div>
-        <div class="form-group col-md-12">
-            <label>
-                Hubs URL: {{$ctrl.currentHost}}/signalr/hubs
-            </label>
+        <!-- END PUBNUB-->
+    </div>
+
+    <div class="col-md-6">
+        <!-- BEGIN AZURE-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    Azure event
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Event hub name: </label>
+                        <input ng-model="$ctrl.azureSetting.EventHubName" class="form-control">                       
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Connection string: </label>
+                        <input ng-model="$ctrl.azureSetting.ConnectionString" class="form-control">
+                        <label>* Event hub name and connection string are used for all layers</label>
+                    </div>
+                   
+
+                    <div class="form-group col-md-12">
+                        <label>
+                            Channel: {{$root.currentLayerId}}
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.AzureIsAddEventEnabled" />
+                            Enable add event
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.AzureIsUpdateEventEnabled" />
+                            Enable update event
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.AzureIsDeleteEventEnabled" />
+                            Enable delete event
+                        </label>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="form-group col-md-12">
-            <label>               
-                Group ID: {{$root.currentLayerId}}
-            </label>
+        <!-- END AZURE-->
+    </div>
+    <div class="col-md-6">
+        <!-- BEGIN SIGNALR-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    SignalR event
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>
+                            SignalR URL: {{$ctrl.currentHost}}/signalr
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            Hubs URL: {{$ctrl.currentHost}}/signalr/hubs
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            Group ID: {{$root.currentLayerId}}
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.SignalRIsAddEventEnabled" />
+                            Enable add event
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.SignalRIsUpdateEventEnabled" />
+                            Enable update event
+                        </label>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="$ctrl.layerSetting.SignalRIsDeleteEventEnabled" />
+                            Enable delete event
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group col-md-12">
-            <label>
-                <input type="checkbox" ng-model="$ctrl.layerSetting.IsAddEventEnabled" />
-                Enable add event
-            </label>         
-        </div>
-        <div class="form-group col-md-12">
-            <label>
-                <input type="checkbox" ng-model="$ctrl.layerSetting.IsUpdateEventEnabled" />
-                Enable update event
-            </label>
-        </div> 
-        <div class="form-group col-md-12">
-            <label>
-                <input type="checkbox" ng-model="$ctrl.layerSetting.IsDeleteEventEnabled" />
-                Enable delete event
-            </label>
-        </div> 
+        <!-- END SIGNALR-->
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
         <div class="form-group col-md-12">
             <button ng-click="$ctrl.saveLayerSetting()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
             <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
