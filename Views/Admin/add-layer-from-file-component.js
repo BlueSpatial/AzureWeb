@@ -15,11 +15,11 @@
         //    $ctrl.services = res.data.Services;
         //    $ctrl.layers = res.data.Layers;
         //});
-       
+
         $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
-        $ctrl.uploadFile = {  };
+        $ctrl.uploadFile = {};
         var validateUploadFile = function () {
             var isValid = true;
             var messages = [];
@@ -76,64 +76,44 @@
                 return;
             };
             $.connection.hub.start().done(function () {
-               
-               
+
+
 
                 var formData = new FormData();
                 formData.append("file", $ctrl.uploadFile.File);
-                //ServerName, UserName, Password, DatabaseName, TableName
-                //formData.append("ServerName", $ctrl.connectionInfo.ServerName);
-                //formData.append("UserName", $ctrl.connectionInfo.UserName);
-                //formData.append("Password", $ctrl.connectionInfo.Password);
-                //formData.append("DatabaseName", $ctrl.connectionInfo.DatabaseName);
+
                 formData.append("tableName", $ctrl.uploadFile.TableName);
-                formData.append("isODataEnabled", $ctrl.uploadFile.IsODataEnabled ? true : false);
-                formData.append("serviceId", $ctrl.single.Layer.ServiceId);
-                formData.append("connectionHubId", $.connection.hub.id);
+               
 
                 $rootScope.progressBar = { Value: 0, Text: "Uploading..." };
 
-                $http.post("/Admin/UploadShapFile", formData, {
+                $http.post("/Admin/UploadShapeFile", formData, {
                     transformRequest: angular.identity,
                     headers: { 'Content-Type': undefined }
                 }
-                    ).success(function (res) {
-                        if (!res.Error) {                           
-                            $rootScope.isIntro = false;
-                            $ctrl.single.Layer = res.Layers[0];
-                            //$ctrl.layers.push(res.Layer);
-                            var layerNames = "";
-                            res.Layers.forEach(function (item, idx) {
-                                $ctrl.callback(item);
-                                layerNames += item.Name;
-                                if (idx != res.Layers.length - 1) { // not the last item
-                                    layerNames += ", ";
-                                }
-                            });
-                            $rootScope.successMessage = "Layer \"" + layerNames + "\" was generated successfully.";
-                            //$ctrl.getTables();
-                            $("#creatLayerModal").modal('hide');
-                            $ctrl.uploadFile = {};
-                            $('#shapeFile').val("");
-                            $rootScope.progressBar.Max = 0;
-                            $rootScope.currentLayerId = res.Layers[0].Id;
-                        }
-                        else {
-                            $rootScope.errorMessage = res.Message;                           
-                        };
+                ).success(function (res) {
+                    if (!res.Error) {
+                        // call the long method to add layer from file
+                        //filePath, tableName, serviceId, connectionHubId, isODataEnabled
+                        $.connection.progressHub.server.addLayerFromFile(res.FilePath, $ctrl.uploadFile.TableName, $ctrl.single.Layer.ServiceId, $.connection.hub.id, $ctrl.uploadFile.IsODataEnabled ? true : false);
+                    }
+                    else {
+                        $rootScope.errorMessage = res.Message;
                         $rootScope.progressBar.Text = "";
                         $.connection.hub.stop();
-                       
-                    }).error(function (res, status) {
-                        if (status == 401) {
-                            authorizeService.logout();
-                        }
-                        else {
-                            $rootScope.errorMessage = 'Cannot generate Layer "' + $ctrl.uploadFile.TableName+'".';
-                        }
-                        $rootScope.progressBar.Text = "";
-                        $.connection.hub.stop();                       
-                    });
+                    };
+                   
+
+                }).error(function (res, status) {
+                    if (status == 401) {
+                        authorizeService.logout();
+                    }
+                    else {
+                        $rootScope.errorMessage = 'Cannot generate Layer "' + $ctrl.uploadFile.TableName + '".';
+                    }
+                    $rootScope.progressBar.Text = "";
+                    $.connection.hub.stop();
+                });
             });
 
         };
@@ -142,16 +122,51 @@
             $ctrl.uploadFile.File = files[0];
         }
 
-       
-      
+
+
         $ctrl.pushFolder = function (folder) {
             $ctrl.folders.push(folder);
         }
         $ctrl.pushService = function (service) {
             $ctrl.services.push(service);
         }
+        var intProgressBar = function() {
+            var progressNotifier = $.connection.progressHub;
+            progressNotifier.client.addLayerSuccessCallBack = function (layers) {
+                $scope.$apply(function () {
+                    $rootScope.isIntro = false;
+                    $ctrl.single.Layer = layers[0];
+                    //$ctrl.layers.push(res.Layer);
+                    var layerNames = "";
+                    layers.forEach(function (item, idx) {
+                        $ctrl.callback(item);
+                        layerNames += item.Name;
+                        if (idx != layers.length - 1) { // not the last item
+                            layerNames += ", ";
+                        }
+                    });
+                    $rootScope.successMessage = "Layer \"" + layerNames + "\" was generated successfully.";
+                    //$ctrl.getTables();
+                    $("#creatLayerModal").modal('hide');
+                    $ctrl.uploadFile = {};
+                    $('#shapeFile').val("");
+                    $rootScope.progressBar.Max = 0;
+                    $rootScope.currentLayerId = layers[0].Id;
+                    $rootScope.progressBar.Text = "";
+                    $.connection.hub.stop();
+                });
+            };
+            progressNotifier.client.addLayerErrorCallBack = function (message) {
+                $scope.$apply(function () {
+                    $rootScope.errorMessage = message;
+                    $rootScope.progressBar.Text = "";
+                    $.connection.hub.stop();
+                });
+            };
+        }
+        intProgressBar();
     }]
-   
+
 
 
 });

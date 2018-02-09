@@ -172,6 +172,30 @@
                     $rootScope.$digest();
                 },300);
         };
+        var needGetFieldValueAgain = true;
+        $scope.$watch("$ctrl.drawing.Attribute", function (newValue, oldValue) {
+            if (!needGetFieldValueAgain) {
+                needGetFieldValueAgain = true;
+                return;
+            }
+            if (newValue) {
+                // for unique value and have value need to confirm and remove all the current value
+                if ($ctrl.drawing.DrawingStyle.Value == "UniqueValue" && $ctrl.labels.length > 1) {
+                    if (confirm("Changing the render field will remove existing unique values. Are you sure you want to proceed?")) {
+                        $ctrl.getFieldValues(newValue);
+                        $ctrl.labels = [$ctrl.labels[0]];// remove all current symbol, except the default
+                    }
+                    else {
+                        $ctrl.drawing.Attribute = oldValue;
+                        needGetFieldValueAgain = false; // change value back, don't need process change event
+                    }
+                }
+                else { // all other case get Field value
+                    $ctrl.getFieldValues(newValue);
+                }
+            }
+        });
+        
         $ctrl.getFieldValues = function (attribute, notInitSliderModel) {
             if (!attribute || !attribute.name) {
                 return;

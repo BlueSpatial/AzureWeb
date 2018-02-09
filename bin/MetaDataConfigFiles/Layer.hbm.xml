@@ -11,7 +11,8 @@
     <property name="Name" type="String">
       <column name="Name" sql-type="nvarchar(max)" not-null="false" />
     </property>
-     <property name="XmlMapping" type="String">
+       <!--string clob will fix bug "The length of the string value exceeds the length configured in the mapping/parameter."-->
+     <property name="XmlMapping" type="StringClob">
       <column name="XmlMapping" sql-type="nvarchar(max)" not-null="false" />
     </property>
     <property name="TableName" type="String">

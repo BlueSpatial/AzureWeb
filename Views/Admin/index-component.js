@@ -9,6 +9,7 @@
         var $ctrl = this;
         $rootScope.errorMessage = "";
         $rootScope.successMessage = "";
+        $rootScope.colorPickerSize = 150;
         $ctrl.getLoginState = authorizeService.getLoginState;
         $ctrl.logout = authorizeService.logout;
         $rootScope.isCheckingLogin = true;

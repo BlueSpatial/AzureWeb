@@ -69,13 +69,13 @@
                     <div ng-show-start="$ctrl.symbolType=='SimpleFillSymbol'" ng-class="{'active':$ctrl.activeTab==1}" class="tab-pane fade in">
                         <div class="form-group">
                             <label>Color / transparency: </label>
-                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Fill.Color}" ng-model="$ctrl.label.Symbol.Fill.Color" />
+                            <input colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Fill.Color}" ng-model="$ctrl.label.Symbol.Fill.Color" />
                         </div>
                     </div>
                     <div ng-show-end class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==2}">
                         <div class="form-group">
                             <label>Outline color: </label>
-                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
+                            <input colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
                         </div>
                         <div class="form-group">
                             <label>Line width: </label>
@@ -97,7 +97,7 @@
                     <div ng-show="$ctrl.symbolType=='SimpleLineSymbol'" class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==3}">
                         <div class="form-group">
                             <label>Color / transparency:</label>
-                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
+                            <input colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
                         </div>
                         <div class="form-group">
                             <label>Line width: </label>
@@ -146,13 +146,13 @@
                         </div>
                         <div ng-show="['esriSMSCross','esriSMSX'].indexOf($ctrl.label.Symbol.Style)==-1" class="form-group">
                             <label>Color / transparency:</label>
-                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
+                            <input colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Color}" ng-model="$ctrl.label.Symbol.Color" />
                         </div>
                     </div>
                     <div ng-show-end class="tab-pane fade in" ng-class="{'active':$ctrl.activeTab==5}">
                         <div class="form-group">
                             <label>Outline color / transparency: </label>
-                            <input colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
+                            <input colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.label.Symbol.Outline.Color}" ng-model="$ctrl.label.Symbol.Outline.Color" />
                         </div>
                         <div class="form-group">
                             <label>Line width: </label>

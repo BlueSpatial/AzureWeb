@@ -87,23 +87,9 @@
                 if (!levels.length) {
                     return;
                 }
-                $ctrl.progressBar = { Value: 0,IsLoading: true, Text: "Connecting...", Max: $ctrl.totalTilesToCreate() };
-                $http.post("/Export/BuildTiles", { Levels: levels, ServiceId: $rootScope.currentServiceId, ConnectionHubId: $.connection.hub.id }
-                ).success(function (res) {
-                    if (res.Error) {
-                        $rootScope.errorMessage = res.Message;
-                    }
-                    else {
-                        $ctrl.checkAll = false;
-                        $ctrl.updateChecked();// remove all check
-                        calculatorTilesTotal();
-                    };
-                })
-                    .error(authorizeService.onError)
-                    .finally(function () {
-                        $ctrl.progressBar.IsLoading = false;
-                        $.connection.hub.stop();
-                    });
+                $ctrl.progressBar = { Value: 0, IsLoading: true, Text: "Connecting...", Max: $ctrl.totalTilesToCreate() };
+                
+                $.connection.progressHub.server.buildTiles({ Levels: levels, ServiceId: $rootScope.currentServiceId, ConnectionHubId: $.connection.hub.id });
             });
         }
 
@@ -148,6 +134,23 @@
                     $ctrl.progressBar.Text = text;
                 });
             };
+            progressNotifier.client.buildTilesSuccessCallBack = function () {
+                $rootScope.$apply(function () {
+                    $ctrl.checkAll = false;
+                    $ctrl.updateChecked();// remove all check
+                    calculatorTilesTotal();
+                    $ctrl.progressBar.IsLoading = false;
+                    $.connection.hub.stop();
+                });
+            };
+            progressNotifier.client.buildTilesErrorCallBack = function (message) {
+                $rootScope.$apply(function () {
+                    $rootScope.errorMessage = message;
+                    $ctrl.progressBar.IsLoading = false;
+                    $.connection.hub.stop();
+                });
+            };
+
 
 
         }

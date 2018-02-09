@@ -35,7 +35,7 @@
                     <div class="col-sm-8 form-group">
                         <label class="control-label">Color:</label>
                         <div class="">
-                            <input title="Text color" colorpicker="rgba" type="text" ng-style="{color:$ctrl.labelFeature.TextColor}" class="form-control" ng-model="$ctrl.labelFeature.TextColor" />
+                            <input title="Text color" colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" ng-style="{color:$ctrl.labelFeature.TextColor}" class="form-control" ng-model="$ctrl.labelFeature.TextColor" />
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                                 Halo color:
                             </label>
                             <div class="">
-                                <input title="Halo color" ng-show-end colorpicker="rgba" type="text" class="form-control" ng-style="{color:$ctrl.labelFeature.HaloColor}" ng-model="$ctrl.labelFeature.HaloColor" />
+                                <input title="Halo color" ng-show-end colorpicker="rgba" colorpicker-size="{{$root.colorPickerSize}}" type="text" class="form-control" ng-style="{color:$ctrl.labelFeature.HaloColor}" ng-model="$ctrl.labelFeature.HaloColor" />
                             </div>
                         </div>
                     </div>

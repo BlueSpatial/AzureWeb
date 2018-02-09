@@ -331,7 +331,7 @@ myApp.factory(factoryName, ['$http', function ($http) {
             drawing.Attribute = attributes.filter(function (item, i) {
                 return item.name == name;
             })[0];
-            getFieldValues(drawing.Attribute,true);
+           // getFieldValues(drawing.Attribute,true);
         };
         switch (drawingInfo.renderer.type) {
             case 'simple':
