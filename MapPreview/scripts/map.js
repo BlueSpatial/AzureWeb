@@ -15,7 +15,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var map = L.map('map').setView([20.61010242300902, -157.33770751953128], 8);
 //set minimap
-var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib = 'Map data &copy; OpenStreetMap contributors';
 var osm2 = new L.TileLayer(osmUrl, { minZoom: 0, maxZoom: 13, attribution: osmAttrib });
 var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true, minimized: true }).addTo(map);
