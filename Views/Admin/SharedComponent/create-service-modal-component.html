@@ -59,7 +59,7 @@
                     Cached Tiles
                     <!-- only show when cached enabled and wms enabled -->
                     <a ng-show="$ctrl.single.NewService.IsCached&&$ctrl.single.NewService.IsCachedSavedValue"
-                       ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/gsr/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMTSServer?service=WMTS&Request=GetCapabilities">(WMTS URL)</a>
+                       ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/rest/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMTSServer?service=WMTS&Request=GetCapabilities">(WMTS URL)</a>
                 </label>
             </div>
             <div ng-show-end class="form-group">
@@ -67,7 +67,7 @@
                 <label>
                     <input type="checkbox" ng-model="$ctrl.single.NewService.IsWMSEnabled">
                     Enable WMS
-                    <a ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/gsr/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMSServer?Request=GetCapabilities">(WMS URL)</a>
+                    <a ng-if="$ctrl.single.NewService.IsWMSEnabled&&$ctrl.single.NewService.IsWMSEnabledSavedValue" target="_blank" href="/bluespatial/rest/services/{{$ctrl.single.NewService.Folder}}/{{$ctrl.single.NewService.Name}}/WMSServer?Request=GetCapabilities">(WMS URL)</a>
                 </label>
             </div>
             <div class="form-group">

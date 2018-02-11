@@ -13,7 +13,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-var map = L.map('map').setView([20.61010242300902, -157.33770751953128], 8);
+var map = L.map('map').setView([39.82, -98.58], 5);
 //set minimap
 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib = 'Map data &copy; OpenStreetMap contributors';

@@ -117,7 +117,7 @@
                 links.push(serviceName);
                 links.push(serviceType);
             }
-            var links = ["/bluespatial/gsr/services"];
+            var links = ["/bluespatial/rest/services"];
             switch (scope.node.MetadataType) {
                 case 0:
                     links.push(scope.node.Name);
