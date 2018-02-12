@@ -32,8 +32,8 @@ var fullscreen = new L.Control.Fullscreen().addTo(map);
 //easy print
 var print = new L.easyPrint({
     sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
-    filename: 'myMap',
-    exportOnly: true,
+    filename: 'mapexport',
+    exportOnly: false,
     hideControlContainer: true
 }).addTo(map);
 
