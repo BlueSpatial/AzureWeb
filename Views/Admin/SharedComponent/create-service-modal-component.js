@@ -1,4 +1,5 @@
-﻿myApp.component('createServiceModalComponent', {
+﻿/// <reference path="create-layer-modal-component.js" />
+myApp.component('createServiceModalComponent', {
     // isolated scope binding
     bindings: {
         connections:'=',
@@ -104,7 +105,7 @@
               $ctrl.single.NewService.Name="";
                 $ctrl.single.NewService.MinScale=0;
                 $ctrl.single.NewService.MaxScale=0;
-                $ctrl.single.NewService.IsWMSEnabled=true;
+                $ctrl.single.NewService.IsWMSEnabled=false;
                 $ctrl.single.NewService.MaxRecordCount=1000;
                 $ctrl.single.NewService.IsAllowAnonymous=false;
             }

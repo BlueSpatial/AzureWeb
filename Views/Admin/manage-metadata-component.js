@@ -261,7 +261,7 @@
         $ctrl.addNewService = function (scope) {
            
             $ctrl.single.IsEditMode = false;
-            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: true, IsAllowAnonymous: false, MaxRecordCount:1000, MinScale:0, MaxScale:0 };
+            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: false, IsAllowAnonymous: false, MaxRecordCount:1000, MinScale:0, MaxScale:0 };
             if ($rootScope.isNotFullVersion()) {
                 // auto select the default connection for basic version
                 //if ($rootScope.isBasicVersion()) {
