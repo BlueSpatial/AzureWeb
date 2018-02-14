@@ -33,7 +33,7 @@
                 <div class="col-xs-12 form-group">
                     <label class="col-xs-2 form-label">Filter expression:</label>
                     <div class="col-xs-6">
-                        <input class="form-control" placeholder="Any valid SQL where statement, e.g.: FID>10 or State='CA'" ng-model="$ctrl.layer.FilterExpression"/>
+                        <input class="form-control" placeholder="Any valid SQL where statement, e.g.: FID>10 or State='CA'" ng-model="$ctrl.layer.FilterExpression" />
                     </div>
                 </div>
             </div>
@@ -71,8 +71,11 @@
             <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
                 <span class="glyphicon glyphicon-remove"></span> Cancel
             </button>
+            <!--<div class="right-buttons">
+                <button ng-click="$ctrl.syncLayerToTable()" class="btn blue tree-button"><span class="glyphicon glyphicons-retweet-2"></span>Sync Table Schema</button>
+            </div>-->
             <field-domain-modal-component domain="$ctrl.activeDomain"></field-domain-modal-component>
-    </form>
+        </form>
 </div>
 </div>
 

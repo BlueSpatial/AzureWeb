@@ -20,7 +20,7 @@
                     <input type="checkbox" ng-model="$ctrl.layerSetting.IsODataEnabled">
                     Enable OData
                     <!-- link to odata -->
-                    <a ng-if="$ctrl.layerSetting.IsODataEnabled&&$ctrl.layerSetting.IsODataEnabledSavedValue" target="_blank" href="/odata/layers/{{$ctrl.layerSetting.Name}}">(OData URL)</a>
+                    <a ng-if="$ctrl.layerSetting.IsODataEnabled&&$ctrl.layerSetting.IsODataEnabledSavedValue" target="_blank" href="/odata/layers/{{$ctrl.layerSetting.Name}}?$top=20">(OData URL)</a>
                 </label>
             </div>
             <div ng-if="$ctrl.layerSetting.IsFeatureLayer">

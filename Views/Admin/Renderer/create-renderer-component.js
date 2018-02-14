@@ -124,6 +124,7 @@
         }
         this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
             $ctrl.onLayerChange();
+            $ctrl.drawing.Attribute = null;
         });
         //$ctrl.$routerOnActivate = function (next) {
             
@@ -172,7 +173,7 @@
                     $rootScope.$digest();
                 },300);
         };
-        var needGetFieldValueAgain = true;
+        var needGetFieldValueAgain = true; 
         $scope.$watch("$ctrl.drawing.Attribute", function (newValue, oldValue) {
             if (!needGetFieldValueAgain) {
                 needGetFieldValueAgain = true;
@@ -180,7 +181,9 @@
             }
             if (newValue) {
                 // for unique value and have value need to confirm and remove all the current value
-                if ($ctrl.drawing.DrawingStyle.Value == "UniqueValue" && $ctrl.labels.length > 1) {
+                if ($ctrl.drawing.DrawingStyle.Value == "UniqueValue" && $ctrl.labels.length > 1 && oldValue
+                    && typeof oldValue !== "undefined" && typeof oldValue !== null && newValue.name !== oldValue.name) {
+
                     if (confirm("Changing the render field will remove existing unique values. Are you sure you want to proceed?")) {
                         $ctrl.getFieldValues(newValue);
                         $ctrl.labels = [$ctrl.labels[0]];// remove all current symbol, except the default

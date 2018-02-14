@@ -85,7 +85,13 @@
         this.$onDestroy = $rootScope.$watch('currentLayerId', function () {
             $ctrl.onLayerChange();
         });
-       
+
+        $ctrl.syncLayerToTable = function () {
+            $http.post("/Field/SyncLayerToTable", { fields: $ctrl.fields, layerId: $rootScope.currentLayerId, isSupportTime: $ctrl.layer.IsSupportTime, timeFieldId: $ctrl.SelectedTimeField.Id, filterExpression: $ctrl.layer.FilterExpression }
+            ).success(function (res) {
+
+            })
+        }; 
        
         $ctrl.saveFields = function () {
             $rootScope.errorMessage = "";
