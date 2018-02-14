@@ -13,7 +13,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-var map = L.map('map').setView([20.61010242300902, -157.33770751953128], 8);
+var map = L.map('map').setView([39.82, -98.58], 5);
 //set minimap
 var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib = 'Map data &copy; OpenStreetMap contributors';
@@ -26,15 +26,24 @@ var scalebar = new L.control.scale().addTo(map);
 
 //measure
 var measureControl = new L.Control.Measure().addTo(map);
+
 //full screen
 var fullscreen = new L.Control.Fullscreen().addTo(map);
+
+//bookmarks
+var control = new L.Control.Bookmarks().addTo(map);
+
+
 //easy print
-var print = new L.easyPrint({
-    sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
-    filename: 'myMap',
-    exportOnly: true,
-    hideControlContainer: true
-}).addTo(map);
+//var print = new L.easyPrint({
+//    sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+//    filename: 'mapexport',
+//    exportOnly: false,
+//    hideControlContainer: true
+//}).addTo(map);
+
+//locate
+var locate = L.control.locate().addTo(map);
 
 
 var layer=L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
