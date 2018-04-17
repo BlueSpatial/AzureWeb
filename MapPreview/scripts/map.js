@@ -1,3 +1,4 @@
+//3
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -13,63 +14,119 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-var map = L.map('map').setView([39.82, -98.58], 5);
 //set minimap
 var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib = 'Map data &copy; OpenStreetMap contributors';
 var osm2 = new L.TileLayer(osmUrl, { minZoom: 0, maxZoom: 13, attribution: osmAttrib });
-var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true, minimized: true }).addTo(map);
+var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true, minimized: true, collapsedWidth: 30, collapsedHeight: 30 }).addTo(map);
+
 //coordinates
 var coordinates = new L.control.mousePosition().addTo(map);
+
 //scale bar
 var scalebar = new L.control.scale().addTo(map);
 
-//measure
-var measureControl = new L.Control.Measure().addTo(map);
+
 
 //full screen
 var fullscreen = new L.Control.Fullscreen().addTo(map);
 
-//bookmarks
-var control = new L.Control.Bookmarks().addTo(map);
 
 
-//easy print
-//var print = new L.easyPrint({
-//    sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
-//    filename: 'mapexport',
-//    exportOnly: false,
-//    hideControlContainer: true
-//}).addTo(map);
+//print
+L.control.browserPrint().addTo(map);
 
 //locate
 var locate = L.control.locate().addTo(map);
-
 
 var layer=L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 //var layer =L.esri.basemapLayer('Topographic').addTo(map);
 
 var layerUrl = getUrlParameter('layer');
-var featureLayer = L.esri.featureLayer({
-    url: layerUrl
-}).addTo(map);
 
+var featureLayer = {};
+var declareFeatureLayer = function (timeInfo) {
+    if (timeInfo) {
+        var startTimeInput = document.getElementById('from');
+        var endTimeInput = document.getElementById('to');
+        featureLayer = L.esri.featureLayer({
+            url: layerUrl,
+            timeField: timeInfo.startTimeField, 
+            from: new Date(startTimeInput.value),
+            to: (new Date(endTimeInput.value)).addHours(24),
+        }).addTo(map);
+        setTimeout(function () {
+            // fix bug first time doesn't load
+            featureLayer.setTimeRange(new Date(startTimeInput.value), (new Date(endTimeInput.value)).addHours(24));
+        }, 500)
+    }
+    else {      
+        featureLayer = L.esri.featureLayer({
+            url: layerUrl,          
+        }).addTo(map);
+    }
+}
+
+
+var template = "";
 var getPopupTemplate = function (properties) {
-    var template = "";
-    for (var key in properties) {
-        if (properties.hasOwnProperty(key)) {
-            template += '<strong>' + key + ': </strong>{' + key + '}<br>'
+
+    if (template === "") {
+        for (var key in properties) {
+            if (properties.hasOwnProperty(key)) {
+                template += '<strong>' + key + ': </strong>{' + key + '}<br>'
+            }
         }
     }
     return template;
 };
 // use ajax to get layer meta data
 var relateHtmls = [];
+var layerMetadata = {};
 $.ajax({
     url: layerUrl+"?f=json",
     context: document.body,
     success: function (res) {
-        var layerMetadata = res;
+        layerMetadata = res;
+        initCrossFilter();
+        if (!layerMetadata.timeInfo) {
+            disableTime();
+        }
+        else {
+            initTimeExtent();
+        }
+        declareFeatureLayer(layerMetadata.timeInfo);
+        buildTable(layerMetadata);   
+      
+        fitBound();
+        bindPopup();
+        // init legend
+        L.esri.legendControl([featureLayer]).addTo(map);
+        //measure
+        var measureControl = new L.Control.Measure({ width: 30, height: 30 }).addTo(map);    
+
+        //bookmarks
+        var control = new L.Control.Bookmarks().addTo(map);
+
+
+        //initEditor(); // init editor after have layerMetadata
+        // hide the map type if not point
+        if (layerMetadata.geometryType != "esriGeometryPoint") {
+            $("#mapTypeMenu").hide();
+        }
+       
+        
+
+        startSignalRConnection(layerMetadata.DbId);
+        if (layerMetadata.htmlPopupType === "esriServerHTMLPopupTypeAsHTMLText") {
+            $.ajax({
+                url: "../Admin/GetPopupContent/" + layerMetadata.DbId,
+                success: function (res) {
+                    template = res.Popup.PopupContent.replace(/\[/g, '{').replace(/\]/g,'}');
+                }
+            })
+        }
+
         if (layerMetadata.relationships&&layerMetadata.relationships.length) {// have relation ship
             // query related
             var query = L.esri.Related.query(featureLayer);
@@ -146,23 +203,26 @@ $.ajax({
 
 
 
-// fix bound
-featureLayer.query().bounds(function (error, latlngbounds) {
-    map.fitBounds(latlngbounds);
-});
+// fit bound
+var fitBound = function () {
+    featureLayer.query().bounds(function (error, latlngbounds) {
+        map.fitBounds(latlngbounds);
+    });
+}
 
 //bind popup
 var popupTemplate = "";
-featureLayer.bindPopup(function (layer) {
-    if (!popupTemplate) {
-        popupTemplate=getPopupTemplate(layer.feature.properties);
-       
-    }
-    return L.Util.template(popupTemplate, layer.feature.properties);
-});
+var bindPopup = function () {
+    featureLayer.bindPopup(function (layer) {
+        if (!popupTemplate) {
+            popupTemplate = getPopupTemplate(layer.feature.properties);
 
-// init legend
-L.esri.legendControl([featureLayer]).addTo(map);
+        }
+        return L.Util.template(popupTemplate, layer.feature.properties);
+    });
+}
+
+
 
 var layerLabels;
 

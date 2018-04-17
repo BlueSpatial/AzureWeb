@@ -54,7 +54,7 @@
                     <tr ng-repeat="field in $ctrl.fields">
                         <td>{{field.Name}}</td>
                         <td>{{$ctrl.fieldTypes[field.Type].Name}}</td>
-                        <td ng-if-start="($index!=0&&$ctrl.fieldTypes[field.Type].Name!='Geometry')"><input type="text" ng-model="field.Alia" /></td>
+                        <td ng-if-start="($index!=0&&$ctrl.fieldTypes[field.Type].Name!='Geometry')"><input type="text" ng-model="field.Alias" /></td>
                         <td><a ng-click="$ctrl.openDomainModal(field.Domain)">Domain</a> ({{field.Domain.type?$ctrl.domains[field.Domain.type]:'None'}})</td>
                         <td><input type="checkbox" ng-model="field.IsIncluded" /></td>
                         <td><input type="checkbox" ng-model="field.IsEditable" /></td>
@@ -71,9 +71,9 @@
             <button class="btn btn-danger tree-button" ng-click="$ctrl.reset()">
                 <span class="glyphicon glyphicon-remove"></span> Cancel
             </button>
-            <!--<div class="right-buttons">
-                <button ng-click="$ctrl.syncLayerToTable()" class="btn blue tree-button"><span class="glyphicon glyphicons-retweet-2"></span>Sync Table Schema</button>
-            </div>-->
+            <div class="right-buttons">
+                <button ng-click="$ctrl.syncLayerToTable()" class="btn blue"><span class="glyphicons glyphicons-roundabout"></span> Sync Table Schema</button>
+            </div>
             <field-domain-modal-component domain="$ctrl.activeDomain"></field-domain-modal-component>
         </form>
 </div>

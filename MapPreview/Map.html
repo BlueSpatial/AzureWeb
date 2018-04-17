@@ -19,10 +19,26 @@
     <script src="./scripts/esri-leaflet.js"></script>
 
     <script src="./scripts/esri-leaflet-legend-compat-src.js"></script>
+
     <!-- Esri Leaflet Related -->
     <script src="./scripts/esri-leaflet-related.js"></script>
     <script src="./scripts/leaflet-providers.js"></script>
-    <script src="./scripts/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+    <script src="scripts/split.min.js"></script>
+
+    <!-- export table -->
+    <script src="./scripts/tableExport/tableExport.min.js"></script>
+    <script src="./scripts/tableExport/libs/FileSaver/FileSaver.min.js"></script>
+    <script src="./scripts/tableExport/libs/html2canvas/html2canvas.min.js"></script>
+    <script src="./scripts/tableExport/libs/jsPDF/jspdf.min.js"></script>
+    <script src="./scripts/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+
+    <!--Realtime-->
+    <script src="./scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script src="./scripts/leaflet-realtime.js"></script>
 
     <!--Mini Map-->
     <link rel="stylesheet" href="./css/Control.MiniMap.css" />
@@ -44,13 +60,48 @@
     <script src="./scripts/Leaflet.Bookmarks.js"></script>
     <link type="text/css" rel="stylesheet" href="./css/leaflet.bookmarks.css">
 
-    <!--Easy Print-->
-    <script src='./scripts/leaflet-easyprint.js'></script>
+    <!--Print-->
+    <script src="./scripts/leaflet.browser.print.js"></script>
+    <script src="./scripts/leaflet.browser.print.utils.js"></script>
 
     <!--Locate-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/L.Control.Locate.min.css" />
     <script src="./scripts/L.Control.Locate.min.js" charset="utf-8"></script>
+
+    <!-- Leaflet edit -->
+    <script src="https://unpkg.com/leaflet.path.drag@0.0.5"></script>
+    <script src="https://unpkg.com/leaflet-editable@1.0.0"></script>
+
+    <!-- Clustered Feature Layer -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script>
+
+    <!-- Heatmap Feature Layer -->
+    <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
+    <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
+
+    <!-- query builder -->
+    <script src="https://cdn.jsdelivr.net/alasql/0.1/alasql.min.js"></script>
+    <script src="./scripts/jQuery-QueryBuilder/query-builder.standalone.min.js"></script>
+
+    <!-- cross filter -->
+    <script src="scripts/crossFilter/d3.min.js"></script>
+    <script src="./scripts/crossFilter/crossfilter.min.js"></script>
+    <script src="./scripts/crossFilter/dc.min.js"></script>
+    <link href="./scripts/crossFilter/dc.min.css" rel="stylesheet" />
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+    <link rel="stylesheet" href="./scripts/jQuery-QueryBuilder/query-builder.default.min.css">
+
+    <link href="./css/app.css" rel="stylesheet" />
+
 
     <link href="./css/map.css" rel="stylesheet" />
 </head>
@@ -59,18 +110,190 @@
     <!-- Load Esri Leaflet Renderers -->
     <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6"></script>
 
-    <div id="map"></div>   
-    <div id="basemaps-wrapper" class="leaflet-bar">
-        <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-            <option value="OpenStreetMap.Mapnik">Mapnik</option>
-            <option value="OpenStreetMap.BlackAndWhite">BlackAndWhite</option>
-            <option value="OpenStreetMap.DE">DE</option>
-            <option value="OpenStreetMap.France">France</option>
-            <option value="OpenStreetMap.HOT">HOT</option>
-            <!--<option value="OpenStreetMap.BZH">BZH</option>-->            
-        </select>
+    <div id="menu" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid p-l-0">
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">
+                            <img style="height:37px" src="/Images/logo-vertical.png" alt="logo" class="logo-default" />
+                        </a>
+                    </li>
+
+                    <li><a id="extent-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-arrows-alt"></i> Feature Extent</a></li>
+                    <li><a id="extent-btn" href="#" data-toggle="modal" data-target="#chartModal"><i class="fa fa-line-chart"></i> Chart</a></li>
+                    <li class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-laptop"></i> <span id="view">Split View </span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-graph"><i class="fa fa-th-large"></i> Split View</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="map-only"><i class="fa fa-globe"></i> Map View</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="view" id="graph-only"><i class="fa fa-table"></i> Table View</a></li>
+                        </ul>
+                    </li>
+                    <!-- map type -->
+                    <li class="dropdown" id="mapTypeMenu">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-map"></i> <span id="mapType">Simple map </span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeNormal"><i class="fa fa-map-marker"></i> Simple Map</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeCluster"><i class="fa fa-bullseye"></i> Cluster Map</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeHeat"><i class="fa fa-fire"></i> Heat Map</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#widgetsSettingModal"><i class="fa fa-cog"></i> Widget Settings</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="time-ranges" class="leaflet-bar">
+            <form id="form">
+                <label for="from">
+                    From
+                    <input id='from' type="date" value='' name='from'>
+                </label>
+                <label for="to">
+                    To
+                    <input id='to' type="date" value='' name='to'>
+                </label>
+                <input id="updateTimeBtn" type="button" value="Update">
+            </form>
+        </div>
+        <div id="basemaps-wrapper" class="leaflet-bar">
+            <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                <option value="OpenStreetMap.Mapnik">Streets</option>
+                <option value="OpenStreetMap.OpenTopoMap">Topo</option>
+                <option value="OpenStreetMap.BlackAndWhite">Black And White</option>
+                <!--<option value="OpenStreetMap.DE">DE</option>
+                <option value="OpenStreetMap.France">France</option>
+                <option value="OpenStreetMap.HOT">HOT</option>-->
+                <!--<option value="OpenStreetMap.BZH">BZH</option>-->
+            </select>
+        </div>
+    </div>
+
+
+    <div id="table-container">
+        <div id="toolbar" style="width: 400px;">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
+                    <i class="fa fa-filter"></i> Filter Data
+                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+                        <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+                        <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+            <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
+        </div>
+        <table id="table"></table>
+    </div>
+    <div class="modal fade" id="widgetsSettingModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Widgets Setting</h4>
+                </div>
+                <div class="modal-body" id="widgetsModalBody">
+                    <div class="row">
+                        <div class="column-1 col-sm-6"></div>
+                        <div class="column-2 col-sm-6"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Choose chart type</label>
+                            <select id="chartTypeSelect">
+                                <option value="barChart">Bar Chart</option>
+                                <option value="pieChart">Pie Chart</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Choose column</label>
+                            <select id="chooseColumnSelect"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button type="button" id="drawChart" class="btn btn-primary">Draw chart</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="dc-chart col-xs-12" id="chart">
+                            <a class="reset" href="javascript:materialChart.filterAll();dc.redrawAll();" style="display: none;">Reset</a>
+                            <br>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Filter Data<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="queryBuilder"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left hidden" id="viewSqlBtn"><i class="fa fa-database"></i> SQL</button>
+                    <button type="button" class="btn btn-info" id="resetFilterBtn"><i class="fa fa-undo"></i> Reset Filter</button>
+                    <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="fa fa-filter"></i> Apply Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1 -->
+    <script src="./scripts/declare-map.js"></script>
+    <!-- 2 -->
+    <script src="./scripts/declare-realtime.js"></script>
+    <!-- 3 -->
     <script src="./scripts/map.js"></script>
+    <!-- 4 -->
+    <script src="./scripts/declare-edit-tool.js"></script>
+    <!-- 5 -->
+    <script src="./scripts/declare-time-query.js"></script>
+    <!-- 6 -->
+    <script src="./scripts/declare-table.js"></script>
+    <script src="./scripts/declare-menu.js"></script>
+    <script src="./scripts/declare-query.js"></script>
+    <script src="./scripts/declare-cross-filter.js"></script>
 
 </body>
 </html>

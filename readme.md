@@ -26,3 +26,8 @@ Prevent unsave change:
 - When active another node
 - When change layer tab
 - When navigate to another route from manage-metadata-component
+
+-------------------------
+For protect code and license we need reactor: http://www.eziriz.com/downloads.htm
+the license file download at https://drive.google.com/file/d/0B52HmbNWVv4qWkdrckhwYWR4Uk9iR0pEcDB1T0JyUEdvWlo4/view?usp=sharing
+Reactor will protect BlueSpatial.Core.dll when build this project with 'Release' mode (for install it will auto copy)

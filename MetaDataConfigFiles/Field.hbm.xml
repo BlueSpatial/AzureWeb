@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
   <class entity-name="Field" table="__Field" lazy="true" >
     <id name="Id" column="Id" type="Int32">
@@ -16,8 +16,8 @@
     <property name="SqlType" type="String">
       <column name="SqlType" sql-type="nvarchar(max)" not-null="true" />
     </property>
-     <property name="Alia" type="String">
-      <column name="Alia" sql-type="nvarchar(max)" not-null="true" />
+     <property name="Alias" type="String">
+      <column name="Alias" sql-type="nvarchar(max)" not-null="true" />
     </property>    
     <property name="IsIncluded" type="bool">
       <column name="IsIncluded" sql-type="bit" not-null="true" />

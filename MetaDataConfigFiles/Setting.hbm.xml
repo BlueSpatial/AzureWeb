@@ -7,8 +7,8 @@
     <property name="Key" type="String">
       <column name="`Key`" sql-type="nvarchar(max)" not-null="true" />
     </property>
-    <property name="Value" type="String">
-      <column name="`Value`" sql-type="nvarchar(max)" not-null="true" />
+    <property name="Value" type="StringClob">
+      <column name="`Value`" sql-type="nvarchar(max)" />
     </property>    
   </class>
 </hibernate-mapping>

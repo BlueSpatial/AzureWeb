@@ -59,6 +59,7 @@
                         $ctrl.services = res.Services;
                         $ctrl.services.unshift({ Id: -2, Name: 'Remove All' });
                         $ctrl.services.unshift({ Id: -1, Name: 'Add All' });
+                        $ctrl.isAzureADSet = res.IsAzureADSet;
                     }
                     else {
                         $rootScope.errorMessage = res.Message;

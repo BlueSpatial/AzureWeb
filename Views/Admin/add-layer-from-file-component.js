@@ -3,6 +3,7 @@
     bindings: {
         single: '=',
         callback: '=',
+        defaultSRs: '='
     },
     templateUrl: '/Views/Admin/add-layer-from-file-component.html',
 
@@ -19,7 +20,7 @@
         $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
-        $ctrl.uploadFile = {};
+        $ctrl.uploadFile = { SR:102100}; // init the default sr
         var validateUploadFile = function () {
             var isValid = true;
             var messages = [];
@@ -49,19 +50,17 @@
                 messages.push("Service is required");
                 isValid = false;
             }
-            if (!$ctrl.uploadFile) {
-                messages.push("Upload file info is required");
+            $ctrl.uploadFile = $ctrl.uploadFile || { SR: 102100};
+        
+            if (!$ctrl.uploadFile.TableName) {
+                messages.push("Layer name is required");
                 isValid = false;
-            } else {
-                if (!$ctrl.uploadFile.TableName) {
-                    messages.push("Layer name is required");
-                    isValid = false;
-                };
-                if (!$ctrl.uploadFile.File) {
-                    messages.push("File is required");
-                    isValid = false;
-                };
-            }
+            };
+            if (!$ctrl.uploadFile.File) {
+                messages.push("File is required");
+                isValid = false;
+            };
+            
             $rootScope.errorMessage = messages.join(", ");
             $scope.$evalAsync(); // something like $apply but not get already in progress error
             return isValid;
@@ -87,7 +86,7 @@
 
                 $rootScope.progressBar = { Value: 0, Text: "Uploading..." };
 
-                $http.post("/Admin/UploadShapeFile", formData, {
+                $http.post("/Admin/UploadFile", formData, {
                     transformRequest: angular.identity,
                     headers: { 'Content-Type': undefined }
                 }
@@ -95,7 +94,8 @@
                     if (!res.Error) {
                         // call the long method to add layer from file
                         //filePath, tableName, serviceId, connectionHubId, isODataEnabled
-                        $.connection.progressHub.server.addLayerFromFile(res.FilePath, $ctrl.uploadFile.TableName, $ctrl.single.Layer.ServiceId, $.connection.hub.id, $ctrl.uploadFile.IsODataEnabled ? true : false);
+                        $.connection.progressHub.server.addLayerFromFile(res.FilePath, $ctrl.uploadFile.TableName,
+                            $ctrl.single.Layer.ServiceId, $.connection.hub.id, $ctrl.uploadFile.IsODataEnabled ? true : false, $ctrl.uploadFile.SR);
                     }
                     else {
                         $rootScope.errorMessage = res.Message;

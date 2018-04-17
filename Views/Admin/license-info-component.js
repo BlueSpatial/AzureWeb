@@ -11,12 +11,7 @@
         // The controller that handles our component logic
         controller: ['$scope', '$rootScope', '$http', 'authorizeService', function ($scope, $rootScope, $http, authorizeService) {
             var $ctrl = this;
-            $ctrl.jsonToDate = function (jsonDate) {
-                if (!jsonDate) {
-                    return null;
-                }
-                return new Date(parseInt(jsonDate.substr(6)));
-            }
+           
             $ctrl.uploadFile = {};
             var validateUploadFile = function () {
                 var isValid = true;

@@ -13,21 +13,21 @@ version="1.0.0">
     <ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>
   </ows:ServiceIdentification>
   <ows:ServiceProvider>
-    <ows:ProviderName>KOAIT</ows:ProviderName>
+    <ows:ProviderName></ows:ProviderName>
     <ows:ProviderSite xlink:href="http://koait.com/"/>
     <ows:ServiceContact>
-      <ows:IndividualName>CONTACT NAME</ows:IndividualName>
+      <ows:IndividualName></ows:IndividualName>
       <ows:ContactInfo>
         <ows:Phone>
-          <ows:Voice>1.555.555.555</ows:Voice>
+          <ows:Voice></ows:Voice>
         </ows:Phone>
         <ows:Address>
           <ows:DeliveryPoint>foo</ows:DeliveryPoint>
-          <ows:City>foo</ows:City>
-          <ows:AdministrativeArea>foo</ows:AdministrativeArea>
-          <ows:PostalCode>foo</ows:PostalCode>
-          <ows:Country>foo</ows:Country>
-          <ows:ElectronicMailAddress>info@koait.com</ows:ElectronicMailAddress>
+          <ows:City></ows:City>
+          <ows:AdministrativeArea></ows:AdministrativeArea>
+          <ows:PostalCode></ows:PostalCode>
+          <ows:Country></ows:Country>
+          <ows:ElectronicMailAddress></ows:ElectronicMailAddress>
         </ows:Address>
       </ows:ContactInfo>
     </ows:ServiceContact>

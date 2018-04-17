@@ -20,8 +20,8 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
-                <add-layer-from-file-component single="$ctrl.single" callback="$ctrl.callback" ng-if="$ctrl.single.AddLayerType.Id==0"></add-layer-from-file-component>
-                <add-layer-from-database-component single="$ctrl.single" callback="$ctrl.callback" ng-if="$ctrl.single.AddLayerType.Id==1"></add-layer-from-database-component>                
+                <add-layer-from-file-component default-s-rs="$ctrl.defaultSRs" single="$ctrl.single" callback="$ctrl.callback" ng-if="$ctrl.single.AddLayerType.Id==0"></add-layer-from-file-component>
+                <add-layer-from-database-component default-s-rs="$ctrl.defaultSRs" single="$ctrl.single" callback="$ctrl.callback" ng-if="$ctrl.single.AddLayerType.Id==1"></add-layer-from-database-component>                
             </div>
         </div>
     </div>

@@ -2,10 +2,11 @@
 body {
     margin: 0;
     padding: 0;
+    padding-top:50px;
 }
 
 #map {
-    position: absolute;
+    position: relative;
     top: 0;
     bottom: 0;
     right: 0;
@@ -13,7 +14,7 @@ body {
 }
 #basemaps-wrapper {
     position: absolute;
-    top: 10px;
+    top: 60px;
     right: 10px;
     z-index: 400;
     background: white;
@@ -61,3 +62,74 @@ body {
     margin-top: 10px;
     margin-right: 10px;
 }
+
+/*time query*/
+#time-ranges {
+    position: absolute;
+    top: 60px;
+    left: 53px;
+    z-index: 1000;
+    padding: 1em;
+    background: white;
+}
+
+    #time-ranges input {
+        display: inline-block;
+        border: 1px solid #999;
+        font-size: 14px;
+        border-radius: 4px;
+        height: 28px;
+        line-height: 28px;
+    }
+
+        #time-ranges input[type='submit'] {
+            box-sizing: content-box;
+            padding: 0 1em;
+            text-transform: uppercase;
+            color: white;
+            background: #5C7DB8;
+            border-color: #5C7DB8;
+        }
+.hidden{
+    display:none;
+}
+/*time query*/
+#menu {
+    background-color: #2b3643;
+}
+    #menu li > a, .fixed-table-toolbar .columns label,
+    .dropdown-menu > li > a, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+        color: #c6cfda;
+    }
+
+.p-l-0{
+    padding-left:0;
+}
+.gutter{
+    cursor:row-resize;
+}
+.dropdown-menu {
+    background-color: #2b3643;
+}
+    .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+        background-color: #3f4f62 !important;
+    }
+.leaflet-bookmarks-control {
+    width: 33px;
+    height: 33px;
+}
+.leaflet-bookmarks-control.expanded{
+    width:initial;
+    height:initial;
+}
+.leaflet-touch .leaflet-control-measure .leaflet-control-measure-toggle, .leaflet-touch .leaflet-control-measure .leaflet-control-measure-toggle:hover {
+    width: 32px;
+    height: 32px;
+}
+.leaflet-bookmarks-control .bookmarks-icon {
+    background: #343434;
+}
+    .leaflet-bookmarks-control .bookmarks-icon:before, .leaflet-bookmarks-control .bookmarks-icon:after {       
+        border-top: 0.5em solid #343434;
+    }
+

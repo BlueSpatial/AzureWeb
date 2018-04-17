@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="" namespace="" xmlns="urn:nhibernate-mapping-2.2">
+  <class entity-name="EditHistory" table="__EditHistory" lazy="true" >
+    <id name="Id" column="Id" type="Int32">
+      <generator class="identity" />
+    </id>
+    <property name="LayerId" type="Int32">
+      <column name="LayerId" sql-type="int" not-null="true" />
+    </property>
+    <property name="UserName" type="String">
+      <column name="UserName" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="Adds" type="String">
+      <column name="Adds" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="Updates" type="String">
+      <column name="Updates" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="Deletes" type="String">
+      <column name="Deletes" sql-type="nvarchar(max)" not-null="false" />
+    </property>
+    <property name="CreatedAt" type="DateTime">
+      <column name="CreatedAt" sql-type="datetime" not-null="false" />
+    </property>
+     <property name="RollbackTime" type="DateTime">
+      <column name="RollbackTime" sql-type="datetime" not-null="false" />
+    </property>
+    
+  </class>
+</hibernate-mapping>

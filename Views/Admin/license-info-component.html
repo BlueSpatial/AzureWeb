@@ -20,13 +20,13 @@
                     <li>You are not allowed to deploy to Azure</li>
                 </ul>
                 <p>Please purchase the ENTERPRISE version for full features including: Features Services, Tile Caches and Azure Deployment.</p>
-                <p ng-if="$root.licenseInfo.ExpiredDate">Your license will expire on <strong class="about-highlight">{{$ctrl.jsonToDate($root.licenseInfo.ExpiredDate)|date:'mediumDate'}}</strong></p>
+                <p ng-if="$root.licenseInfo.ExpiredDate">Your license will expire on <strong class="about-highlight">{{$root.jsonToDate($root.licenseInfo.ExpiredDate)|date:'mediumDate'}}</strong></p>
                 <p>Your hardware Id: {{$root.licenseInfo.HardwareId}}, use this information when you purchase new license</p>
             </div>
             <!-- ENTERPRISE -->
             <div ng-if="$root.licenseInfo.VersionType==3">
                 <p>You are using the <strong class="about-highlight">ENTERPRISE version</strong>, with full features.</p>
-                <p ng-if="$root.licenseInfo.ExpiredDate">Your license will expire on <strong class="about-highlight">{{$ctrl.jsonToDate($root.licenseInfo.ExpiredDate)|date:'mediumDate'}}</strong></p>
+                <p ng-if="$root.licenseInfo.ExpiredDate">Your license will expire on <strong class="about-highlight">{{$root.jsonToDate($root.licenseInfo.ExpiredDate)|date:'mediumDate'}}</strong></p>
                 <p>Your hardware Id: {{$root.licenseInfo.HardwareId}}, use this information when you purchase new license</p>
             </div>
             <!-- trial -->

@@ -70,9 +70,9 @@ body > .breadcrumb {
 .page-spinner-bar > div {
     background: #3598dc;
 }
-.glyphicons.tree-icon, .glyphicons.metadata-icon {
+.glyphicons{
     line-height: 0;
-    vertical-align: middle;
+    vertical-align: initial;
 }
 .glyphicons-folder-open {
     color: #878d87;
@@ -135,8 +135,8 @@ b, strong {
 }
 .angular-ui-tree-node .node-text {
     font-family: "Open Sans", sans-serif;
-    margin-left: -10px;
     line-height: 1.2;
+    padding-left: 3px;
     font-weight: normal;
 }
 .page-header.navbar .page-logo {
@@ -161,4 +161,8 @@ b, strong {
  
      min-height:initial!important;
    
+}
+.highlight {
+    background-color: #3598dc;
+    color:white;
 }

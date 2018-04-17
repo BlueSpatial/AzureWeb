@@ -7,6 +7,10 @@
     // The controller that handles our component logic
     controller: ['$rootScope', '$http', 'authorizeService', 'layerService', 'ngIntroService', 'commonService', function ($rootScope, $http, authorizeService, layerService, ngIntroService, commonService ) {
         var $ctrl = this;
+        $ctrl.isTreeCollapsed = false;
+        $ctrl.toggleTree = function () {
+            $ctrl.isTreeCollapsed = !$ctrl.isTreeCollapsed;
+        }
         $ctrl.menuOptions = [
             ['<span class="glyphicon glyphicon-remove"></span> Delete', function ($itemScope, $event) {
                 $ctrl.removeMetadata($itemScope)
@@ -18,7 +22,8 @@
             { Id: 3, Name: 'Labels' },           
             { Id: 4, Name: 'HTML' },
             { Id: 5, Name: 'Related Records' },
-            { Id: 6, Name: 'Events' }
+            { Id: 6, Name: 'Events' },
+            { Id: 7, Name: 'Versions' }
         ];
         $ctrl.currentLayerTab = 0;
         $ctrl.serviceTabs = [{ Id: 0, Name: 'Service' },

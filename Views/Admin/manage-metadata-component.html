@@ -1,7 +1,7 @@
 ﻿<script type="text/ng-template" id="nodes_renderer.html">
     <div id="node{{node.MetadataType}}_{{node.Id}}" ng-click="$ctrl.activeNode(this,$index)"  context-menu="$ctrl.menuOptions"
                  ui-tree-handle class="tree-node tree-node-content"
-         title="{{$ctrl.getDisableTitle(node)}}"
+         title="{{$ctrl.getDisableTitle(node)||(node.Name+' '+$ctrl.getNodeTypeName(this,$index))}}"
          ng-class="{'folder':node.MetadataType==0,'service':node.MetadataType==1, 'layer':node.MetadataType==2,'disabled': node.IsDisabled,'active':node.Id==$root.currentNode.Id&&node.MetadataType==$root.currentNode.MetadataType}">
         <a class="btn expand-button btn-xs btn-enable" ng-if="node.Nodes && node.Nodes.length > 0" data-nodrag ng-click="toggle(this)">
             <span class="glyphicon"
@@ -13,17 +13,15 @@
        
        
         <!--3 top for folder and service, 3 button for layer-->
-        <span class="metadata-icon"
+        <span class="metadata-icon glyphicons"
               ng-class="{
-            'glyphicons glyphicons-folder-open': node.MetadataType==0,
-            'glyphicons glyphicons-nearby-circle': node.MetadataType==1&&node.ServiceType==0,
-            'glyphicons glyphicons-nearby-square': node.MetadataType==1&&node.ServiceType==1,
+            'glyphicons-folder-open': node.MetadataType==0,
+            'glyphicons-nearby-circle': node.MetadataType==1&&node.ServiceType==0,
+            'glyphicons-nearby-square': node.MetadataType==1&&node.ServiceType==1,
 
-            'icon polygon': node.MetadataType==2&&(node.Type==1||node.Type==2),
-            'icon point': node.MetadataType==2&&!node.Type,
-            'icon polyline': node.MetadataType==2&&node.Type==3}">
-
-            <span class="node-text">{{node.Name}} {{$ctrl.getNodeTypeName(this,$index)}}</span>
+            'glyphicons-vector-path-polygon': node.MetadataType==2&&(node.Type==1||node.Type==2),
+            'glyphicons-pin': node.MetadataType==2&&!node.Type,
+            'glyphicons-vector-path-line': node.MetadataType==2&&node.Type==3}"><!--please don't delete this comment, it will make ui change--><span ng-if="!$ctrl.isTreeCollapsed" class="node-text">{{node.Name}} {{$ctrl.getNodeTypeName(this,$index)}}</span>
         </span>
       
 
@@ -36,14 +34,15 @@
 
 
 
-<div class="row">
+<div class="row {{$ctrl.isTreeCollapsed?'tree-collapsed':''}}">
     <div class="col-sm-4">
         <div ui-tree data-drag-enabled="false" class="portlet light bordered" id="tree-root">
             <div class="row" ng-intro-options="$ctrl.introOptions" ng-intro-autorefresh="1" ng-intro-method="$ctrl.callIntro" ng-intro-exit-method="$root.exitIntro">
-                <div class="col-sm-12">
+                <div class="col-sm-12 tree-button-group">
                     <button class="btn btn-default expand-button" ng-click="$ctrl.expandAll()"><span class="glyphicon glyphicon-expand"></span> Expand </button>
                     <button class="btn btn-default expand-button" ng-click="$ctrl.collapseAll()"><span class="glyphicon glyphicon-collapse-down"></span> Collapse </button>
                     <button id="intro1" class="btn blue" ng-click="$ctrl.addNewFolder();$root.exitIntro()"><span class="glyphicon glyphicon-plus"></span> Add Folder</button>
+                    <button class="btn blue" ng-click="$ctrl.toggleTree()"><span class="glyphicons {{$ctrl.isTreeCollapsed?'glyphicons-arrow-right':' glyphicons-arrow-left'}}"></span>{{$ctrl.isTreeCollapsed?"Expand Tree":"Collapse Tree"}}</button>
                 </div>
             </div>
             <ol ui-tree-nodes ng-model="$ctrl.data">
@@ -147,6 +146,10 @@
                 <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==6">
                     <!--relate record-->
                     <event-config-component></event-config-component>
+                </div>
+                <div class="tab-pane active" ng-if="$ctrl.currentLayerTab==7">
+                    <!--version-->
+                    <version-component></version-component>
                 </div>
                
             </div>

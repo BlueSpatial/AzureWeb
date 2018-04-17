@@ -3,7 +3,7 @@ Metronic AngularJS App Main Script
 ***/
 
 /* Metronic App */
-var myApp = angular.module('myApp', ["angular-intro", "ui.bootstrap", "oc.lazyLoad", 'ngComponentRouter', 'about', 'licenseInfo', 'ngSanitize', 'ui.select', 'ui.tree', 'colorpicker.module', 'angularMultiSlider', 'LocalStorageModule', 'ui.bootstrap.progressbar', 'ckeditor', 'ui.bootstrap.contextMenu'])
+var myApp = angular.module('myApp', ["angular-intro", "ui.bootstrap", "oc.lazyLoad", 'ngComponentRouter', 'about', 'licenseInfo', 'ngSanitize', 'ui.select', 'ui.tree', 'colorpicker.module', 'angularMultiSlider', 'LocalStorageModule', 'ui.bootstrap.progressbar', 'ckeditor', 'ui.bootstrap.contextMenu', 'angularjs-datetime-picker'])
 
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -40,6 +40,13 @@ myApp.factory('settings', ['$rootScope', function($rootScope) {
     };
 
     $rootScope.settings = settings;
+
+    $rootScope.jsonToDate = function (jsonDate) {
+        if (!jsonDate) {
+            return null;
+        }
+        return new Date(parseInt(jsonDate.substr(6)));
+    }
 
     return settings;
 }]);

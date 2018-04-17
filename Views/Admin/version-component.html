@@ -1,0 +1,104 @@
+﻿<!-- choose layer -->
+<select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
+<div ng-if="$root.currentLayerId" >
+    <div class="row" ng-if="!$ctrl.layerVersionSetting.IsVersioned">
+        <div class="col-md-4">
+            <div class="form-group">
+                <button ng-click="$ctrl.enableHistoryTracking()" class="btn blue"><span class="glyphicons glyphicons-clock"></span> Enable versioning</button>
+            </div>
+           
+        </div>
+    </div>
+    <!-- Render table data -->
+    <div ng-if="$ctrl.layerVersionSetting.IsVersioned">
+        <div class="row">
+            <div class="col-md-12">
+                <label>Please select the time OR recovery point in the edit history</label>
+                <div class="row">
+                    <div class="form-group col-lg-7" ng-style="{opacity:$ctrl.timeOption=='time'?0.5:1}">
+                        Edit history: <a ng-click="$ctrl.onLayerChange()"><span class="glyphicons glyphicons-refresh"></span> Refresh</a>
+                        <ui-select ng-model="$ctrl.editHistory"
+                                   theme="bootstrap"
+                                   ng-click="$ctrl.changeTimeOption('history')"
+                                   reset-search-input="false"
+                                   title="Choose a restore point">
+                            <ui-select-match placeholder="Choose a restore point">
+                                <span>{{$ctrl.getDisplayText($select.selected)}}</span>
+                            </ui-select-match>
+                            <!-- field type 5 for date -->
+                            <ui-select-choices repeat="e in $ctrl.EditHistories">
+                                <div>{{$ctrl.getDisplayText(e)}}</div>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                    <div class="form-group col-lg-5" ng-style="{opacity:$ctrl.timeOption=='history'?0.5:1}">
+                        Time:
+                        <input class="form-control" ng-click="$ctrl.changeTimeOption('time')" date-format="{{$ctrl.dateFormat}}" datetime-picker ng-model="$ctrl.date" />
+                    </div>
+
+                </div>
+                <!-- Render table data -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+
+                    <button ng-if-start="$ctrl.timeOption!='time'" ng-click="$ctrl.viewChange()" class="btn blue"><span class="glyphicons glyphicons-git-compare"></span> View changeset</button>
+                    <button ng-if-end ng-click="$ctrl.revertChange()" class="btn btn-outline red"><span class="glyphicons glyphicons-unshare"></span> Revert changeset</button>
+                    <button ng-click="$ctrl.getLayerDataAtThisTime()" class="btn blue"><span class="glyphicons glyphicons-table"></span> View data at that time</button>
+                    <button ng-click="$ctrl.rollback()" class="btn btn-outline red"><span class="glyphicons glyphicons-restart"></span> Reset data to that time</button>
+
+                </div>
+                <div class="fixed-table-body">
+                    <!-- repeat on add and edit list -->
+                    <div ng-if="$ctrl[d.DataObjectName]" ng-repeat="d in $ctrl.dataTables">
+                        <h4>{{d.Name}}</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <!-- list column -->
+                                    <th ng-repeat="c in $ctrl[d.DataObjectName].Columns">{{c}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- list data -->
+                                <tr class="{{d.DataObjectName=='deleteData'?'old-version':''}}" ng-repeat="item in $ctrl[d.DataObjectName].Items track by $index">
+                                    <td ng-repeat="f in item track by $index">{{f}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- update list -->
+                    <div ng-if="$ctrl.updateDataOld">
+                        <h4>Update features</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <!-- list column -->
+                                    <th ng-repeat="c in $ctrl.updateDataOld.Columns">{{c}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- list data new data -->
+                                <tr ng-repeat="item in $ctrl.updateDataNew.Items track by $index">
+                                    <td ng-class="{'highlight':f!=$ctrl.updateDataOld.Items[$parent.$index][$index]}"
+                                        ng-repeat="f in item track by $index">
+                                        {{f}}
+                                    </td>
+                                </tr>
+                                <!-- list data old data -->
+                                <tr title="Old data" class="old-version" ng-repeat="item in $ctrl.updateDataOld.Items track by $index">
+                                    <td ng-repeat="f in item track by $index">{{f}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

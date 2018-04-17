@@ -481,3 +481,19 @@ input.number {
 .dropdown-menu > li > a {
     padding: 8px 8px;
 }
+tr.old-version td{
+    background-color:darkgrey;
+}
+.fixed-table-body{
+    overflow-x:auto;
+    overflow-y:auto;
+}
+.tree-collapsed .col-sm-4 {
+    width: 182px;
+}
+.tree-collapsed .col-sm-8 {
+    width: calc(100% - 182px);
+}
+.tree-button-group button{
+    margin-top:5px;
+}

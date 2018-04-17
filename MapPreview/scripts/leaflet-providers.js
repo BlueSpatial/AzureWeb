@@ -97,7 +97,13 @@
 					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			},
 			variants: {
-				Mapnik: {},
+                Mapnik: {},
+                OpenTopoMap : {
+                    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+                    options: {
+                        maxZoom: 18
+                    } 
+			    },
 				BlackAndWhite: {
 					url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
 					options: {

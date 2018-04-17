@@ -3,6 +3,7 @@
     bindings: {
         single: '=',
         callback: '=',
+        defaultSRs: '='
     },
     templateUrl: '/Views/Admin/add-layer-from-database-component.html',
 
@@ -17,6 +18,7 @@
         //    $ctrl.services = res.data.Services;
         //    $ctrl.layers = res.data.Layers;
         //});
+        $ctrl.sR = 102100;
         $ctrl.getTables = function () {
             if (!$ctrl.single.Layer || !$ctrl.single.Layer.ServiceId) {
                 return;
@@ -45,7 +47,8 @@
             if (!$ctrl.layerName) {
                 $rootScope.errorMessage = "Layer name is required";
             }
-            $http.post("/Admin/GenerateHibernateConfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false) }
+            $ctrl.sR = $ctrl.sR || 102100;
+            $http.post("/Admin/GenerateHibernateConfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false), spatialReference: $ctrl.sR }
            ).success(function (res) {
                if (!res.Error) {
                    $ctrl.callback(res.Layer);

@@ -9,14 +9,14 @@
                     <tr>
                         <th>User name/Email</th>
                         <th>Role</th>
-                        <th>Is Azure AD User</th>
+                        <th ng-if="$ctrl.isAzureADSet">Is Azure AD User</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="u in $ctrl.users">
                         <td>{{u.UserName}}</td>
                         <td>{{$ctrl.getRoleName(u.Role)}}</td>
-                        <td><input type="checkbox" ng-model="u.IsAzureAD" disabled /></td>
+                        <td ng-if="$ctrl.isAzureADSet"><input type="checkbox" ng-model="u.IsAzureAD" disabled /></td>
                         <td>
                             <a class="btn btn-danger btn-xs tree-button pull-right" ng-click="$ctrl.deleteUser(u,$index)"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                             <button ng-click="$ctrl.editUser(u)" class="btn blue btn-xs pull-right m-r-8"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
@@ -36,7 +36,7 @@
                     <h4 class="modal-title">{{$ctrl.isEditMode?'Edit':'Add'}} user</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group" ng-if="$ctrl.isAzureADSet">
                         <label>
                             Azure AD User:
                             <input ng-disabled="$ctrl.selectedUser.Id" type="checkbox" ng-model="$ctrl.selectedUser.IsAzureAD">
