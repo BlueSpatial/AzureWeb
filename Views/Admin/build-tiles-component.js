@@ -126,7 +126,11 @@
             };
             progressNotifier.client.updateProgressValue = function (i) {
                 $rootScope.$apply(function () {
-                    $ctrl.progressBar.Value += i;
+                    var newValue = $ctrl.progressBar.Value + i;
+                    if (newValue > $ctrl.progressBar.Max) { // don allow new value>max;
+                        newValue = $ctrl.progressBar.Max;
+                    }
+                    $ctrl.progressBar.Value = newValue;
                 });
             };
             progressNotifier.client.updateProgressText = function (text) {
