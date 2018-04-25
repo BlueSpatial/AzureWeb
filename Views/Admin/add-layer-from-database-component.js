@@ -18,6 +18,7 @@
         //    $ctrl.services = res.data.Services;
         //    $ctrl.layers = res.data.Layers;
         //});
+        
         $ctrl.sR = 102100;
         $ctrl.getTables = function () {
             if (!$ctrl.single.Layer || !$ctrl.single.Layer.ServiceId) {
@@ -41,12 +42,18 @@
         });
         $ctrl.generateHibernateConfig = function () {
             if (!authorizeService.isAuthorize()) return;
+            if (!$ctrl.layerName) {
+                $rootScope.errorMessage = "Layer name is required";
+                return;
+            }
+            if (!$ctrl.sR) {
+                $rootScope.errorMessage = "Spatial reference is required";
+                return;
+            }
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
             $rootScope.successMessage = "";
-            if (!$ctrl.layerName) {
-                $rootScope.errorMessage = "Layer name is required";
-            }
+            
             $ctrl.sR = $ctrl.sR || 102100;
             $http.post("/Admin/GenerateHibernateConfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false), spatialReference: $ctrl.sR }
            ).success(function (res) {
@@ -67,6 +74,7 @@
                    $ctrl.connectionInfo.TableName = "";
                    $ctrl.layerName = "";
                    $rootScope.currentLayerId = res.Layer.Id;
+                   $ctrl.sR = 102100;
                }
                else {
                    $rootScope.errorMessage = res.Message;

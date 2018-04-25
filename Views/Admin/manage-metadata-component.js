@@ -151,16 +151,19 @@
         $ctrl.removeMetadata = function (scope) {
             if (!authorizeService.isAuthorize()) return;
             var confirmMessage = "Are you sure you want to delete layer '" + scope.node.Name + "'?";
+           
             if (scope.node.MetadataType == 0) {
-                confirmMessage = "Are you sure you want to delete folder '" + scope.node.Name + "'? This will also delete all child services.";
+                confirmMessage = "Are you sure you want to delete folder '" + scope.node.Name + "'? This will also delete all child services, all child layers.";                
             }
             else if (scope.node.MetadataType == 1) {
                 confirmMessage = "Are you sure you want to delete service '" + scope.node.Name + "'? This will also delete all child layers.";
             };
+           
             if (confirm(confirmMessage)) {
+                var needDeleteTable = confirm("When you delete layer, do you want to delete layer table in database also?");
                 $rootScope.errorMessage = "";
                 $rootScope.isLoading = true;
-                $http.post("/Admin/DeleteMetadata", { id: scope.node.Id, type: scope.node.MetadataType }
+                $http.post("/Admin/DeleteMetadata", { id: scope.node.Id, type: scope.node.MetadataType, needDeleteTable: needDeleteTable }
                 ).success(function (res) {
                     if (!res.Error) {
                         scope.remove();
