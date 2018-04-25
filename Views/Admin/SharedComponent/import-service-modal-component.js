@@ -12,7 +12,6 @@
     // The controller that handles our component logic
     controller: ['$http', '$scope','$rootScope', 'authorizeService', 'layerService', function ($http,$scope, $rootScope, authorizeService, layerService) {
         var $ctrl = this;
-        $ctrl.hideCopyButton=1;
         var setDefaultConnection = function () {
             if ($ctrl.connections.length == 1) {
                 $ctrl.connectionId = $ctrl.connections[0].Id;

@@ -3,7 +3,6 @@
     bindings: {
         metadataType: '=',
         metadataId: '=',
-        hideCopyButton: '=',
     },
 
     templateUrl: '/Views/Admin/SharedComponent/breadcrumb-component.html',

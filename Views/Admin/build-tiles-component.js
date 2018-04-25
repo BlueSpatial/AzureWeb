@@ -124,19 +124,9 @@
                     })
                 });
             };
-            progressNotifier.client.updateProgressMax = function () {
+            progressNotifier.client.updateProgressValue = function (i) {
                 $rootScope.$apply(function () {
-                   
-                    $ctrl.progressBar.Max = $ctrl.totalTilesToCreate();
-                });
-            };
-            progressNotifier.client.increaseProgressValue = function () {
-                $rootScope.$apply(function () {
-                    //var newValue = $ctrl.progressBar.Value + i;
-                    //if (newValue > $ctrl.progressBar.Max) { // don allow new value>max;
-                    //    newValue = $ctrl.progressBar.Max;
-                    //}
-                    $ctrl.progressBar.Value +=1;
+                    $ctrl.progressBar.Value += i;
                 });
             };
             progressNotifier.client.updateProgressText = function (text) {

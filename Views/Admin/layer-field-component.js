@@ -94,9 +94,6 @@
                     return;
                 }
             }
-            // replace the filter
-            $ctrl.layer.FilterExpression = $ctrl.layer.FilterExpression || "";
-            $ctrl.layer.FilterExpression = $ctrl.layer.FilterExpression.replace(/"/g, "'");
             $rootScope.isLoading = true;
             $ctrl.fields.forEach(function (item, idx) {
                 item.JsonDomain = JSON.stringify(item.Domain);

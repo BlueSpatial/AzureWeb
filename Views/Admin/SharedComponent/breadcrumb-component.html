@@ -13,8 +13,8 @@
         }"></span>
                 {{b.Name}}
             </a>
-            <i ng-if="$index!=($ctrl.breadcrumb.length-1)" class="fa fa-circle"></i>&nbsp;&nbsp;
-            <button ng-hide="$ctrl.hideCopyButton" ng-if="$index==($ctrl.breadcrumb.length-1)" ng-click="$ctrl.copyURL(b.Url)" class="btn btn-sm blue btn-outline"><span class="glyphicons glyphicons-copy"></span> Copy URL</button>
+            <i ng-if="$index!=($ctrl.breadcrumb.length-1)" class="fa fa-circle"></i>
+            <button ng-if="$index==($ctrl.breadcrumb.length-1)" ng-click="$ctrl.copyURL(b.Url)" class="btn btn-sm blue btn-outline"><span class="glyphicons glyphicons-copy"></span> Copy URL</button>
         </li>
     </ul>
 </div>

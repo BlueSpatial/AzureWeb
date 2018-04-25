@@ -16,11 +16,6 @@
                 <input class="form-control number" type="number" ng-min="0" ng-model="$ctrl.layerSetting.MaxScale" />
             </div>
             <div class="form-group">
-                <label>
-                    Spatial Reference: {{$ctrl.layerSetting.SpatialReference}}
-                </label>
-            </div>
-            <div class="form-group">
                 <label title="{{(!$ctrl.layerSetting.IsAllowAnonymous)?'OData is only allowed on services with allow anonymous':''}}">
                     <input ng-disabled="!$ctrl.layerSetting.IsAllowAnonymous" type="checkbox" ng-model="$ctrl.layerSetting.IsODataEnabled">
                     Enable OData
@@ -39,7 +34,6 @@
                         <input ng-model="$ctrl.layerSetting.IsEditable" type="checkbox" /> Editable
                     </label>
                 </div>
-
             </div>
 
             <div class="form-group">

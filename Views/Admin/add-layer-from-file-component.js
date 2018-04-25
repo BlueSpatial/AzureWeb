@@ -20,10 +20,7 @@
         $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
-        var initUploadFile = function () {
-            return { SR: 102100 };
-        }
-        $ctrl.uploadFile = initUploadFile(); // init the default sr
+        $ctrl.uploadFile = { SR:102100}; // init the default sr
         var validateUploadFile = function () {
             var isValid = true;
             var messages = [];
@@ -53,14 +50,10 @@
                 messages.push("Service is required");
                 isValid = false;
             }
-            $ctrl.uploadFile = $ctrl.uploadFile || initUploadFile();
+            $ctrl.uploadFile = $ctrl.uploadFile || { SR: 102100};
         
             if (!$ctrl.uploadFile.TableName) {
                 messages.push("Layer name is required");
-                isValid = false;
-            };
-            if (!$ctrl.uploadFile.SR) {
-                messages.push("Spatial Reference is required");
                 isValid = false;
             };
             if (!$ctrl.uploadFile.File) {
@@ -155,7 +148,7 @@
                     $rootScope.successMessage = "Layer \"" + layerNames + "\" was generated successfully.";
                     //$ctrl.getTables();
                     $("#creatLayerModal").modal('hide');
-                    $ctrl.uploadFile = initUploadFile();
+                    $ctrl.uploadFile = {};
                     $('#shapeFile').val("");
                     $rootScope.progressBar.Max = 0;
                     $rootScope.currentLayerId = layers[0].Id;
