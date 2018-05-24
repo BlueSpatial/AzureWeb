@@ -1,8 +1,7 @@
-﻿
-<div class="page-bar" ng-show="$ctrl.breadcrumb.length">
+﻿<div class="page-bar" ng-show="$ctrl.breadcrumb.length">
     <ul class="page-breadcrumb">
         <li ng-repeat="b in $ctrl.breadcrumb">
-            <a href="{{b.Url}}" target="_blank">
+            <a href="{{b.Url}}" target="_blank" ng-disabled="b.IsStopped">
                 <span class="glyphicons tree-icon"
                       ng-class="{
           'glyphicons-folder-open': b.MetadataType==0,

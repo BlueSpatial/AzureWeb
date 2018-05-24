@@ -28,6 +28,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
     <script src="scripts/split.min.js"></script>
 
+    <script src="scripts/jscolor.js"></script>
+
     <!-- export table -->
     <script src="./scripts/tableExport/tableExport.min.js"></script>
     <script src="./scripts/tableExport/libs/FileSaver/FileSaver.min.js"></script>
@@ -83,6 +85,9 @@
     <script src="https://rawgit.com/Leaflet/Leaflet.heat/gh-pages/dist/leaflet-heat.js"></script>
     <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
 
+    <!-- Buuble map -->
+    <script src="http://opengov.github.io/Leaflet.bubble/dist/leaflet-bubble.js"></script>
+
     <!-- query builder -->
     <script src="https://cdn.jsdelivr.net/alasql/0.1/alasql.min.js"></script>
     <script src="./scripts/jQuery-QueryBuilder/query-builder.standalone.min.js"></script>
@@ -122,7 +127,7 @@
                     </li>
 
                     <li><a id="extent-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-arrows-alt"></i> Feature Extent</a></li>
-                    <li><a id="extent-btn" href="#" data-toggle="modal" data-target="#chartModal"><i class="fa fa-line-chart"></i> Chart</a></li>
+                    <!--<li><a id="extent-btn" href="#" data-toggle="modal" data-target="#chartModal"><i class="fa fa-line-chart"></i> Chart</a></li>-->
                     <li class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-laptop"></i> <span id="view">Split View </span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -135,67 +140,91 @@
                     <li class="dropdown" id="mapTypeMenu">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-map"></i> <span id="mapType">Simple map </span><b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeNormal"><i class="fa fa-map-marker"></i> Simple Map</a></li>
-                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeCluster"><i class="fa fa-bullseye"></i> Cluster Map</a></li>
-                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeHeat"><i class="fa fa-fire"></i> Heat Map</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeNormal"><i style="width:13px; padding-left:3px;" class="fa fa-map-marker"></i> Simple Map</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeCluster"><i style="width:13px; padding-left:1px;" class="fa fa-bullseye"></i> Cluster Map</a></li>
+                            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" name="mapType" id="mapTypeHeat"><i style="width:13px; padding-left:1px;" class="fa fa-fire"></i> Heat Map</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#mapTypeBubbleModal" name="mapType" id="mapTypeBubble"><i style="width:13px; padding-left:0px;" class="fa fa-dribbble"></i> Bubble Map</a></li>
                         </ul>
                     </li>
                     <li><a href="#" data-toggle="modal" data-target="#widgetsSettingModal"><i class="fa fa-cog"></i> Widget Settings</a></li>
+                    <li><a id="chart-btn" href="#" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-bar-chart"></i> <span id="chart-view">Show Chart</span></a></li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div id="map-container">
-        <div id="map"></div>
-        <div id="time-ranges" class="leaflet-bar">
-            <form id="form">
-                <label for="from">
-                    From
-                    <input id='from' type="date" value='' name='from'>
-                </label>
-                <label for="to">
-                    To
-                    <input id='to' type="date" value='' name='to'>
-                </label>
-                <input id="updateTimeBtn" type="button" value="Update">
-            </form>
+    <div id="left-container" style="width:100%;">
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="time-ranges" class="leaflet-bar">
+                <form id="form">
+                    <label for="from">
+                        From
+                        <input id='from' type="date" value='' name='from'>
+                    </label>
+                    <label for="to">
+                        To
+                        <input id='to' type="date" value='' name='to'>
+                    </label>
+                    <input id="updateTimeBtn" type="button" value="Update">
+                </form>
+            </div>
+            <div id="basemaps-wrapper" class="leaflet-bar">
+                <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+                    <option value="OpenStreetMap.Mapnik">Streets</option>
+                    <option value="OpenStreetMap.OpenTopoMap">Topo</option>
+                    <option value="OpenStreetMap.BlackAndWhite">Black And White</option>
+                    <!--<option value="OpenStreetMap.DE">DE</option>
+                    <option value="OpenStreetMap.France">France</option>
+                    <option value="OpenStreetMap.HOT">HOT</option>-->
+                    <!--<option value="OpenStreetMap.BZH">BZH</option>-->
+                </select>
+            </div>
         </div>
-        <div id="basemaps-wrapper" class="leaflet-bar">
-            <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-                <option value="OpenStreetMap.Mapnik">Streets</option>
-                <option value="OpenStreetMap.OpenTopoMap">Topo</option>
-                <option value="OpenStreetMap.BlackAndWhite">Black And White</option>
-                <!--<option value="OpenStreetMap.DE">DE</option>
-                <option value="OpenStreetMap.France">France</option>
-                <option value="OpenStreetMap.HOT">HOT</option>-->
-                <!--<option value="OpenStreetMap.BZH">BZH</option>-->
-            </select>
+        <div id="table-container">
+            <div id="toolbar" style="width: 400px;">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
+                        <i class="fa fa-filter"></i> Filter Data
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
+                            <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
+                            <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
+            </div>
+            <table id="table"></table>
         </div>
     </div>
-
-
-    <div id="table-container">
-        <div id="toolbar" style="width: 400px;">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
-                    <i class="fa fa-filter"></i> Filter Data
-                </button>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-cloud-download"></i> Export Data <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
-                        <li><a href="#" id="download-excel-btn"><i class="fa fa-file-excel-o"></i> Excel</a></li>
-                        <li><a href="#" id="download-pdf-btn"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
-                    </ul>
+    <div id="right-container" style="width:0%">
+        <div style="margin-left:15px; margin-top:10px; width: calc(100% - 30px);">
+            <div class="form-group">
+                <label>Choose type</label>
+                <select id="chartTypeSelect" onChange="drawChart()">
+                    <option value="barChart">Bar Chart</option>
+                    <option value="pieChart">Pie Chart</option>
+                </select>
+                <label>Choose column</label>
+                <select id="chooseColumnSelect" onChange="drawChart()"></select>
+            </div>
+            <div class="row">
+                <div class="dc-chart col-xs-12" id="chart">
+                    <a class="reset" href="javascript:materialChart.filterAll();dc.redrawAll();" style="display: none;">Reset</a>
+                    <br>
                 </div>
             </div>
-            <span id="feature-count" class="text-muted" style="padding-left: 15px;"></span>
         </div>
-        <table id="table"></table>
+
     </div>
+    <div style="clear:both;"></div>
+
     <div class="modal fade" id="widgetsSettingModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -217,7 +246,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
+    <!--<div class="modal fade" id="chartModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -248,16 +277,16 @@
                             <br>
                         </div>
                     </div>
-                   
+
                 </div>
                 <div class="modal-footer">
-                    
+
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog">
@@ -276,6 +305,81 @@
                     <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="fa fa-filter"></i> Apply Filter</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mapTypeBubbleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Bubble Map Option<span id="record-count" class="badge pull-right" style="margin-right: 15px; margin-top: 2px;"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Property:</label>
+                        <select class="form-control bubbleOption" id="bubbleOptionProperty"></select>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Legend:</label>
+                            <input class="bubbleOption" type="checkbox" id="bubbleOptionLegend" checked="checked" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Tooltip:</label>
+                            <input class="bubbleOption" type="checkbox" id="bubbleOptionTooltip" checked="checked" />
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Max Radius:</label>
+                            <input type="number" class="form-control bubbleOption" id="bubbleOptionMaxRadius" value="35" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Scale:</label>
+                            <input type="text" class="form-control bubbleOption" id="bubbleOptionScale" value="YlGnBu" />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Radius:</label>
+                            <input type="number" class="form-control bubbleOption" id="bubbleOptionStyleRadius" value="10" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Weight:</label>
+                            <input type="number" class="form-control bubbleOption" id="bubbleOptionStyleWeight" value="1" />
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Color:</label>
+                            <input class="jscolor form-control bubbleOption" id="bubbleOptionStyleColor" value="#555" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Opacity: </label>
+                            <input class="form-control bubbleOption" type="number" min="0" max="100" value="80" id="bubbleOptionStyleOpacity">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>Fill Color:</label>
+                            <input class="jscolor form-control bubbleOption" id="bubbleOptionStyleFillColor" value="#74acb8" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Fill Opacity:</label>
+                            <input class="form-control bubbleOption" type="number" min="0" max="100" value="50" id="bubbleOptionStyleOpacity">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="resetBubbleMap"> Reset</button>
+                    <button type="button" class="btn btn-primary" id="getBubbleMap"> OK</button>
+                </div>
+                </div>
         </div>
     </div>
 

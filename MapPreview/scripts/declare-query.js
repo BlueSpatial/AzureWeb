@@ -24,8 +24,14 @@ var buildFilter = function (layerMetadata) {
                 label: field.alias
             };
             var features = [];
+            var mapBounds = map.getBounds();
             featureLayer.eachFeature(function (feature) {
-                features.push(feature.feature);
+                if (map.hasLayer(feature)) {// the feature that visible on map (not include feature remove by "featureLayer.removeLayers")
+                    if ((feature._bounds && mapBounds.contains(feature._bounds)) || // if polygon and line check by bound
+                        (feature.getLatLng && mapBounds.contains(feature.getLatLng()))) {// if point check by lat lng
+                        features.push(feature.feature);
+                    }
+                }
             });
              // get the unique items, if less than 30 value
             alasql("SELECT DISTINCT(properties->[" + field.name + "]) AS field FROM ? ORDER BY field ASC", [features], function (results) {
@@ -79,8 +85,14 @@ function applyFilter(chartFilterdFeatures) {
     }
 
     var features = [];
+    var mapBounds = map.getBounds();
     featureLayer.eachFeature(function (feature) {
-        features.push(feature.feature);
+        if (map.hasLayer(feature)) {// the feature that visible on map (not include feature remove by "featureLayer.removeLayers")
+            if ((feature._bounds && mapBounds.contains(feature._bounds)) || // if polygon and line check by bound
+                (feature.getLatLng && mapBounds.contains(feature.getLatLng()))) {// if point check by lat lng
+                features.push(feature.feature);
+            }
+        }
     });
     alasql(query, [features], function (features) {        
         filterdFeature = features;

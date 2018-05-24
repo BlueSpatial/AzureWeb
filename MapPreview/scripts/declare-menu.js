@@ -29,6 +29,28 @@ function switchView(view) {
         $("#table-container").css("height", "100%");
         $("#map-container").hide();
         $(window).resize();
+    } else if (view == "show-chart") {
+        $("#chart-view").html("Hide Chart");
+
+        $("#left-container").css("width", "calc(68% - 2.5px)");
+        $("#right-container").show();
+        $("#right-container").css("width", "calc(32% - 2.5px)");
+        $(window).resize();
+        if (map) {
+            map.invalidateSize();
+        }
+        $('#basemaps-wrapper').css('right', $('#right-container').width() + 10 + 'px');
+        drawChart();
+    } else if (view == "hide-chart") {
+        $("#chart-view").html("Show Chart");
+
+        $("#left-container").css("width", "100%");
+        $("#right-container").hide();
+        $(window).resize();
+        if (map) {
+            map.invalidateSize();
+        }
+        $('#basemaps-wrapper').css('right', '10px');
     }
 }
 
@@ -45,6 +67,31 @@ $("[name='view']").click(function () {
         return false;
     }
 });
+
+var initSplitChart = false;
+$("#chart-btn").click(function () {
+    if ($("#chart-view").html() === "Show Chart") {
+        if (!initSplitChart) {
+            Split(['#left-container', '#right-container'], {
+                direction: 'horizontal',
+                gutterSize: 5,
+                sizes: [70, 30],
+                minSize: [screen.availWidth - 620, 410],
+                onDragEnd: function () {
+                    $(window).trigger('resize');
+                    map.invalidateSize();
+                },
+                onDrag: function () {
+                    $('#basemaps-wrapper').css('right', $('#right-container').width() + 10 + 'px');
+                }
+            });
+            initSplitChart = true;
+        }
+        switchView("show-chart");
+    } else if ($("#chart-view").html() === "Hide Chart"){
+        switchView("hide-chart");
+    }
+})
 
 $("#extent-btn").click(function () {
     fitBound();
@@ -144,22 +191,89 @@ initWidgetSetting();
 $("[name='mapType']").click(function () {
     $(".in,.open").removeClass("in open");
     map.removeLayer(featureLayer);
+    map.removeLayer(bubbles);
+    $(".legend")[0] ? $(".legend")[0].remove() : undefined
     if (this.id === "mapTypeNormal") {
-        $("#mapType").html("Simple Map");      
+        $("#mapType").html("Simple Map");
         declareFeatureLayer(layerMetadata.timeInfo);
     } else if (this.id === "mapTypeCluster") {
         $("#mapType").html("Cluster Map");
         featureLayer = L.esri.Cluster.featureLayer({
             url: layerUrl,
         }).addTo(map);
+        bindPopup();
     } else if (this.id === "mapTypeHeat") {
         $("#mapType").html("Heat Map");
         featureLayer = L.esri.Heat.featureLayer({
             url: layerUrl,
             radius: 20
         }).addTo(map);
+    } else if (this.id === "mapTypeBubble") {
+        $("#mapType").html("Bubble Map");
+        //var featureCollection = {
+        //    type: "FeatureCollection",
+        //    features: []
+        //}
+        //featureLayer.eachFeature(function (feature) {
+        //    featureCollection.features.push(feature.feature);
+        //});
+        //bubbleOption.property = 'POINTNUM';
+        //bubbles = L.bubbleLayer(featureCollection, bubbleOption);
+        //bubbles.addTo(map);
     }
 });
+
+$("#getBubbleMap").click(function () {
+    var data = $('.bubbleOption');
+    bubbleOption.property = data[0].value;
+
+    bubbleOption.legend = data[1].checked;
+    bubbleOption.tooltip = data[2].checked;
+
+    bubbleOption.max_radius = +data[3].value;
+    bubbleOption.scale = data[4].value;
+
+    bubbleOption.style.radius = +data[5].value;
+    bubbleOption.style.weight = +data[6].value;
+
+    bubbleOption.style.color = data[7].value;
+    bubbleOption.style.opacity = data[8].value / 100;;
+
+    bubbleOption.style.fillColor = data[9].value;
+    bubbleOption.style.fillOpacity = data[10].value / 100;
+
+    console.log(bubbleOption);
+
+    var featureCollection = {
+        type: "FeatureCollection",
+        features: []
+    }
+    featureLayer.eachFeature(function (feature) {
+        featureCollection.features.push(feature.feature);
+    });
+    bubbles = L.bubbleLayer(featureCollection, bubbleOption);
+    bubbles.addTo(map);
+
+    $('#mapTypeBubbleModal').modal('hide');
+});
+
+$('#resetBubbleMap').click(function () {
+    var data = $('.bubbleOption');
+    data[1].checked = true;
+    data[2].checked = true;
+
+    data[3].value = 35;
+    data[4].value = 'YlGnBu';
+
+    data[5].value = 10;
+    data[6].value = 1;
+
+    data[7].value = "#555555";
+    data[8].value = 80
+
+    data[9].value = "#74acb8";
+    data[10].value = 50;
+})
 Split(['#map-container', '#table-container'], {
     direction: 'vertical',
     gutterSize: 5,

@@ -6,6 +6,20 @@ html, body {
 body {
   padding-top: 50px;
 }
+
+#left-container {
+    float: left;
+    height: 100%;
+}
+
+#right-container {
+    float: left;
+    height: 100%;
+    overflow-x:scroll;
+    overflow-y:hidden;
+    white-space: nowrap;
+}
+
 #map-container {
     height: 45%;
     padding: 0;

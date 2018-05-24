@@ -1,5 +1,4 @@
-﻿<!-- choose layer -->
-<select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
+﻿<select-layer-component on-layer-change="$ctrl.onLayerChange"></select-layer-component>
 <div ng-if="$root.currentLayerId" >
     <div class="row" ng-if="!$ctrl.layerVersionSetting.IsVersioned">
         <div class="col-md-4">
@@ -54,43 +53,46 @@
                 <div class="fixed-table-body">
                     <!-- repeat on add and edit list -->
                     <div ng-if="$ctrl[d.DataObjectName]" ng-repeat="d in $ctrl.dataTables">
-                        <h4>{{d.Name}}</h4>
+                        <h4 style="float:left; margin-right:10px;">{{d.Name}}</h4>
+                        <button ng-click="$ctrl.viewVerionOnMap(d.DataObjectName)" class="btn blue"><span class="glyphicons glyphicons-git-compare"></span> View on map</button>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <!-- list column -->
-                                    <th ng-repeat="c in $ctrl[d.DataObjectName].Columns">{{c}}</th>
+                                    <th ng-repeat="c in $ctrl[d.DataObjectName].Columns track by $index" ng-if="$index+1 != $ctrl[d.DataObjectName].Columns.length">{{c}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- list data -->
                                 <tr class="{{d.DataObjectName=='deleteData'?'old-version':''}}" ng-repeat="item in $ctrl[d.DataObjectName].Items track by $index">
-                                    <td ng-repeat="f in item track by $index">{{f}}</td>
+                                    <td ng-repeat="f in item track by $index" ng-if="$index+1 != item.length">{{f}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- update list -->
                     <div ng-if="$ctrl.updateDataOld">
-                        <h4>Update features</h4>
+                        <h4 style="float:left; margin-right:10px;">Updated features</h4>
+                        <button ng-click="$ctrl.viewVerionOnMap('updateData')" class="btn blue"><span class="glyphicons glyphicons-git-compare"></span> View on map</button>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <!-- list column -->
-                                    <th ng-repeat="c in $ctrl.updateDataOld.Columns">{{c}}</th>
+                                    <th ng-repeat="c in $ctrl.updateDataOld.Columns track by $index" ng-if="$index+1 != $ctrl.updateDataOld.Columns.length">{{c}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- list data new data -->
-                                <tr ng-repeat="item in $ctrl.updateDataNew.Items track by $index">
-                                    <td ng-class="{'highlight':f!=$ctrl.updateDataOld.Items[$parent.$index][$index]}"
-                                        ng-repeat="f in item track by $index">
-                                        {{f}}
+                                <tr ng-repeat="(pIndex, item) in $ctrl.updateDataNew.Items track by $index">
+                                   
+                                    <td ng-class="{'highlight':f!=$ctrl.updateDataOld.Items[pIndex][$index]}"
+                                        ng-repeat="f in item track by $index" ng-if="$index+1 != item.length">
+                                         {{f}}
                                     </td>
                                 </tr>
                                 <!-- list data old data -->
                                 <tr title="Old data" class="old-version" ng-repeat="item in $ctrl.updateDataOld.Items track by $index">
-                                    <td ng-repeat="f in item track by $index">{{f}}</td>
+                                    <td ng-repeat="f in item track by $index" ng-if="$index+1 != item.length">{{f}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -100,5 +102,27 @@
         </div>
     </div>
 </div>
-
-
+<div class="modal fade" id="viewLeafletMapModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">MAP</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12" ng-if="$ctrl.features" ng-class="{'col-md-6': $ctrl.features2}">
+                            <div ng-if="$ctrl.features2">New data</div>
+                            <leaflet-map-component id="$ctrl.mapName" features="$ctrl.features" style="'height:300px;'"></leaflet-map-component>
+                        </div>
+                        <div class="col-md-6" ng-if="$ctrl.features2">
+                            <div>Old data</div>
+                            <leaflet-map-component id="$ctrl.mapName2" features="$ctrl.features2" style="'height:300px;'"></leaflet-map-component>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

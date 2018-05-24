@@ -166,3 +166,12 @@ b, strong {
     background-color: #3598dc;
     color:white;
 }
+
+a[disabled="disabled"] {
+    pointer-events: none;
+    color: gray !important;
+}
+
+.tree-collapsed .node-text {
+    display: none;
+}

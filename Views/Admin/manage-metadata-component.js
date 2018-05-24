@@ -17,17 +17,17 @@
             }]
         ]
         $ctrl.layerTabs = [{ Id: 0, Name: 'Layer' },
-            { Id: 1, Name: 'Fields' },
-            { Id: 2, Name: 'Styles' },
-            { Id: 3, Name: 'Labels' },           
-            { Id: 4, Name: 'HTML' },
-            { Id: 5, Name: 'Related Records' },
-            { Id: 6, Name: 'Events' },
-            { Id: 7, Name: 'Versions' }
+        { Id: 1, Name: 'Fields' },
+        { Id: 2, Name: 'Styles' },
+        { Id: 3, Name: 'Labels' },
+        { Id: 4, Name: 'HTML' },
+        { Id: 5, Name: 'Related Records' },
+        { Id: 6, Name: 'Events' },
+        { Id: 7, Name: 'Versions' }
         ];
         $ctrl.currentLayerTab = 0;
         $ctrl.serviceTabs = [{ Id: 0, Name: 'Service' },
-        { Id: 1, Name: 'Build Tiles' },        
+        { Id: 1, Name: 'Build Tiles' },
         ];
         $ctrl.currentServiceTab = 0;
         $ctrl.activeLayerTab = function (id) {
@@ -43,6 +43,33 @@
             $ctrl.currentServiceTab = id;
         }
 
+        var getLayerSetting = function () {
+            $rootScope.errorMessage = "";
+            $rootScope.isLoading = true;
+            $http.get("/admin/GetLayerSetting", { params: { layerId: $rootScope.currentLayerId } }).success(function (res) {
+                if (!res.Error) {
+                    $ctrl.layerTabs = [
+                        { Id: 0, Name: 'Layer' },
+                        { Id: 1, Name: 'Fields' },
+                        { Id: 2, Name: 'Styles' },
+                        { Id: 3, Name: 'Labels' },
+                        { Id: 4, Name: 'HTML' },
+                        { Id: 5, Name: 'Related Records' },
+                        { Id: 6, Name: 'Events' }
+                    ];
+                    if (res.LayerSetting.ServiceType === 1) {
+                        $ctrl.layerTabs.push({ Id: 7, Name: 'Versions' });
+                    } else {
+                        $ctrl.currentLayerTab = $ctrl.currentLayerTab === 7 ? 0 : $ctrl.currentLayerTab;
+                    }
+                }
+                else {
+                    $rootScope.errorMessage = res.Message;
+                };
+                $rootScope.isLoading = false;
+            });
+        }
+
         $ctrl.activeNode = function (scope, idx) {
             if ($rootScope.canDeactivate&&!$rootScope.canDeactivate()) {
                 return; // can't navigate away if have unsaved change
@@ -51,6 +78,9 @@
             $rootScope.currentScope = scope;
             $rootScope.currentNode = scope.node;
             editNode(scope);
+            if ($rootScope.currentNode.MetadataType === 2) {
+                getLayerSetting();
+            }
         }
         var activeNodeManually = function (node) {
             setTimeout(function () {
@@ -160,17 +190,78 @@
             };
            
             if (confirm(confirmMessage)) {
-                var needDeleteTable = confirm("When you delete layer, do you want to delete layer table in database also?");
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        "Yes": function () {
+                            $rootScope.errorMessage = "";
+                            $rootScope.isLoading = true;
+                            $http.post("/Admin/DeleteMetadata", { id: scope.node.Id, type: scope.node.MetadataType, needDeleteTable: true }
+                            ).success(function (res) {
+                                if (!res.Error) {
+                                    scope.remove();
+                                    if (scope.node.MetadataType == 2 && scope.node.Id == $rootScope.currentLayerId) {
+                                        $rootScope.currentLayerId = null;
+                                    }
+                                    inactiveNode();
+                                }
+                                else {
+                                    $rootScope.errorMessage = res.Message;
+                                };
+                                $rootScope.isLoading = false;
+                            })
+                                .error(authorizeService.onError);
+                            $(this).dialog("close");
+                        },
+                        "No": function () {
+                            $rootScope.errorMessage = "";
+                            $rootScope.isLoading = true;
+                            $http.post("/Admin/DeleteMetadata", { id: scope.node.Id, type: scope.node.MetadataType, needDeleteTable: false }
+                            ).success(function (res) {
+                                if (!res.Error) {
+                                    scope.remove();
+                                    if (scope.node.MetadataType == 2 && scope.node.Id == $rootScope.currentLayerId) {
+                                        $rootScope.currentLayerId = null;
+                                    }
+                                    inactiveNode();
+                                }
+                                else {
+                                    $rootScope.errorMessage = res.Message;
+                                };
+                                $rootScope.isLoading = false;
+                            })
+                                .error(authorizeService.onError);
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                
+            }
+        };
+
+        $ctrl.changeStatusService = function (serviceId, isStopped) {
+            if (!authorizeService.isAuthorize()) return;
+
+            if (isStopped) {
+                confirmMessage = "Are you sure you want to stop this service?";
+            } 
+
+            if ((isStopped && confirm(confirmMessage)) || (!isStopped)) {
                 $rootScope.errorMessage = "";
                 $rootScope.isLoading = true;
-                $http.post("/Admin/DeleteMetadata", { id: scope.node.Id, type: scope.node.MetadataType, needDeleteTable: needDeleteTable }
+                $http.post("/Admin/UpdateServiceStatus", { serviceId: serviceId, status: isStopped }
                 ).success(function (res) {
                     if (!res.Error) {
-                        scope.remove();
-                        if (scope.node.MetadataType == 2 && scope.node.Id == $rootScope.currentLayerId) {
-                            $rootScope.currentLayerId = null;
-                        }
-                        inactiveNode();
+                        $ctrl.single.NewService.IsStopped = isStopped;
+
+                        // update breadcrumb 
+                        $rootScope.$emit('changeBreadcrumbServiceIsStopped', $ctrl.single.NewService);
+
+                        // update metadata tree
+                        getMetadataTree();
                     }
                     else {
                         $rootScope.errorMessage = res.Message;
@@ -269,7 +360,7 @@
         $ctrl.addNewService = function (scope) {
            
             $ctrl.single.IsEditMode = false;
-            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: false, IsAllowAnonymous: false, MaxRecordCount:1000, MinScale:0, MaxScale:0 };
+            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: false, IsAllowAnonymous: false, MaxRecordCount:1000, MinScale:0, MaxScale:0, IsStopped: false };
             if ($rootScope.isNotFullVersion()) {
                 // auto select the default connection for basic version
                 //if ($rootScope.isBasicVersion()) {
@@ -343,6 +434,8 @@
                 $ctrl.single.NewLayer.Id = currentNode.Id;
                 $ctrl.single.NewLayer.Name = currentNode.Name;
                 $ctrl.single.NewLayer.IsODataEnabled = currentNode.IsODataEnabled;
+                $ctrl.single.NewLayer.IsStopped = currentNode.IsStopped;
+
                 //("#editLayerModal").modal('show');
                 $ctrl.pushLayer = function (layerName) {
                     currentNode.Name = layerName;

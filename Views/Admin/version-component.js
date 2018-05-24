@@ -12,8 +12,8 @@
         $ctrl.timeOption = "";
         $ctrl.dataTables = [
             { Name: "All features", DataObjectName: "data" },
-            { Name: "Add features", DataObjectName: "addData" },
-            { Name: "Delete features", DataObjectName: "deleteData" }
+            { Name: "Added features", DataObjectName: "addData" },
+            { Name: "Deleted features", DataObjectName: "deleteData" }
         ];
 
         var getLayerVersionSetting = function () {
@@ -23,6 +23,7 @@
                 if (!res.Error) {
                     $ctrl.layerVersionSetting = res.LayerVersionSetting;
                     $ctrl.EditHistories = res.EditHistories;
+                    $ctrl.editHistory = undefined;
                 }
                 else {
                     $rootScope.errorMessage = res.Message;
@@ -148,7 +149,7 @@
                     $rootScope.errorMessage = res.Message;
                 }
                 else {
-                    $ctrl.data = res.Data;                   
+                    $ctrl.data = res.Data;
                 };
                 $rootScope.isLoading = false;
             })
@@ -195,6 +196,84 @@
         $ctrl.changeTimeOption = function (option) {
             $ctrl.timeOption = option;
         }
+
+        $ctrl.viewVerionOnMap = function (dataObjectName) {
+            $ctrl.features = undefined;
+            $ctrl.features2 = undefined;
+
+            setTimeout(function () {
+                $ctrl.mapName = dataObjectName + Date.now();
+                $ctrl.mapName2 = "updateData2" + Date.now();
+                if (!dataObjectName)
+                    return;
+               
+                if (dataObjectName === 'addData') {
+                    var features = $ctrl.addData.Items.map((item) => {
+                        return {
+                            "type": "Feature",
+                            "geometry": item[item.length - 1],
+                            "properties": {
+                            }
+                        }
+                    });
+                    $ctrl.features = features;
+                }
+
+                if (dataObjectName === 'deleteData') {
+                    var features = $ctrl.deleteData.Items.map((item) => {
+                        return {
+                            "type": "Feature",
+                            "geometry": item[item.length - 1],
+                            "properties": {
+                            }
+                        }
+                    });
+                    $ctrl.features = features;
+                }
+
+                if (dataObjectName === 'updateData') {
+                    var featuresNew = $ctrl.updateDataNew.Items.map((item) => {
+                        return {
+                            "type": "Feature",
+                            "geometry": item[item.length-1],
+                            "properties": {
+                            }
+                        }
+                    });
+                    $ctrl.features = featuresNew;
+
+                    var featuresOld = $ctrl.updateDataOld.Items.map((item) => {
+                        return {
+                            "type": "Feature",
+                            "geometry": item[item.length-1],
+                            "properties": {
+                            }
+                        }
+                    });
+                    $ctrl.features2 = featuresOld;
+                }
+
+                if (dataObjectName === 'data') {
+                    var features = $ctrl.data.Items.map((item) => {
+                        return {
+                            "type": "Feature",
+                            "geometry": item[item.length - 1],
+                            "properties": {
+                            }
+                        }
+                    });
+                    $ctrl.features = features;
+                }
+
+                var $layerModal = $("#viewLeafletMapModal");
+                $layerModal.modal('show');
+                setTimeout(() => {
+                    $(window).trigger('resize');
+                }, 500)
+            });
+
+        }
+
     }]
        
        

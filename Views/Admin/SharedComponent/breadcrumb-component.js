@@ -46,12 +46,21 @@
             $ctrl.breadcrumb[1].Url = urls.join("/");
             $ctrl.breadcrumb[1].ServiceType = service.ServiceType;
         });
+
+        $rootScope.$on('changeBreadcrumbServiceIsStopped', function (event, service) {
+            if (!$ctrl.breadcrumb || !$ctrl.breadcrumb[1]) {
+                return;
+            }
+            $ctrl.breadcrumb[1].IsStopped = service.IsStopped ;
+        });
+
         $rootScope.$on('changeBreadcrumbLayerName', function (event, layerName) {
             if (!$ctrl.breadcrumb || !$ctrl.breadcrumb[2] ) {
                 return;
             }
             $ctrl.breadcrumb[2].Name = layerName;
         });
+
         $rootScope.$on('changeBreadcrumbFolderName', function (event, folderName) {
             if (!$ctrl.breadcrumb || !$ctrl.breadcrumb[0]) {
                 return;

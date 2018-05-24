@@ -28,6 +28,9 @@
       <property name="IsAllowAnonymous" type="bool">
       <column name="IsAllowAnonymous" sql-type="bit" not-null="true" />
     </property>
+    <property name="IsStopped" type="bool">
+      <column name="IsStopped" sql-type="bit" not-null="false" />
+    </property>
     <property name="MinScale" type="Int32">
       <column name="MinScale" sql-type="int" />
     </property>

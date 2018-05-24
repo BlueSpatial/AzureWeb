@@ -24,24 +24,27 @@
     <ul>
         @foreach (var service in Model.ServiceConfigs)
         {
-            <li>
-                <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/@service.ServiceType.ToString()">@Path.GetFileName(service.Name)</a> (@service.ServiceType.ToString())<br>
-            </li>
-            if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer)
+            if (!service.IsStopped)// dont show stopped service
             {
-                if (service.IsWMSEnabled)
-                {
-                    <li>
-                        <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMS Server)<br>
-                    </li>
-                    if (service.IsCached)
+                <li>
+                    <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/@service.ServiceType.ToString()">@Path.GetFileName(service.Name)</a> (@service.ServiceType.ToString())<br>
+                </li>
+                    if (service.ServiceType == BlueSpatial.Models.AdminViewModels.ServiceType.MapServer)
                     {
+                        if (service.IsWMSEnabled)
+                        {
                         <li>
-                            <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMTSServer?service=WMTS&Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMTS Server)<br>
+                            <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMSServer?Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMS Server)<br>
                         </li>
+                            if (service.IsCached)
+                            {
+                            <li>
+                                <a href="@Model.ParentFolder/@Path.GetFileName(service.Name)/WMTSServer?service=WMTS&Request=GetCapabilities">@Path.GetFileName(service.Name)</a> (WMTS Server)<br>
+                            </li>
+                                }
+                            }
+                        }
                     }
-                }
             }
-        }
     </ul>
 }
