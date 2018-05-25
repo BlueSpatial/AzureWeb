@@ -11,7 +11,7 @@ http://vipassanaandenvironmentalinformatics.blogspot.com/2013/03/getting-started
 For setup project need to install wix http://wixtoolset.org/
 
 When deploy: 
-Must enable 32 bit application in application pool and enable full folder permission for this site
+Must enable 64 bit application in application pool and enable full folder permission for this site
 
 
 about license:
