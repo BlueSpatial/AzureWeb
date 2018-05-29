@@ -12,8 +12,8 @@
         $ctrl.timeOption = "";
         $ctrl.dataTables = [
             { Name: "All features", DataObjectName: "data" },
-            { Name: "Added features", DataObjectName: "addData" },
-            { Name: "Deleted features", DataObjectName: "deleteData" }
+            { Name: "Added feature", DataObjectName: "addData" },
+            { Name: "Deleted feature", DataObjectName: "deleteData" }
         ];
 
         var getLayerVersionSetting = function () {
@@ -176,7 +176,7 @@
             })
                 .error(authorizeService.onError);
         };
-        $ctrl.dateFormat = 'MMM d, y h:mm a';
+        $ctrl.dateFormat = 'MMM d, y h:mm:ss a';
         $ctrl.getDisplayText = function (editHistoryItem) {
             if (!editHistoryItem) return;
             var date = convertUTCDateToLocalDate($rootScope.jsonToDate(editHistoryItem.CreatedAt));
