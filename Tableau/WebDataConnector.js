@@ -83,7 +83,13 @@
         $.getJSON(url, function (result) {
             var query = "SELECT * FROM ?";
 
-            var sql = getUrlParameter('sql');
+            //var sql = getUrlParameter('sql');
+            var sql = "";
+            var url = window.location.search;
+            if (url.indexOf("sql") != -1) {
+                sql = decodeURIComponent(url.substr(url.indexOf("sql") + 4));
+            }
+
             if (sql && sql.length > 0) {
                 query += " WHERE " + sql;
             }
