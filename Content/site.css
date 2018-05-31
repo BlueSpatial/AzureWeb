@@ -500,3 +500,18 @@ tr.old-version td{
 .progress {
     background-color: #cccccc;
 }
+
+.fade-in-up {
+    -webkit-animation: fadeInUp .5s;
+    animation: fadeInUp .5s;
+}
+
+.custom-alert {
+    position: fixed;
+    width: inherit;
+    right: 0;
+    z-index: 9999999;
+    bottom: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

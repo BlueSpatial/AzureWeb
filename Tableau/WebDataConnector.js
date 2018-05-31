@@ -28,7 +28,8 @@
     myConnector.getSchema = function (schemaCallback) {
 
         var layerUrl = getUrlParameter('layer');
-        $.getJSON(layerUrl + "?f=json", function (resp) {
+        var token = getUrlParameter('token');
+        $.getJSON(layerUrl + "?f=json&token=" + token, function (resp) {
             var cols = [];
             for (var i = 0, len = resp.fields.length; i < len; i++) {
                 var field = resp.fields[i];
@@ -78,8 +79,8 @@
     };
 
     // Download the data
-    myConnector.getData = function (table, doneCallback) {
-        var url = getUrlParameter('layer') + "/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson";
+     myConnector.getData = function (table, doneCallback) {
+         var url = getUrlParameter('layer') + "/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson&token=" + getUrlParameter('token');
         $.getJSON(url, function (result) {
             var query = "SELECT * FROM ?";
 
@@ -111,74 +112,79 @@
 
     // Create filter UI
     $.ajax({
-        url: getUrlParameter('layer') + "?f=json",
-        context: document.body,
-        success: function (res) {
-            // Query field data
-            var layerMetadata = res;
+        url: getUrlParameter('layer') + "?f=json" + "&token=" + getUrlParameter('token'),
+        context: document.body
+    })
+    .done(function (res) {
+        // Query field data
+        var layerMetadata = res;
 
-            // Query features data
-            var features = [];
-            var url = getUrlParameter('layer') + "/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson";
-            $.getJSON(url, function (result) {
-                features = result.features;
-                
-                var filters = [];
-                layerMetadata.fields.forEach(function (field, index) {
-                    if (field.type != "esriFieldTypeGeometry") { // ignore the geometry column
+        // Query features data
+        var features = [];
+        var url = getUrlParameter('layer') + "/query?returnGeometry=true&where=1%3D1&outSr=4326&outFields=*&f=geojson&token=" + getUrlParameter('token');
+        $.getJSON(url, function (result) {
+            features = result.features;
 
-                        // Filter config          
-                        var id;
-                        var type;
-                        if (field.type == "esriFieldTypeOID" || field.type == "esriFieldTypeSmallInteger" || field.type == "esriFieldTypeInteger") {
-                            id = "cast(properties->" + field.name + " as int)";
-                            type = "integer";
-                        }
-                        else if (field.type == "esriFieldTypeDouble" || field.type == "esriFieldTypeSingle") {
-                            id = "cast(properties->" + field.name + " as double)";
-                            type = "double";
-                        }
-                        else {
-                            id = "properties->" + field.name;
-                            type = "string";
-                        }
+            var filters = [];
+            layerMetadata.fields.forEach(function (field, index) {
+                if (field.type != "esriFieldTypeGeometry") { // ignore the geometry column
 
-                        var filter = {
-                            type: type,
-                            id: id,
-                            label: field.alias
-                        };
-
-                        // get the unique items, if less than 30 value
-                        alasql("SELECT DISTINCT(properties->[" + field.name + "]) AS field FROM ? ORDER BY field ASC", [features], function (results) {
-                            // apply domain setting
-                            if (field.domain && field.domain.codedValues ||
-                                results.length <= 15) {
-                                if (field.domain && field.domain.codedValues) { // have coded value
-                                    filter.values = field.domain.codedValues.map(function (item) { return item.code });
-                                }
-                                else { // not have coded value
-                                    var distinctValues = [];
-                                    $.each(results, function (index, value) {
-                                        distinctValues.push(value.field);
-                                    });
-                                    filter.values = distinctValues;
-                                }
-                                filter.input = "checkbox";
-                                filter.multiple = "true";
-                                filter.operators = ["in", "not_in", "equal", "not_equal"];
-                                filter.vertical = true;
-                            }
-                            filters.push(filter);
-                        });
+                    // Filter config          
+                    var id;
+                    var type;
+                    if (field.type == "esriFieldTypeOID" || field.type == "esriFieldTypeSmallInteger" || field.type == "esriFieldTypeInteger") {
+                        id = "cast(properties->" + field.name + " as int)";
+                        type = "integer";
                     }
-                });
+                    else if (field.type == "esriFieldTypeDouble" || field.type == "esriFieldTypeSingle") {
+                        id = "cast(properties->" + field.name + " as double)";
+                        type = "double";
+                    }
+                    else {
+                        id = "properties->" + field.name;
+                        type = "string";
+                    }
 
-                $("#queryBuilder").queryBuilder({
-                    allow_empty: true,
-                    filters: filters
-                });
+                    var filter = {
+                        type: type,
+                        id: id,
+                        label: field.alias
+                    };
+
+                    // get the unique items, if less than 30 value
+                    alasql("SELECT DISTINCT(properties->[" + field.name + "]) AS field FROM ? ORDER BY field ASC", [features], function (results) {
+                        // apply domain setting
+                        if (field.domain && field.domain.codedValues ||
+                            results.length <= 15) {
+                            if (field.domain && field.domain.codedValues) { // have coded value
+                                filter.values = field.domain.codedValues.map(function (item) { return item.code });
+                            }
+                            else { // not have coded value
+                                var distinctValues = [];
+                                $.each(results, function (index, value) {
+                                    distinctValues.push(value.field);
+                                });
+                                filter.values = distinctValues;
+                            }
+                            filter.input = "checkbox";
+                            filter.multiple = "true";
+                            filter.operators = ["in", "not_in", "equal", "not_equal"];
+                            filter.vertical = true;
+                        }
+                        filters.push(filter);
+                    });
+                }
             });
+
+            $("#queryBuilder").queryBuilder({
+                allow_empty: true,
+                filters: filters
+            });
+        });
+    })
+    .fail(function (err) {
+        if (err.status == 401) {
+            $('#authForm').css("display", "block");
         }
     });
 
@@ -211,9 +217,40 @@
         window.location.href = sqlIndex != -1 ? url.substring(0, sqlIndex - 1) : url;
     });
    
-    if (document.referrer != "") {
-        setTimeout(function () {
-            tableau.submit();
-        });
+     if (document.referrer != "") {
+         if (
+             window.location.href.search("token") === -1 ||
+             (window.location.href.search("token") !== -1 && document.referrer.search("token") !== -1)
+         ) {
+             setTimeout(function () {
+                 tableau.submit();
+             });
+        }
     }
+
+     $("#btnSignIn").click(function () {
+         var data = new FormData();
+         data.append("request", "getToken");
+         data.append("username", $("input[name='txtUsername']").val());
+         data.append("password", $("input[name='txtPassword']").val());
+         data.append("expiration", "60");
+         data.append("f", "json");
+
+         $.ajax({
+            type: 'POST',
+            url: location.protocol + '//' + location.host + "/bluespatial/tokens/",
+            data: data,
+            processData: false,
+            contentType: false
+        })
+        .done(function (res) {  
+            if (res && res.token) {
+                var href = window.location.href + "&token=" + res.token
+                window.location.replace(href);
+            }
+        })
+        .fail(function (err) {
+            $('#messageAuth').css("display", "block");
+        });
+     });
 })();

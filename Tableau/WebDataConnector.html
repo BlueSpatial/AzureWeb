@@ -35,6 +35,39 @@
     <button type="button" class="btn btn-info" id="resetFilterBtn"><i class="fa fa-undo"></i> Reset Filter</button>
     <button type="button" class="btn btn-primary" id="applyFilterBtn"><i class="fa fa-filter"></i> Apply Filter</button>
     <button type="button" class="btn btn-primary" id="getAllDataBtn"><i class="fa fa-filter"></i> Get All Data</button>
+
+    <div class="modal fade in" id="authForm" tabindex="-1" role="dialog" style="background-color:gray">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sign In</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        Please sign in to access
+                    </div>
+                    <div id="messageAuth" style="display: none; color: white; background-color: rgb(212, 100, 100); text-align: center; padding-top: 3px; padding-bottom: 3px;">Unable to access the authentication service.</div>
+                    <div id="uploadGisFile" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Username:</label>
+                                    <input type="text" class="form-control" name="txtUsername">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password:</label>
+                                    <input type="password" class="form-control" name="txtPassword" />
+                                </div>
+                                <div class="form-group" style="text-align:center;">
+                                    <button class="btn btn-primary blue" id="btnSignIn"><span class="glyphicon glyphicon-upload"></span> Sign In</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
