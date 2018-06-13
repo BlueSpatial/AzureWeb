@@ -109,7 +109,7 @@
         <div class="portlet light bordered" id="mainPanel" ng-if="$root.currentNode.MetadataType==2">
             <div class="right-buttons" ng-show="$root.currentNode.Id">
                 <a class="btn btn-primary blue" href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink($root.currentScope,$root.currentNodeIndex)}}" target="_blank" ng-hide="$ctrl.single.NewLayer.IsStopped">
-                    <span class="glyphicons glyphicons-eye-open tree-icon"></span> Preview
+                    <span class="glyphicons glyphicons-eye-open tree-icon"></span> View
                 </a>
                 <a class="btn btn-outline red btn-enable" data-nodrag ng-click="$ctrl.removeMetadata($root.currentScope)">
                     <span class="glyphicon glyphicon-remove"></span> Delete layer

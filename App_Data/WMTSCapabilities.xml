@@ -14,7 +14,7 @@ version="1.0.0">
   </ows:ServiceIdentification>
   <ows:ServiceProvider>
     <ows:ProviderName></ows:ProviderName>
-    <ows:ProviderSite xlink:href="http://koait.com/"/>
+    <ows:ProviderSite xlink:href="http://www.bluespatial.com/"/>
     <ows:ServiceContact>
       <ows:IndividualName></ows:IndividualName>
       <ows:ContactInfo>
