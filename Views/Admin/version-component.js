@@ -208,68 +208,63 @@
                     return;
                
                 if (dataObjectName === 'addData') {
-                    var features = $ctrl.addData.Items.map((item) => {
+                    var features = $ctrl.addData.Items.map(function (item) {
                         return {
                             "type": "Feature",
                             "geometry": item[item.length - 1],
-                            "properties": {
-                            }
-                        }
+                            "properties": {}
+                        };
                     });
                     $ctrl.features = features;
                 }
 
                 if (dataObjectName === 'deleteData') {
-                    var features = $ctrl.deleteData.Items.map((item) => {
+                    var features = $ctrl.deleteData.Items.map(function (item) {
                         return {
                             "type": "Feature",
                             "geometry": item[item.length - 1],
-                            "properties": {
-                            }
-                        }
+                            "properties": {}
+                        };
                     });
                     $ctrl.features = features;
                 }
 
                 if (dataObjectName === 'updateData') {
-                    var featuresNew = $ctrl.updateDataNew.Items.map((item) => {
+                    var featuresNew = $ctrl.updateDataNew.Items.map(function (item) {
                         return {
                             "type": "Feature",
-                            "geometry": item[item.length-1],
-                            "properties": {
-                            }
-                        }
+                            "geometry": item[item.length - 1],
+                            "properties": {}
+                        };
                     });
                     $ctrl.features = featuresNew;
 
-                    var featuresOld = $ctrl.updateDataOld.Items.map((item) => {
+                    var featuresOld = $ctrl.updateDataOld.Items.map(function (item) {
                         return {
                             "type": "Feature",
-                            "geometry": item[item.length-1],
-                            "properties": {
-                            }
-                        }
+                            "geometry": item[item.length - 1],
+                            "properties": {}
+                        };
                     });
                     $ctrl.features2 = featuresOld;
                 }
 
                 if (dataObjectName === 'data') {
-                    var features = $ctrl.data.Items.map((item) => {
+                    var features = $ctrl.data.Items.map(function (item) {
                         return {
                             "type": "Feature",
                             "geometry": item[item.length - 1],
-                            "properties": {
-                            }
-                        }
+                            "properties": {}
+                        };
                     });
                     $ctrl.features = features;
                 }
 
                 var $layerModal = $("#viewLeafletMapModal");
                 $layerModal.modal('show');
-                setTimeout(() => {
+                setTimeout(function () {
                     $(window).trigger('resize');
-                }, 500)
+                }, 500);
             });
 
         }

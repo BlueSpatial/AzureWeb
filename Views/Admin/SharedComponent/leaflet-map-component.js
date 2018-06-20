@@ -25,10 +25,10 @@
             var layer = L.geoJSON($ctrl.features);
             layer.addTo(map);
 
-            setTimeout(() => {
+            setTimeout(function () {
                 map.invalidateSize();
                 map.fitBounds(layer.getBounds());
-            }, 500)
+            }, 500);
         });
     }]
 });

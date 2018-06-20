@@ -92,9 +92,9 @@ var declareFeatureLayer = function (timeInfo) {
 var template = "";
 var getPopupTemplate = function (properties) {
 
-    const findFieldByName = (fieldName) => {
-        let pos = -1;
-        layerMetadata.fields.forEach((field, index) => {
+    var findFieldByName = function(fieldName) {
+        var pos = -1;
+        layerMetadata.fields.forEach(function(field, index){
             if (field.name === fieldName) {
                 pos = index
             }
@@ -366,7 +366,7 @@ function getLabelFeature() {
 }
 
 function createTextLabel(properties, text) {
-    layerMetadata.fields.forEach((field, index) => {
+    layerMetadata.fields.forEach(function(field, index){
         var foundIndex = text.indexOf("[" + field.name + "]");
         if (foundIndex != -1) {
             text = text.replace("[" + field.name + "]", properties[field.name])
@@ -516,46 +516,46 @@ function addLabelFeature() {
             }
 
             // add CSS
-            var styles = `color: ${labelFeature.TextColor}; font-size: ${labelFeature.TextSize}pt;`;
+            var styles = "color: " + labelFeature.TextColor + "; font-size: " + labelFeature.TextSize + "pt;";
             if (labelFeature.Underline) {
-                styles += `text-decoration: underline;`;
+                styles += "text-decoration: underline;";
             }
             if (labelFeature.Italic) {
-                styles += `font-style: italic;`;
+                styles += "font-style: italic;";
             }
             if (labelFeature.Bold) {
-                styles += `font-weight: bold;`;
+                styles += "font-weight: bold;";
             }
 
             if (labelFeature.Alignment) {
                 switch (labelFeature.Alignment.Value) {
                     case "esriServerPointLabelPlacementAboveLeft":
-                        styles += `left: unset; right: 100%; margin-right: 15px; padding-right: unset; bottom: 15px;`;
+                        styles += "left: unset; right: 100%; margin-right: 15px; padding-right: unset; bottom: 15px;";
                         break;
                     case "esriServerPointLabelPlacementAboveCenter":
-                        styles += `bottom: 15px;`
+                        styles += "bottom: 15px;"
                         break;
                     case "esriServerPointLabelPlacementAboveRight":
-                        styles += `left: unset; margin-left: 5px; bottom: 15px;`;
+                        styles += "left: unset; margin-left: 5px; bottom: 15px;";
                         break;
 
                     case "esriServerPointLabelPlacementBelowLeft":
-                        styles += `left: unset; right: 100%; margin-right: 15px; padding-right: unset; top: 15px;`;
+                        styles += "left: unset; right: 100%; margin-right: 15px; padding-right: unset; top: 15px;";
                         break;
                     case "esriServerPointLabelPlacementBelowCenter":
-                        styles += `top: 15px;`
+                        styles += "top: 15px;"
                         break;
                     case "esriServerPointLabelPlacementBelowRight":
-                        styles += `left: unset; margin-left: 5px; top: 15px;`;
+                        styles += "left: unset; margin-left: 5px; top: 15px;";
                         break;
 
                     case "esriServerPointLabelPlacementCenterLeft":
-                        styles += `left: unset; right: 100%; margin-right: 15px; padding-right: unset`;
+                        styles += "left: unset; right: 100%; margin-right: 15px; padding-right: unset";
                         break;
                     case "esriServerPointLabelPlacementCenterCenter":
                         break;
                     case "esriServerPointLabelPlacementCenterRight":
-                        styles += `left: unset; margin-left: 5px;`;
+                        styles += "left: unset; margin-left: 5px;";
                         break;
                 }
             }
@@ -565,7 +565,7 @@ function addLabelFeature() {
                     icon: L.divIcon({
                         iconSize: null,
                         className: 'label',
-                        html: `<div style="${styles}">${createTextLabel(e.feature.properties, labelFeature.Text)}</div>`
+                        html: "<div style=\"" + styles + "\">" + createTextLabel(e.feature.properties, labelFeature.Text) + "</div>"
                     })
                 }
             )
@@ -630,7 +630,7 @@ function getProperties() {
     var bubbleOptionProperty = ""
     layerMetadata.fields.forEach(function (field) {
         if (field.type === 'esriFieldTypeDouble' || field.type === 'esriFieldTypeInteger') {
-            bubbleOptionProperty += `<option value=${field.name}>${field.alias}</option>`;
+            bubbleOptionProperty += "<option value=" + field.name + ">" + field.alias + "</option>";
         }
     })
     $('#bubbleOptionProperty')[0].innerHTML = bubbleOptionProperty;
