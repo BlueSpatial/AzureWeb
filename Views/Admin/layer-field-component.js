@@ -123,7 +123,7 @@
             beginUpdateField();
             $http.post("/Field/SyncLayerToTable", { fields: $ctrl.fields, layerId: $rootScope.currentLayerId, isSupportTime: $ctrl.layer.IsSupportTime, timeFieldId: $ctrl.SelectedTimeField.Id, filterExpression: $ctrl.layer.FilterExpression }
             ).success(function (res) {
-                updateFieldCallBack(res, "Sync successfully!");
+                updateFieldCallBack(res, "Sync successfull!");
             })
         }; 
        
@@ -131,7 +131,7 @@
             beginUpdateField();
             $http.post("/Field/PostField", { fields: $ctrl.fields, layerId: $rootScope.currentLayerId, isSupportTime: $ctrl.layer.IsSupportTime, timeFieldId: $ctrl.SelectedTimeField.Id, filterExpression: $ctrl.layer.FilterExpression }
             ).success(function (res) {
-                updateFieldCallBack(res, "Save successfully!");
+                updateFieldCallBack(res, "Save successfull!");
             })
             .error(authorizeService.onError);        
          
