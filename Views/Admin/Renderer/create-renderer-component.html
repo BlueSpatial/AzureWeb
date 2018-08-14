@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label>Rendering field:</label>
-                            <ui-select ng-model="$ctrl.drawing.Attribute"
+                            <ui-select on-select="$ctrl.getFieldValues($item)" ng-model="$ctrl.drawing.Attribute"
                                         theme="bootstrap"
                                         ng-disabled="!($ctrl.drawing.DrawingStyle.Id==1||$ctrl.drawing.DrawingStyle.Id==2)"
                                         reset-search-input="false">
