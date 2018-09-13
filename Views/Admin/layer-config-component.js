@@ -9,6 +9,11 @@
     controller: ['$rootScope', '$http', 'authorizeService', 'commonService', function ($rootScope, $http, authorizeService, commonService) {
         var $ctrl = this;
         $ctrl.layerSetting = {};
+        $ctrl.defaultSRs = {
+            '102100': "EPSG:3857 (Pseudo-Mercator)",
+            '4326': "EPSG:4326 (WGS84)"
+        };
+           
         $ctrl.saveLayerSetting = function () {
             $rootScope.errorMessage = "";
             if (!$ctrl.layerSetting.Name) {

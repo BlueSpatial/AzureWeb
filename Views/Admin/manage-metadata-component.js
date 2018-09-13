@@ -360,7 +360,7 @@
         $ctrl.addNewService = function (scope) {
            
             $ctrl.single.IsEditMode = false;
-            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: false, IsAllowAnonymous: false, MaxRecordCount:1000, MinScale:0, MaxScale:0, IsStopped: false };
+            $ctrl.single.NewService = { IsCached: false, IsWMSEnabled: false, IsAllowAnonymous: false, MaxRecordCount: 1000, MinScale: 0, MaxScale: 0, IsStopped: false, SpatialReference: 102100 };
             if ($rootScope.isNotFullVersion()) {
                 // auto select the default connection for basic version
                 //if ($rootScope.isBasicVersion()) {

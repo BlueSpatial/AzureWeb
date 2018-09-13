@@ -55,7 +55,7 @@
             $rootScope.successMessage = "";
             
             $ctrl.sR = $ctrl.sR || 102100;
-            $http.post("/Admin/GenerateHibernateConfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false), spatialReference: $ctrl.sR }
+            $http.post("/Admin/GenerateHibernateConfig", { connectionInfo: $ctrl.connectionInfo, serviceId: $ctrl.single.Layer.ServiceId, layerName: $ctrl.layerName, isODataEnabled: ($ctrl.isODataEnabled ? true : false) }
            ).success(function (res) {
                if (!res.Error) {
                    $ctrl.callback(res.Layer);

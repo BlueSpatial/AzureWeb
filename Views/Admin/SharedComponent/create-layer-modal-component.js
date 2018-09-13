@@ -12,9 +12,6 @@
         var $ctrl = this;
         $ctrl.layerTypes = [{ Id: 0, Name: "Add layer from file" }, { Id: 1, Name: "Add layer from database" }];
         $ctrl.single.AddLayerType = $ctrl.layerTypes[0];
-        $ctrl.defaultSRs = [
-            { Value: 102100, Name: "102100 (Spherical Mercator)" },
-            { Value: 4326, Name: "4326 (WGS84 - World Geodetic System 1984)" }
-        ];
+       
     }]
 });

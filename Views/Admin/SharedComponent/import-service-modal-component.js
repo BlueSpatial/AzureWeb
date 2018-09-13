@@ -12,6 +12,11 @@
     // The controller that handles our component logic
     controller: ['$http', '$scope','$rootScope', 'authorizeService', 'layerService', function ($http,$scope, $rootScope, authorizeService, layerService) {
         var $ctrl = this;
+        $ctrl.defaultSRs = [
+            { Value: 102100, Name: "EPSG:3857 (Pseudo-Mercator)" },
+            { Value: 4326, Name: "EPSG:4326 (WGS84)" }
+        ];
+        $ctrl.spatialReference = 102100;
         $ctrl.hideCopyButton=1;
         var setDefaultConnection = function () {
             if ($ctrl.connections.length == 1) {
@@ -33,10 +38,11 @@
             }
             if (!authorizeService.isAuthorize()) return;
             $rootScope.progressBar = { Value: 0, Text: "Connecting..." };
+            $ctrl.spatialReference = $ctrl.spatialReference||'102100'
             $.connection.hub.start().done(function () {
                
 
-                $.connection.progressHub.server.importService($rootScope.currentFolderId, $ctrl.serviceURL, $ctrl.connectionId, $.connection.hub.id);
+                $.connection.progressHub.server.importService($rootScope.currentFolderId, $ctrl.serviceURL, $ctrl.connectionId, $.connection.hub.id, $ctrl.spatialReference);
                 
             });
         };

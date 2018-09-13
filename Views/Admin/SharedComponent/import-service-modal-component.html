@@ -16,7 +16,7 @@
                     <label>Database connection: </label>
                     <!-- disable when edit or basic version  -->
                     <ui-select ng-model="$ctrl.connectionId"
-                               theme="bootstrap"                              
+                               theme="bootstrap"
                                reset-search-input="false"
                                ng-disabled="$ctrl.connections.length == 1"
                                title="{{$root.isBasicVersion()?'The BASIC version is limited to the default installed database connection':''}}">
@@ -26,6 +26,19 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
+                <div class="form-group">
+                    <label>Spatial Reference:</label>
+                    <ui-select ng-model="$ctrl.spatialReference"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               title="Choose Spatial Reference">
+                        <ui-select-match placeholder="Choose Spatial Reference">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="t.Value as t in $ctrl.defaultSRs  | propsFilter: {Name: $select.search}">
+                            <div ng-bind-html="t.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
                 <button ng-click="$ctrl.importService()" type="button" class="btn blue">
                     <span class="glyphicon glyphicon-import"></span>
                     Import

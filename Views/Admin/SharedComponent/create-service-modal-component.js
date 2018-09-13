@@ -13,6 +13,10 @@ myApp.component('createServiceModalComponent', {
     // The controller that handles our component logic
     controller: ['$http', '$rootScope', 'authorizeService', 'layerService', 'commonService', function ($http, $rootScope, authorizeService, layerService, commonService) {
         var $ctrl = this;
+        $ctrl.defaultSRs = [
+            { Value: 102100, Name: "EPSG:3857 (Pseudo-Mercator)" },
+            { Value: 4326, Name: "EPSG:4326 (WGS84)" }
+        ];
         $ctrl.serviceTypes = [{ Id: 0, DisplayName: 'Map Service' },
             { Id: 1, DisplayName: 'Feature Service' }];
         //use for only show the link if the value saved
@@ -26,19 +30,21 @@ myApp.component('createServiceModalComponent', {
             var _validateService = function () {
                 var valid = true;
                 var messages = [];
-                if (!$ctrl.single.NewService || !$ctrl.single.NewService.ConnectionId) {
+                $ctrl.single.NewService = $ctrl.single.NewService || {};
+                if (!$ctrl.single.NewService.ConnectionId) {
                     messages.push("Database connection is required");
                     valid = false;
                 }
-                if (!$ctrl.single.NewService || !$ctrl.single.NewService.Name) {
+                $ctrl.single.NewService.SpatialReference = $ctrl.single.NewService.SpatialReference || 102100; // 102100 as default
+                if (!$ctrl.single.NewService.Name) {
                     messages.push("Service name is required");
                     valid = false;
                 }
-                if (!$ctrl.single.NewService || $ctrl.single.NewService.ServiceType == undefined) {
+                if ($ctrl.single.NewService.ServiceType == undefined) {
                     messages.push("Service type is required");
                     valid = false;
                 }
-                if (!$ctrl.single.NewService||!$ctrl.single.NewService.FolderId) {
+                if (!$ctrl.single.NewService.FolderId) {
                     messages.push("Folder is required");
                     valid = false;
                 }
@@ -54,7 +60,7 @@ myApp.component('createServiceModalComponent', {
                 $ctrl.single.NewService.Id = $ctrl.single.NewService.Id || 0;
                 $rootScope.successMessage = "";
                 var service = {};
-                commonService.mergeObject($ctrl.single.NewService, service, ['Id', 'Name', 'IsCached', 'IsWMSEnabled', 'ServiceType', 'ConnectionId', 'MinScale', 'MaxScale', 'MaxRecordCount', 'IsAllowAnonymous', 'FolderId']);
+                commonService.mergeObject($ctrl.single.NewService, service, ['Id', 'Name', 'IsCached', 'IsWMSEnabled', 'ServiceType', 'ConnectionId', 'MinScale', 'MaxScale', 'MaxRecordCount', 'IsAllowAnonymous', 'FolderId', 'SpatialReference']);
                 $http.post("/Admin/PostService", { service: service }
                 ).success(function (res) {
                     if (!res.Error) {

@@ -102,7 +102,7 @@
                         // call the long method to add layer from file
                         //filePath, tableName, serviceId, connectionHubId, isODataEnabled
                         $.connection.progressHub.server.addLayerFromFile(res.FilePath, $ctrl.uploadFile.TableName,
-                            $ctrl.single.Layer.ServiceId, $.connection.hub.id, $ctrl.uploadFile.IsODataEnabled ? true : false, $ctrl.uploadFile.SR);
+                            $ctrl.single.Layer.ServiceId, $.connection.hub.id, $ctrl.uploadFile.IsODataEnabled ? true : false);
                     }
                     else {
                         $rootScope.errorMessage = res.Message;
