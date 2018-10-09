@@ -17,7 +17,7 @@
         //    $ctrl.layers = res.data.Layers;
         //});
 
-        $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip";
+        $ctrl.supportedFormats = ".zip, .geojson, .json, .kmz, .kml, .gpx, .gml, .rss, .gdb.zip, .csv";
         //$ctrl.callNewServiceDialog = layerService.callNewServiceDialog;
         //$ctrl.callNewFolderDialog = layerService.callNewFolderDialog;
         var initUploadFile = function () {

@@ -95,6 +95,7 @@
     <property name="Extent" type="NHibernate.Spatial.Type.GeometryType, NHibernate.Spatial">
       <column name="Extent" sql-type="geometry" not-null="true" />
     </property>
+    
     <property name="PopupType" type="Int32">
       <column name="PopupType" sql-type="int" not-null="false" />
     </property>

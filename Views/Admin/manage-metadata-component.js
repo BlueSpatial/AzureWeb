@@ -57,7 +57,7 @@
                         { Id: 5, Name: 'Related Records' },
                         { Id: 6, Name: 'Events' }
                     ];
-                    if (res.LayerSetting.ServiceType === 1) {
+                    if (res.LayerSetting.ServiceType === 1 && res.LayerSetting.ServerType == "mssql") {
                         $ctrl.layerTabs.push({ Id: 7, Name: 'Versions' });
                     } else {
                         $ctrl.currentLayerTab = $ctrl.currentLayerTab === 7 ? 0 : $ctrl.currentLayerTab;

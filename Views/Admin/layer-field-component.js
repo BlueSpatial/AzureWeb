@@ -1,7 +1,7 @@
 ﻿myApp.component('layerFieldComponent', {
     // isolated scope binding
     bindings: {
-      
+        connections:'='
     },
     templateUrl: '/Views/Admin/layer-field-component.html',
 
