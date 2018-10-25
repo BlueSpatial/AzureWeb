@@ -111,6 +111,9 @@
                 <a class="btn btn-primary blue" href="/MapPreview/Map.html?layer={{$ctrl.getNodeLink($root.currentScope,$root.currentNodeIndex)}}" target="_blank" ng-hide="$ctrl.single.NewLayer.IsStopped">
                     <span class="glyphicons glyphicons-eye-open tree-icon"></span> View
                 </a>
+                <a class="btn btn-primary blue" href="/MapPreview/Kepler.gl/Map3D.html#/?where=1=1&outFields=*&outSR=4326&f=geojson&layer={{$ctrl.getNodeLink($root.currentScope,$root.currentNodeIndex)}}&mapToken={{$ctrl.setting.MapboxToken}}" target="_blank" ng-hide="$ctrl.single.NewLayer.IsStopped">
+                    <span class="glyphicons glyphicons-eye-plus tree-icon"></span> View Layer 3D
+                </a>
                 <a class="btn btn-outline red btn-enable" data-nodrag ng-click="$ctrl.removeMetadata($root.currentScope)">
                     <span class="glyphicon glyphicon-remove"></span> Delete layer
                 </a>

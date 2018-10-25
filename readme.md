@@ -11,7 +11,9 @@ http://vipassanaandenvironmentalinformatics.blogspot.com/2013/03/getting-started
 For setup project need to install wix http://wixtoolset.org/
 
 When deploy: 
-Must enable 64 bit application in application pool and enable full folder permission for this site
+- Must enable 64 bit application in application pool and enable full folder permission for this site
+- Unload the docker project when publish
+
 
 
 about license:
@@ -31,3 +33,6 @@ Prevent unsave change:
 For protect code and license we need reactor: http://www.eziriz.com/downloads.htm
 the license file download at https://drive.google.com/file/d/0B52HmbNWVv4qWkdrckhwYWR4Uk9iR0pEcDB1T0JyUEdvWlo4/view?usp=sharing
 Reactor will protect BlueSpatial.Core.dll when build this project with 'Release' mode (for install it will auto copy)
+
+------
+when get error when run: go to Options->web project-> use 64 bit

@@ -16,30 +16,30 @@
                 $rootScope.isLoading = true;
                 $http.get("/admin/GetOtherSetting").success(function (res) {
                     if (!res.Error) {
-                         $ctrl.setting.IsCatalogDisabled = res.IsCatalogDisabled;
+                        $ctrl.setting.IsCatalogDisabled = res.IsCatalogDisabled;
+                        $ctrl.setting.MapboxToken = res.MapboxToken;
                     }
                     else {
                         $rootScope.errorMessage = res.Message;
-                    };
+                    }
                     $rootScope.isLoading = false;
                 });
-            }
+            };
             getOtherSetting();
 
-        }
-        $ctrl.updateDisableCatalog = function () {
+        };
+        $ctrl.saveSettings = function () {
             if (!authorizeService.isAuthorize()) return;
             $rootScope.errorMessage = "";
             $rootScope.isLoading = true;
-            $http.post("/Admin/UpdateIsCatalogDisabled", { isCatalogDisabled: $ctrl.setting.IsCatalogDisabled }
+            $http.post("/Admin/SaveSettings", { isCatalogDisabled: $ctrl.setting.IsCatalogDisabled, mapboxToken: $ctrl.setting.MapboxToken }
             ).success(function (res) {
-                if (res.Error) {
-                    $ctrl.setting.IsCatalogDisabled = !$ctrl.setting.IsCatalogDisabled;
+                if (res.Error) {                   
                     $rootScope.errorMessage = res.Message;
                 }
                 else {
-                    $rootScope.successMessage = "Catalog was updated successfully!";
-                };
+                    $rootScope.successMessage = "Settings were updated successfully!";
+                }
                 $rootScope.isLoading = false;
             })
                 .error(authorizeService.onError);

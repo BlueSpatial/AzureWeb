@@ -16,7 +16,7 @@
             <li class="classic-menu-dropdown" ng-class="{active:$root.isActiveRoute('/ManageServices')}">
                 <a ng-link="['ManageServices']">
                     <i class="fa fa-map-o"></i>
-                    <span class="title">Services and Layers</span>        
+                    <span class="title">Services and Layers</span>
                     <span ng-if="$root.isActiveRoute('/ManageServices')" class="selected"></span>
                 </a>
             </li>
@@ -27,7 +27,7 @@
                     <span ng-if="$root.isActiveRoute('/ManageConnection')" class="selected"></span>
                 </a>
             </li>
-            <li class="mega-menu-dropdown" ng-init="$root.securityRoutes=['/ManageUser','/Cors','/AzureAdSetting','/OtherSetting']" ng-class="{active:$root.isActiveRoutes($root.securityRoutes)}">
+            <li class="mega-menu-dropdown" ng-init="$root.securityRoutes=['/ManageUser','/Cors','/AzureAdSetting']" ng-class="{active:$root.isActiveRoutes($root.securityRoutes)}">
                 <a class="dropdown-toggle">
                     <i class="fa fa-shield"></i>
                     <span class="title">Security</span>
@@ -50,16 +50,23 @@
                             <i class="fa fa-cloud"></i> Azure AD Settings
                         </a>
                     </li>
-                    <li class="nav-item" ng-class="{active:$root.isActiveRoute('/OtherSetting')}">
-                        <a ng-link="['OtherSetting']">
-                            <i class="fa fa-cog"></i> Other Settings
-                        </a>
-                    </li>
+                    <!--<li class="nav-item" ng-class="{active:$root.isActiveRoute('/OtherSetting')}">
+                <a ng-link="['OtherSetting']">
+                    <i class="fa fa-cog"></i> Other Settings
+                </a>
+            </li>-->
                 </ul>
             </li>
-            
-           
-        
+            <li class="classic-menu-dropdown" ng-class="{active:$root.isActiveRoute('/OtherSetting')}">
+                <a ng-link="['OtherSetting']">
+                    <i class="fa fa-cog"></i>
+                    <span class="title">Settings</span>
+                    <span ng-if="$root.isActiveRoute('/OtherSetting')" class="selected"></span>
+                </a>
+            </li>
+
+
+
         </ul>
     </div>
     <!-- END MEGA MENU -->

@@ -66,8 +66,8 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div ng-show-start="$ctrl.single.NewService.ServiceType==0" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}">
-                <!--only show for map service-->
+            <div ng-show-start="$ctrl.single.NewService.ServiceType==0&&$ctrl.single.NewService.SpatialReference==102100" class="form-group" ng-attr-title="{{$root.isNotFullVersion()?'Tile Caches are not available with the BASIC/PRO version':''}}">
+                <!--only show for map service and sr 102100-->
                 <label ng-class="{'disabled':$root.isNotFullVersion()}">
                     <input type="checkbox" ng-model="$ctrl.single.NewService.IsCached">
                     Enable Cached Tiles 

@@ -10,13 +10,17 @@
     controller: ['$location', '$rootScope', '$http', 'authorizeService', 'localStorageService', function ($location, $rootScope, $http, authorizeService, localStorageService) {
         var $ctrl = this;
         $rootScope.isLoading = true;
-        $http.get("/Account/CheckLogin").success(function (res) {
-            if (!res.IsLogin) {
-                authorizeService.logout();// logout client site when server is timeout
-            }
-            $ctrl.isFirstTime = res.IsFirstTime;
-            $rootScope.isLoading = false;
-        });
+        var checkLogin = function () {
+            $http.get("/Account/CheckLogin").success(function (res) {
+                if (!res.IsLogin) {
+                    authorizeService.logout();// logout client site when server is timeout
+                }
+                $ctrl.isFirstTime = res.IsFirstTime;
+                $ctrl.haveConnectionString = res.HaveConnectionString;
+                $rootScope.isLoading = false;
+            });
+        }
+        checkLogin();
         if (authorizeService.isAuthorize()) {
             if (localStorageService.get('authorizationData').Role == "Admin") {
                 $location.path("/ManageServices");
@@ -45,7 +49,7 @@
                 };
                 $rootScope.isLoading = false;
             });
-        }
+        };
         var validateUserInfo = function () {
             var messages = [];
             if (!$ctrl.userName) {
@@ -54,7 +58,7 @@
             if (!$ctrl.password) {
                 messages.push("Password is required!");
             }
-            if ($ctrl.password != $ctrl.passwordRetype) {
+            if ($ctrl.password !== $ctrl.passwordRetype) {
                 messages.push("Confirm password does not match!");
             }
             if (messages.length) {
@@ -62,8 +66,9 @@
                 return false;
             }
             return true;
-        }
+        };
         $ctrl.saveLoginInfo = function () {
+            $ctrl.errorMessage = "";
             if (!validateUserInfo()) {
                 return;
             }
@@ -78,10 +83,86 @@
                 }
                 else {
                     $ctrl.errorMessage = res.Message;
-                };
+                }
                 $rootScope.isLoading = false;
             });
 
-        }
+        };
+
+        //initial default value for database
+        $ctrl.initialDatabase = "BlueSpatial";
+
+        $ctrl.changePort = function () {
+            switch ($ctrl.databaseType) {
+
+                case "postgres":
+                    $ctrl.port = "5432";
+                    break;
+
+                case "mysql":
+                    $ctrl.port = "3306";
+                    break;
+
+                default:
+                    $ctrl.port = "1433";
+                    break;
+            }
+        };
+
+
+        var validateDatabaseInfo = function () {
+            var messages = [];
+            if (!$ctrl.databaseType) {
+                messages.push("Database type is required!");
+            }
+            if (!$ctrl.host) {
+                messages.push("Host is required!");
+            }    
+            //if (!$ctrl.port) {
+            //    messages.push("Port is required!");
+            //}  
+            if (!$ctrl.initialDatabase) {
+                messages.push("Initial database is required!");
+            }  
+            if (!$ctrl.userNameOfDb) {
+                messages.push("User name is required!");
+            }
+            if (!$ctrl.passwordOfDb) {
+                messages.push("Password is required!");
+            }  
+            if (messages.length) {
+                $ctrl.errorMessage = messages.join('</br>');
+                return false;
+            }
+            return true;
+        };
+        $ctrl.saveDatabaseInfo = function () {
+            $ctrl.errorMessage = "";
+            if (!validateDatabaseInfo()) {
+                return;
+            }
+            $rootScope.isLoading = true;
+            // save connection info to server
+            $http.post("/Admin/SaveDatabaseInfo", {
+                DatabaseType: $ctrl.databaseType,
+                Host: $ctrl.host,
+                Port: $ctrl.port,
+                InitialDatabase: $ctrl.initialDatabase,
+                UserName: $ctrl.userNameOfDb,
+                Password: $ctrl.passwordOfDb
+            }
+            ).success(function (res) {
+                if (!res.Error) {
+                    $ctrl.haveConnectionString = true;
+                    //create database if not exist, update existing database
+                    checkLogin();
+                }
+                else {
+                    $ctrl.errorMessage = res.Message;
+                }
+                $rootScope.isLoading = false;
+            });
+
+        };
     }]
 });

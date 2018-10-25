@@ -28,6 +28,10 @@
                     <a ng-if="$ctrl.layerSetting.IsAllowAnonymous&&$ctrl.layerSetting.IsODataEnabled&&$ctrl.layerSetting.IsODataEnabledSavedValue" target="_blank" href="/odata/layers/{{$ctrl.layerSetting.Name}}?$top=20">(OData URL)</a>
                 </label>
             </div>
+            <div class="form-group" ng-if="$ctrl.layerSetting.IsFeatureLayer">
+                <input  type="checkbox" ng-model="$ctrl.layerSetting.IsOdkEnabled">
+                Enable Odk
+            </div>
             <div ng-if="$ctrl.layerSetting.IsFeatureLayer">
                 <div class="form-group">
                     <label>

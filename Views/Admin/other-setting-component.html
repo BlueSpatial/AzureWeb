@@ -1,7 +1,15 @@
 ﻿<div class="portlet light bordered ng-scope" id="mainPanel">
-    <h4> Other Settings </h4>
-    <div class="form-group">
-        <!-- Disable catalog -->
-        <label><input ng-model="$ctrl.setting.IsCatalogDisabled" ng-change="$ctrl.updateDisableCatalog()" type="checkbox" /> Disable catalog</label>
+    <h4> Settings </h4>
+    <div class="col-md-6">
+        <div class="form-group">
+            <!-- Disable catalog -->
+            <label><input ng-model="$ctrl.setting.IsCatalogDisabled" type="checkbox" /> Disable catalog</label>
+        </div>
+        <div class="form-group">
+            <label>Mapbox token:</label>
+            <input class="form-control" placeholder="e.g: pk.eyJ1IjoibWFrYW5pIiwiYSI6ImNqbWsycXU2ZTA0ZnczcHBodHBxcWFzZWIifQ.YX7gWz4lcHfiQP0ZOn3jkq" ng-model="$ctrl.setting.MapboxToken" />
+        </div>
+        <button ng-click="$ctrl.saveSettings()" class="btn blue"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
     </div>
 </div>
+

@@ -195,7 +195,7 @@
                     break;
             }
         });
-        $ctrl.closeModal = function () {
+        $ctrl.saveDomainValues = function () {
             $rootScope.errorMessage = "";
             var messages = validateDomain();
             if (messages.length) {
@@ -203,9 +203,12 @@
                 $rootScope.errorMessage = messages.join('</br>');
             }
             else {
-                $('#fieldDomainModal').modal('hide');
+                $ctrl.closeModal();
                 // domainAngularObjectToJsObject($ctrl.domain);
             }
+        };
+        $ctrl.closeModal = function () {
+            $('#fieldDomainModal').modal('hide');
         };
     }]
 });

@@ -15,6 +15,9 @@
      <property name="XmlMapping" type="StringClob">
       <column name="XmlMapping" sql-type="nvarchar(max)" not-null="false" />
     </property>
+    <property name="OdkForm" type="StringClob">
+      <column name="OdkForm" sql-type="nvarchar(max)" not-null="false" />
+    </property>    
     <property name="TableName" type="String">
       <column name="TableName" sql-type="nvarchar(max)" not-null="false" />
     </property>
@@ -75,6 +78,9 @@
       
     <property name="IsODataEnabled" type="bool">
       <column name="IsODataEnabled" sql-type="bit"/>
+    </property>
+    <property name="IsOdkEnabled" type="bool">
+      <column name="IsOdkEnabled" sql-type="bit"/>
     </property>
     <property name="HasAttachments" type="bool">
       <column name="HasAttachments" sql-type="bit" not-null="true" />
