@@ -29,8 +29,10 @@
                 </label>
             </div>
             <div class="form-group" ng-if="$ctrl.layerSetting.IsFeatureLayer">
-                <input  type="checkbox" ng-model="$ctrl.layerSetting.IsOdkEnabled">
-                Enable Odk
+                <label>
+                    <input type="checkbox" ng-model="$ctrl.layerSetting.IsOdkEnabled">
+                    Enable Odk
+                </label>
             </div>
             <div ng-if="$ctrl.layerSetting.IsFeatureLayer">
                 <div class="form-group">

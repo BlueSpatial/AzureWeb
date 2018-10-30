@@ -10,6 +10,7 @@
     controller: ['$location', '$rootScope', '$http', 'authorizeService', 'localStorageService', function ($location, $rootScope, $http, authorizeService, localStorageService) {
         var $ctrl = this;
         $rootScope.isLoading = true;
+        $ctrl.haveConnectionString = true;// Fix bug first time it show connection string and then hide
         var checkLogin = function () {
             $http.get("/Account/CheckLogin").success(function (res) {
                 if (!res.IsLogin) {
