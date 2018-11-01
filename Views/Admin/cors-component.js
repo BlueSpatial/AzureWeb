@@ -67,7 +67,7 @@
             if (confirm(confirmMessage)) {
                 $rootScope.errorMessage = "";
                 $rootScope.isLoading = true;
-                $http.post("/Admin/DeleteMetadata", { id: domain.Id, type: 3 }// 3 for domain
+                $http.post("/Admin/DeleteMetadata", { id: domain.Id, type: 3, needDeleteTable : false}// 3 for domain
                 ).success(function (res) {
                     if (!res.Error) {
                         $ctrl.domains.splice(idx, 1);
